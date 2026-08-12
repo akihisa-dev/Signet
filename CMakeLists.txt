@@ -4,7 +4,7 @@ cmake_minimum_required(VERSION 3.31)
 
 project(
   Signet
-  VERSION 0.1.1
+  VERSION 0.2.0
   DESCRIPTION "A geometric emblem editor"
   LANGUAGES CXX
 )
@@ -26,9 +26,23 @@ option(SIGNET_ENABLE_CLANG_TIDY "Run clang-tidy while compiling" OFF)
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 include(SignetWarnings)
 
-# The first bootstrap commit establishes a buildable project target. Product
-# sources and tests are added in dependency order by subsequent commits.
-add_library(signet_core INTERFACE)
-target_include_directories(signet_core INTERFACE "${CMAKE_CURRENT_SOURCE_DIR}/src")
+add_library(signet_core STATIC
+  src/core/document.cpp
+)
+target_include_directories(signet_core PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/src")
+signet_set_project_warnings(signet_core)
 
 include(CTest)
+if(BUILD_TESTING)
+  add_executable(signet_document_tests tests/document_tests.cpp)
+  target_link_libraries(signet_document_tests PRIVATE signet_core)
+  signet_set_project_warnings(signet_document_tests)
+  add_test(NAME document COMMAND signet_document_tests)
+
+  if(SIGNET_ENABLE_SANITIZERS)
+    foreach(target signet_core signet_document_tests)
+      target_compile_options(${target} PRIVATE -fsanitize=address,undefined -fno-omit-frame-pointer)
+      target_link_options(${target} PRIVATE -fsanitize=address,undefined)
+    endforeach()
+  endif()
+endif()
