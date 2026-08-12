@@ -114,6 +114,36 @@ void preparePrompt(signet::ui::AiGenerationDialog* dialog) {
   dialog->consentCheckBox()->setChecked(true);
 }
 
+void prepareConsent(signet::ui::AiGenerationDialog* dialog) {
+  dialog->consentCheckBox()->setChecked(true);
+}
+
+void testPromptOrImageModes() {
+  FakeAiProvider provider;
+  signet::ui::MainWindow window(&provider);
+  window.aiLogoAction()->trigger();
+  auto* dialog = window.aiGenerationDialog();
+  prepareConsent(dialog);
+  QVERIFY(!dialog->generateButton()->isEnabled());
+  dialog->generateButton()->click();
+  QCOMPARE(provider.request_count, 0);
+
+  QTemporaryDir directory;
+  QVERIFY(directory.isValid());
+  const auto image_path = directory.filePath(QStringLiteral("reference.png"));
+  QImage image(8, 8, QImage::Format_ARGB32);
+  image.fill(Qt::white);
+  QVERIFY(image.save(image_path, "PNG"));
+  dialog->setImagePaths({image_path});
+  QVERIFY(dialog->generateButton()->isEnabled());
+  dialog->generateButton()->click();
+  QTRY_COMPARE_WITH_TIMEOUT(
+      static_cast<int>(dialog->state()),
+      static_cast<int>(signet::ui::AiGenerationDialog::State::preview_ready), 1000);
+  QVERIFY(provider.last_request.prompt.isEmpty());
+  QCOMPARE(provider.last_request.image_paths, QStringList{image_path});
+}
+
 void testInvalidAndOversizeImages() {
   FakeAiProvider provider;
   signet::ui::MainWindow window(&provider);
@@ -255,6 +285,7 @@ void testProviderErrorsAndNarrowFocus() {
 int main(int argc, char** argv) {
   QApplication application(argc, argv);
   testActionSingletonAndApply();
+  testPromptOrImageModes();
   testInvalidAndOversizeImages();
   testCancelCloseAndLateSuccess();
   testStaleAfterEditAndUndo();

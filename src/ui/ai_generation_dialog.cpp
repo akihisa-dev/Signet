@@ -98,12 +98,12 @@ void AiGenerationDialog::buildUi() {
   root->setContentsMargins(12, 12, 12, 12);
   root->setSpacing(8);
 
-  auto* prompt_label = new QLabel(tr("Describe the logo"), this);
+  auto* prompt_label = new QLabel(tr("Describe the logo (optional when using an image)"), this);
   prompt_label->setObjectName(QStringLiteral("aiPromptLabel"));
   root->addWidget(prompt_label);
   prompt_edit_ = new QPlainTextEdit(this);
   prompt_edit_->setObjectName(QStringLiteral("aiPromptEdit"));
-  prompt_edit_->setPlaceholderText(tr("Describe an editable geometric logo…"));
+  prompt_edit_->setPlaceholderText(tr("Describe an editable geometric logo, or add a reference image…"));
   prompt_edit_->setMaximumHeight(100);
   prompt_edit_->setTabChangesFocus(false);
   prompt_edit_->setAccessibleName(tr("Logo prompt"));
@@ -270,8 +270,8 @@ bool AiGenerationDialog::validateInputs(QString& error) const {
     return false;
   }
   const QString prompt = prompt_edit_->toPlainText();
-  if (prompt.trimmed().isEmpty()) {
-    error = tr("Enter a logo description first.");
+  if (prompt.trimmed().isEmpty() && image_paths_.isEmpty()) {
+    error = tr("Enter a logo description or choose a reference image first.");
     return false;
   }
   if (prompt.size() > kPromptMaxLength) {

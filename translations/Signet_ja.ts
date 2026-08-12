@@ -568,12 +568,12 @@
         <translation>編集可能なロゴを生成</translation>
     </message>
     <message>
-        <source>Describe the logo</source>
-        <translation>ロゴを説明してください</translation>
+        <source>Describe the logo (optional when using an image)</source>
+        <translation>ロゴを説明してください（画像を使う場合は任意）</translation>
     </message>
     <message>
-        <source>Describe an editable geometric logo…</source>
-        <translation>編集可能な幾何学ロゴを説明してください…</translation>
+        <source>Describe an editable geometric logo, or add a reference image…</source>
+        <translation>編集可能な幾何学ロゴを説明するか、参照画像を追加してください…</translation>
     </message>
     <message>
         <source>Logo prompt</source>
@@ -634,6 +634,10 @@
     <message>
         <source>Reference image could not be decoded.</source>
         <translation>参照画像をデコードできませんでした。</translation>
+    </message>
+    <message>
+        <source>Enter a logo description or choose a reference image first.</source>
+        <translation>ロゴの説明を入力するか、先に参照画像を選択してください。</translation>
     </message>
     <message>
         <source>Enter a logo description first.</source>

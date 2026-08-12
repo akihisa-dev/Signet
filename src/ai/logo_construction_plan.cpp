@@ -145,7 +145,8 @@ bool requireTransform(
     std::vector<PlanDiagnostic>& diagnostics,
     const std::string_view path) {
   if (value == nullptr) {
-    return true;
+    addDiagnostic(diagnostics, std::string(path), "required field is missing");
+    return false;
   }
   if (!requireObject(value, diagnostics, path)) {
     return false;

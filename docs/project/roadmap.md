@@ -72,7 +72,7 @@ open ArcはBooleanとSplitのoperandにできず、Boolean結果のSymmetryは�
 
 状態：限定範囲を実装済み（実provider接続と実GUI操作は未確認）。
 
-`AI`メニューの`AIロゴ…`からmodelessダイアログを開き、自然言語のプロンプトと任意のPNG/JPEG参照画像を受け取る。外部送信前に明示的な同意を求め、同意がない場合は生成を開始しない。ユーザーがインストールしてログインしたCodex CLIを任意providerとして使い、Signetは認証情報を読み取らない。providerの失敗や未設定はエディタの編集を妨げない。
+`AI`メニューの`AIロゴ…`からmodelessダイアログを開き、自然言語のプロンプトまたは任意のPNG/JPEG参照画像（両方も可）を受け取る。両方がない場合は拒否する。外部送信前に明示的な同意を求め、同意がない場合は生成を開始しない。ユーザーがインストールしてログインしたCodex CLIを任意providerとして使い、Signetは認証情報を読み取らない。providerの失敗や未設定はエディタの編集を妨げない。
 
 Codex CLI呼び出しは非同期で、read-only sandboxとephemeral実行を指定し、入力と一時ファイルはリクエスト終了時に削除する。生成結果は`LogoConstructionPlan`として厳格に検証し、コピーした文書でプレビューする。文書revisionが変わった結果は適用せず、明示的なApplyだけがDAGへ一つのUndo単位で追加する。プロンプトと画像はDocument、設定、ログへ保存しない。
 

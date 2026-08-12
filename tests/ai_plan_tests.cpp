@@ -56,6 +56,15 @@ void testSchemaAndSemanticRejection() {
       std::string(validPlan()).find("\"roots\""), 0, "\"extra\":1,");
   assert(!signet::ai::parseLogoConstructionPlan(unknown));
 
+  const auto missing_transform = signet::ai::parseLogoConstructionPlan(R"JSON({
+    "schema_version":1,
+    "coordinate_system":{"unit":"logical","origin":"center","x_axis":"right","y_axis":"up","bounds":[-100,-100,100,100]},
+    "nodes":[{"id":"circle","name":"Circle","kind":"primitive","primitive":{"type":"circle","radius":10}}],
+    "roots":["circle"]
+  })JSON");
+  assert(!missing_transform);
+  assert(hasDiagnostic(missing_transform.diagnostics, "transform"));
+
   const std::string unknown_primitive = std::string(validPlan()).replace(
       std::string(validPlan()).find("\"radius\":40"), std::string("\"radius\":40").size(),
       "\"radius\":40,\"extra\":1");
@@ -73,8 +82,8 @@ void testSchemaAndSemanticRejection() {
     "schema_version":1,
     "coordinate_system":{"unit":"logical","origin":"center","x_axis":"right","y_axis":"up","bounds":[-100,-100,100,100]},
     "nodes":[
-      {"id":"a","name":"Arc","kind":"primitive","primitive":{"type":"arc","radius":10,"start_degrees":0,"sweep_degrees":90}},
-      {"id":"b","name":"Circle","kind":"primitive","primitive":{"type":"circle","radius":10}},
+      {"id":"a","name":"Arc","kind":"primitive","primitive":{"type":"arc","radius":10,"start_degrees":0,"sweep_degrees":90},"transform":{"translation":{"x":0,"y":0},"rotation_degrees":0,"scale":{"x":1,"y":1}}},
+      {"id":"b","name":"Circle","kind":"primitive","primitive":{"type":"circle","radius":10},"transform":{"translation":{"x":0,"y":0},"rotation_degrees":0,"scale":{"x":1,"y":1}}},
       {"id":"x","name":"X","kind":"boolean","operation":"unite","left":"a","right":"b"}],
     "roots":["x"]
   })JSON";
@@ -98,8 +107,8 @@ void testSchemaAndSemanticRejection() {
     "schema_version":1,
     "coordinate_system":{"unit":"logical","origin":"center","x_axis":"right","y_axis":"up","bounds":[-100,-100,100,100]},
     "nodes":[
-      {"id":"a","name":"A","kind":"primitive","primitive":{"type":"circle","radius":10}},
-      {"id":"b","name":"B","kind":"primitive","primitive":{"type":"circle","radius":5}},
+      {"id":"a","name":"A","kind":"primitive","primitive":{"type":"circle","radius":10},"transform":{"translation":{"x":0,"y":0},"rotation_degrees":0,"scale":{"x":1,"y":1}}},
+      {"id":"b","name":"B","kind":"primitive","primitive":{"type":"circle","radius":5},"transform":{"translation":{"x":0,"y":0},"rotation_degrees":0,"scale":{"x":1,"y":1}}},
       {"id":"x","name":"X","kind":"boolean","operation":"unite","left":"a","right":"b"},
       {"id":"mirror","name":"Mirror","kind":"symmetry","input":"x","axis":{"origin":{"x":0,"y":0},"direction":{"x":1,"y":0}}}],
     "roots":["mirror"]
@@ -165,7 +174,7 @@ void testPrimitiveBooleanAndSymmetryCoverage() {
     "schema_version":1,
     "coordinate_system":{"unit":"logical","origin":"center","x_axis":"right","y_axis":"up","bounds":[-100,-100,100,100]},
     "nodes":[
-      {"id":"circle","name":"Circle","kind":"primitive","primitive":{"type":"circle","radius":10}},
+      {"id":"circle","name":"Circle","kind":"primitive","primitive":{"type":"circle","radius":10},"transform":{"translation":{"x":0,"y":0},"rotation_degrees":0,"scale":{"x":1,"y":1}}},
       {"id":"rectangle","name":"Rectangle","kind":"primitive","primitive":{"type":"rectangle","width":20,"height":20},"transform":{"translation":{"x":30,"y":0},"rotation_degrees":0,"scale":{"x":1,"y":1}}},
       {"id":"golden","name":"Golden","kind":"primitive","primitive":{"type":"golden_rectangle","short_side":10},"transform":{"translation":{"x":-30,"y":0},"rotation_degrees":0,"scale":{"x":1,"y":1}}},
       {"id":"arc","name":"Arc","kind":"primitive","primitive":{"type":"arc","radius":10,"start_degrees":0,"sweep_degrees":360},"transform":{"translation":{"x":0,"y":30},"rotation_degrees":0,"scale":{"x":1,"y":1}}},

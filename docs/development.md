@@ -96,7 +96,7 @@ scripts/secret-guard.sh range <base> <head>
 
 `build/`、`build-*`、`dist/`、`out/`、app bundle、binary、third-party license tree、`*.sha256`は検査対象外です。fixtureは一時ディレクトリ内で値を分割して組み立て、リポジトリへ保存しません。hookの自動installは行いません。
 
-AIロゴ生成の実環境確認には、ユーザーがインストールしてログインしたCodex CLIが必要です。providerは外部送信前にダイアログで同意を要求し、read-only／ephemeralで非同期実行します。実Codex、ネットワーク、認証、GUIの手動確認は通常の`dev`検証には含まれず、配布・サブスクリプション条件と正式な結果保存は未決定です。
+AIロゴ生成は自然言語または参照画像（両方も可）を入力にできますが、両方なしは拒否します。実環境確認には、ユーザーがインストールしてログインしたCodex CLIが必要です。providerは外部送信前に同意を要求し、構造化計画の指示をstdinへ前置したうえでread-only／ephemeralで非同期実行します。`--output-schema`によるparserの安全なsubset（図形種別・数値・必須フィールド）と、parserによるcross-node意味検証を組み合わせます。実Codex、ネットワーク、認証、GUIの手動確認は通常の`dev`検証には含まれず、配布・サブスクリプション条件と正式な結果保存は未決定です。
 
 ## 変更、commit、version、公開
 

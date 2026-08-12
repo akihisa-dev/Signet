@@ -40,4 +40,4 @@ DTOのdouble値は表示用近似であり、面の`FaceId`と`RegionHit::face_i
 Booleanの評価結果は`DocumentEvaluationSnapshot.booleans`にNodeId付きで格納され、元primitiveのtransform変更とUndo/Redoの後に文書から再評価される。
 交差、非交差、接線、包含、同一円、空結果、切り抜きの入力順、xor、境界閉鎖、hitをテストしている。
 この評価は幾何モジュールと文書スナップショットまで実装済みだが、Canvasと`MainWindow`のBoolean操作・結果表示へは接続していない。
-open ArcはBooleanとSplitのoperand非対応で、Boolean結果のSymmetryも非対応である。Boolean操作の配置方式、複数選択方式、alignment UI既定値、色、線、透明度、レイヤー、保存、書き出しは未実装または未決定である。`AI`メニューの`AIロゴ…`からmodeless生成ダイアログを開き、文章入力、任意のPNG/JPEG参照画像、明示同意、生成プレビュー、構成ノード一覧、stale revisionの拒否、明示的なApplyを提供する。ApplyはPlanCompilerを介して編集可能なDAGを一つのUndo単位で追加する。provider接続、外部送信、生成成功の実動作はこのUIテストでは確認していない。
+open ArcはBooleanとSplitのoperand非対応で、Boolean結果のSymmetryも非対応である。Boolean操作の配置方式、複数選択方式、alignment UI既定値、色、線、透明度、レイヤー、保存、書き出しは未実装または未決定である。`AI`メニューの`AIロゴ…`からmodeless生成ダイアログを開き、文章入力または任意のPNG/JPEG参照画像（両方も可）、明示同意、生成プレビュー、構成ノード一覧、stale revisionの拒否、明示的なApplyを提供する。文章と画像の両方がない場合は生成を開始しない。ApplyはPlanCompilerを介して編集可能なDAGを一つのUndo単位で追加する。provider接続、外部送信、生成成功の実動作はこのUIテストでは確認していない。

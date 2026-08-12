@@ -28,6 +28,28 @@ constexpr int kMaxImageDimension = 4096;
 constexpr std::uint64_t kMaxImagePixels = 16ULL * 1024ULL * 1024ULL;
 constexpr int kCancelGracePeriodMs = 300;
 
+constexpr auto kConstructionInstruction =
+    "You are Signet's geometric logo construction planner.\n"
+    "Return exactly one JSON object that conforms to the supplied output schema; do not return "
+    "Markdown, commentary, or any other text.\n"
+    "Build an editable parametric construction, not a raster trace: represent the logo with "
+    "only circle, rectangle, golden_rectangle, and arc primitives, transforms, Boolean nodes "
+    "(unite, intersect, subtract, exclusive_or), and symmetry nodes.\n"
+    "Use stable ASCII node IDs and ASCII human-readable node names, with explicit references. Keep coordinates finite and within the "
+    "schema limits, use a non-zero symmetry direction, and make Boolean operands closed.\n"
+    "When reference images are supplied, infer their structure and recreate it with these "
+    "geometric primitives and relationships rather than tracing pixels.\n"
+    "If no text request is supplied, infer the logo intent from the reference image(s).\n"
+    "The schema enforces local numeric and shape constraints; the parser additionally checks "
+    "node references, duplicate IDs, cycles, distinct Boolean operands, closed Boolean inputs, "
+    "and unsupported Boolean-to-Symmetry relationships.\n"
+    "The JSON object must contain only schema_version, coordinate_system, nodes, and roots.\n"
+    "User request (may be empty):\n";
+
+QString buildConstructionPrompt(const QString& user_prompt) {
+  return QString::fromUtf8(kConstructionInstruction) + user_prompt;
+}
+
 QString errorText(const AiErrorKind kind, const QString& detail = {}) {
   const auto prefix = [&] {
     switch (kind) {
@@ -193,9 +215,11 @@ std::optional<CodexCliProvider::PreparedRequest> CodexCliProvider::prepareReques
     const GenerationRequest& request_data,
     AiError& error) {
   const auto prompt = request_data.prompt.toUtf8();
-  if (prompt.trimmed().isEmpty() || prompt.size() > kMaxPromptBytes) {
+  if ((prompt.trimmed().isEmpty() && request_data.image_paths.isEmpty()) ||
+      prompt.size() > kMaxPromptBytes) {
     error = {AiErrorKind::invalid_input,
-             errorText(AiErrorKind::invalid_input, QStringLiteral("prompt is empty or too large"))};
+             errorText(AiErrorKind::invalid_input,
+                       QStringLiteral("prompt and reference images are empty, or prompt is too large"))};
     return std::nullopt;
   }
   if (request_data.timeout_ms == 0U) {
@@ -223,7 +247,8 @@ std::optional<CodexCliProvider::PreparedRequest> CodexCliProvider::prepareReques
              errorText(AiErrorKind::process_failure, QStringLiteral("cannot secure temporary directory"))};
     return std::nullopt;
   }
-  PreparedRequest prepared{request_data.prompt, temporary->filePath(QStringLiteral("schema.json")),
+  PreparedRequest prepared{buildConstructionPrompt(request_data.prompt),
+                           temporary->filePath(QStringLiteral("schema.json")),
                            temporary->filePath(QStringLiteral("last-message.json")), temporary->path(), {}};
   if (!writeSchema(prepared.schema_path, error)) {
     return std::nullopt;
@@ -293,14 +318,82 @@ bool CodexCliProvider::validateImage(
 
 bool CodexCliProvider::writeSchema(const QString& path, AiError& error) const {
   const QByteArray schema = R"JSON({
-  "type":"object",
+  "type":"object", "additionalProperties":false,
   "required":["schema_version","coordinate_system","nodes","roots"],
-  "additionalProperties":false,
   "properties":{
     "schema_version":{"type":"integer","const":1},
-    "coordinate_system":{"type":"object"},
-    "nodes":{"type":"array"},
-    "roots":{"type":"array"}
+    "coordinate_system":{
+      "type":"object", "additionalProperties":false,
+      "required":["unit","origin","x_axis","y_axis","bounds"],
+      "properties":{
+        "unit":{"type":"string","const":"logical"},
+        "origin":{"type":"string","const":"center"},
+        "x_axis":{"type":"string","const":"right"},
+        "y_axis":{"type":"string","const":"up"},
+        "bounds":{"type":"array","minItems":4,"maxItems":4,"items":{"type":"number","minimum":-1000000,"maximum":1000000}}
+      }
+    },
+    "nodes":{
+      "type":"array", "minItems":1, "maxItems":64,
+      "items":{
+        "oneOf":[
+          {
+            "type":"object", "additionalProperties":false,
+                "required":["id","name","kind","primitive","transform"],
+            "properties":{
+              "id":{"type":"string","minLength":1,"maxLength":64,"pattern":"^[A-Za-z0-9_-]+$"},
+              "name":{"type":"string","minLength":1,"maxLength":64,"pattern":"^[A-Za-z0-9 _.-]+$"},
+              "kind":{"type":"string","const":"primitive"},
+              "primitive":{
+                "oneOf":[
+                  {"type":"object","additionalProperties":false,"required":["type","radius"],"properties":{"type":{"const":"circle"},"radius":{"type":"number","exclusiveMinimum":0,"maximum":1000000}}},
+                  {"type":"object","additionalProperties":false,"required":["type","width","height"],"properties":{"type":{"const":"rectangle"},"width":{"type":"number","exclusiveMinimum":0,"maximum":1000000},"height":{"type":"number","exclusiveMinimum":0,"maximum":1000000}}},
+                  {"type":"object","additionalProperties":false,"required":["type","short_side"],"properties":{"type":{"const":"golden_rectangle"},"short_side":{"type":"number","exclusiveMinimum":0,"maximum":1000000}}},
+                  {"type":"object","additionalProperties":false,"required":["type","radius","start_degrees","sweep_degrees"],"properties":{"type":{"const":"arc"},"radius":{"type":"number","exclusiveMinimum":0,"maximum":1000000},"start_degrees":{"type":"number","minimum":-1000000,"maximum":1000000},"sweep_degrees":{"anyOf":[{"type":"number","exclusiveMinimum":0,"maximum":360},{"type":"number","minimum":-360,"exclusiveMaximum":0}]}}}
+                ]
+              },
+              "transform":{
+                "type":"object", "additionalProperties":false,
+                "required":["translation","rotation_degrees","scale"],
+                "properties":{
+                  "translation":{"$ref":"#/$defs/point"},
+                  "rotation_degrees":{"type":"number","minimum":-1000000,"maximum":1000000},
+                  "scale":{"$ref":"#/$defs/nonzero_point"}
+                }
+              }
+            }
+          },
+          {
+            "type":"object", "additionalProperties":false,
+            "required":["id","name","kind","operation","left","right"],
+            "properties":{
+              "id":{"type":"string","minLength":1,"maxLength":64,"pattern":"^[A-Za-z0-9_-]+$"},
+              "name":{"type":"string","minLength":1,"maxLength":64,"pattern":"^[A-Za-z0-9 _.-]+$"},
+              "kind":{"type":"string","const":"boolean"},
+              "operation":{"type":"string","enum":["unite","intersect","subtract","exclusive_or"]},
+              "left":{"type":"string","minLength":1,"maxLength":64},
+              "right":{"type":"string","minLength":1,"maxLength":64}
+            }
+          },
+          {
+            "type":"object", "additionalProperties":false,
+            "required":["id","name","kind","input","axis"],
+            "properties":{
+              "id":{"type":"string","minLength":1,"maxLength":64,"pattern":"^[A-Za-z0-9_-]+$"},
+              "name":{"type":"string","minLength":1,"maxLength":64,"pattern":"^[A-Za-z0-9 _.-]+$"},
+              "kind":{"type":"string","const":"symmetry"},
+              "input":{"type":"string","minLength":1,"maxLength":64},
+              "axis":{"type":"object","additionalProperties":false,"required":["origin","direction"],"properties":{"origin":{"$ref":"#/$defs/point"},"direction":{"allOf":[{"$ref":"#/$defs/point"},{"anyOf":[{"properties":{"x":{"not":{"const":0}}}},{"properties":{"y":{"not":{"const":0}}}}]}]}}}
+            }
+          }
+        ]
+      }
+    },
+    "roots":{"type":"array","minItems":1,"items":{"type":"string","minLength":1,"maxLength":64}}
+  },
+  "$defs":{
+    "point":{"type":"object","additionalProperties":false,"required":["x","y"],"properties":{"x":{"type":"number","minimum":-1000000,"maximum":1000000},"y":{"type":"number","minimum":-1000000,"maximum":1000000}}},
+    "nonzero_point":{"allOf":[{"$ref":"#/$defs/point"},{"type":"object","properties":{"x":{"not":{"const":0}},"y":{"not":{"const":0}}}}]}
   }
 })JSON";
   QFile file(path);
