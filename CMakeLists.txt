@@ -4,7 +4,7 @@ cmake_minimum_required(VERSION 3.31)
 
 project(
   Signet
-  VERSION 0.2.0
+  VERSION 0.3.0
   DESCRIPTION "A geometric emblem editor"
   LANGUAGES CXX
 )
@@ -26,10 +26,16 @@ option(SIGNET_ENABLE_CLANG_TIDY "Run clang-tidy while compiling" OFF)
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 include(SignetWarnings)
 
+find_package(CGAL 6.2 REQUIRED)
+
 add_library(signet_core STATIC
   src/core/document.cpp
+  src/geometry/arrangement_model.cpp
+  src/geometry/alignment.cpp
+  src/geometry/snap.cpp
 )
 target_include_directories(signet_core PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/src")
+target_link_libraries(signet_core PUBLIC CGAL::CGAL)
 signet_set_project_warnings(signet_core)
 
 include(CTest)
@@ -39,8 +45,18 @@ if(BUILD_TESTING)
   signet_set_project_warnings(signet_document_tests)
   add_test(NAME document COMMAND signet_document_tests)
 
+  add_executable(signet_snap_tests tests/snap_tests.cpp)
+  target_link_libraries(signet_snap_tests PRIVATE signet_core)
+  signet_set_project_warnings(signet_snap_tests)
+  add_test(NAME snap COMMAND signet_snap_tests)
+
+  add_executable(signet_alignment_tests tests/alignment_tests.cpp)
+  target_link_libraries(signet_alignment_tests PRIVATE signet_core)
+  signet_set_project_warnings(signet_alignment_tests)
+  add_test(NAME alignment COMMAND signet_alignment_tests)
+
   if(SIGNET_ENABLE_SANITIZERS)
-    foreach(target signet_core signet_document_tests)
+    foreach(target signet_core signet_document_tests signet_snap_tests signet_alignment_tests)
       target_compile_options(${target} PRIVATE -fsanitize=address,undefined -fno-omit-frame-pointer)
       target_link_options(${target} PRIVATE -fsanitize=address,undefined)
     endforeach()
