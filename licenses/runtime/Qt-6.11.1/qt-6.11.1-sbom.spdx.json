@@ -1,0 +1,2505 @@
+{
+  "SPDXID": "SPDXRef-DOCUMENT",
+  "spdxVersion": "SPDX-2.3",
+  "name": "SBOM-SPDX-qt-6.11.1",
+  "creationInfo": {
+    "created": "2026-08-11T14:28:02Z",
+    "creators": [
+      "Tool: https://github.com/Homebrew/brew@6.0.15"
+    ]
+  },
+  "dataLicense": "CC0-1.0",
+  "documentNamespace": "https://formulae.brew.sh/spdx/qt-6.11.1.json",
+  "documentDescribes": [
+    "SPDXRef-Archive-qt-src",
+    "SPDXRef-Package-SPDXRef-assimp-6.0.5",
+    "SPDXRef-Package-SPDXRef-brotli-1.2.0",
+    "SPDXRef-Package-SPDXRef-dbus-1.16.2_1",
+    "SPDXRef-Package-SPDXRef-double-conversion-3.4.0",
+    "SPDXRef-Package-SPDXRef-libpng-1.6.58",
+    "SPDXRef-Package-SPDXRef-freetype-2.14.3",
+    "SPDXRef-Package-SPDXRef-pcre2-10.47_1",
+    "SPDXRef-Package-SPDXRef-json-c-0.19",
+    "SPDXRef-Package-SPDXRef-libunistring-1.4.2",
+    "SPDXRef-Package-SPDXRef-gettext-1.0",
+    "SPDXRef-Package-SPDXRef-glib-2.88.3",
+    "SPDXRef-Package-SPDXRef-fontconfig-2.18.3",
+    "SPDXRef-Package-SPDXRef-xorgproto-2025.1",
+    "SPDXRef-Package-SPDXRef-libxau-1.0.12",
+    "SPDXRef-Package-SPDXRef-libxdmcp-1.1.5",
+    "SPDXRef-Package-SPDXRef-libxcb-1.17.0",
+    "SPDXRef-Package-SPDXRef-libx11-1.8.13",
+    "SPDXRef-Package-SPDXRef-libxext-1.3.7",
+    "SPDXRef-Package-SPDXRef-libxrender-0.9.12",
+    "SPDXRef-Package-SPDXRef-lzo-2.10",
+    "SPDXRef-Package-SPDXRef-pixman-0.46.4",
+    "SPDXRef-Package-SPDXRef-cairo-1.18.4",
+    "SPDXRef-Package-SPDXRef-graphite2-1.3.15",
+    "SPDXRef-Package-SPDXRef-icu4c@78-78.3",
+    "SPDXRef-Package-SPDXRef-harfbuzz-14.3.0",
+    "SPDXRef-Package-SPDXRef-jpeg-turbo-3.2.0",
+    "SPDXRef-Package-SPDXRef-libb2-0.98.1",
+    "SPDXRef-Package-SPDXRef-md4c-0.5.3",
+    "SPDXRef-Package-SPDXRef-ca-certificates-2026-07-16",
+    "SPDXRef-Package-SPDXRef-openssl@3-3.6.3",
+    "SPDXRef-Package-SPDXRef-lz4-1.10.0",
+    "SPDXRef-Package-SPDXRef-xz-5.8.3",
+    "SPDXRef-Package-SPDXRef-zstd-1.5.7_1",
+    "SPDXRef-Package-SPDXRef-qtbase-6.11.1",
+    "SPDXRef-Package-SPDXRef-qtsvg-6.11.1",
+    "SPDXRef-Package-SPDXRef-qtdeclarative-6.11.1",
+    "SPDXRef-Package-SPDXRef-qtshadertools-6.11.1",
+    "SPDXRef-Package-SPDXRef-qt3d-6.11.1",
+    "SPDXRef-Package-SPDXRef-qt5compat-6.11.1",
+    "SPDXRef-Package-SPDXRef-qtcanvaspainter-6.11.1",
+    "SPDXRef-Package-SPDXRef-qtcharts-6.11.1",
+    "SPDXRef-Package-SPDXRef-qtconnectivity-6.11.1",
+    "SPDXRef-Package-SPDXRef-qtdatavis3d-6.11.1",
+    "SPDXRef-Package-SPDXRef-qtquicktimeline-6.11.1",
+    "SPDXRef-Package-SPDXRef-qtquick3d-6.11.1",
+    "SPDXRef-Package-SPDXRef-qtgraphs-6.11.1",
+    "SPDXRef-Package-SPDXRef-abseil-20260107.1",
+    "SPDXRef-Package-SPDXRef-protobuf-35.1",
+    "SPDXRef-Package-SPDXRef-qtgrpc-6.11.1_2",
+    "SPDXRef-Package-SPDXRef-qtwebsockets-6.11.1",
+    "SPDXRef-Package-SPDXRef-qthttpserver-6.11.1",
+    "SPDXRef-Package-SPDXRef-jasper-4.2.9",
+    "SPDXRef-Package-SPDXRef-giflib-6.1.3",
+    "SPDXRef-Package-SPDXRef-webp-1.6.0",
+    "SPDXRef-Package-SPDXRef-libtiff-4.7.2",
+    "SPDXRef-Package-SPDXRef-little-cms2-2.19",
+    "SPDXRef-Package-SPDXRef-libmng-2.0.3_1",
+    "SPDXRef-Package-SPDXRef-qtimageformats-6.11.1",
+    "SPDXRef-Package-SPDXRef-qtlanguageserver-6.11.1",
+    "SPDXRef-Package-SPDXRef-qtserialport-6.11.1",
+    "SPDXRef-Package-SPDXRef-qtpositioning-6.11.1",
+    "SPDXRef-Package-SPDXRef-qtlocation-6.11.1",
+    "SPDXRef-Package-SPDXRef-qtlottie-6.11.1",
+    "SPDXRef-Package-SPDXRef-qtmultimedia-6.11.1",
+    "SPDXRef-Package-SPDXRef-qtnetworkauth-6.11.1",
+    "SPDXRef-Package-SPDXRef-qtquick3dphysics-6.11.1",
+    "SPDXRef-Package-SPDXRef-qtquickeffectmaker-6.11.1",
+    "SPDXRef-Package-SPDXRef-qtremoteobjects-6.11.1",
+    "SPDXRef-Package-SPDXRef-qtscxml-6.11.1",
+    "SPDXRef-Package-SPDXRef-qtsensors-6.11.1",
+    "SPDXRef-Package-SPDXRef-qtserialbus-6.11.1",
+    "SPDXRef-Package-SPDXRef-qtspeech-6.11.1",
+    "SPDXRef-Package-SPDXRef-qttasktree-6.11.1",
+    "SPDXRef-Package-SPDXRef-gumbo-parser-0.13.2",
+    "SPDXRef-Package-SPDXRef-litehtml-0.10",
+    "SPDXRef-Package-SPDXRef-qttools-6.11.1",
+    "SPDXRef-Package-SPDXRef-qttranslations-6.11.1",
+    "SPDXRef-Package-SPDXRef-readline-8.3.3",
+    "SPDXRef-Package-SPDXRef-hunspell-1.7.3",
+    "SPDXRef-Package-SPDXRef-qtvirtualkeyboard-6.11.1",
+    "SPDXRef-Package-SPDXRef-qtwebchannel-6.11.1",
+    "SPDXRef-Package-SPDXRef-qtwebengine-6.11.1",
+    "SPDXRef-Package-SPDXRef-qtwebview-6.11.1",
+    "SPDXRef-Compiler",
+    "SPDXRef-Bottle-qt"
+  ],
+  "files": [
+    {
+      "SPDXID": "SPDXRef-File-qt",
+      "fileName": "md5sums.txt",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "9e6bcc7f14c6776eb9dd480ec3df75a5bb458ab76cfb3b91b14e999968a62e73"
+        }
+      ]
+    }
+  ],
+  "packages": [
+    {
+      "SPDXID": "SPDXRef-Archive-qt-src",
+      "name": "qt",
+      "versionInfo": "6.11.1",
+      "filesAnalyzed": false,
+      "licenseDeclared": "NOASSERTION",
+      "builtDate": "2026-05-12T04:43:57Z",
+      "licenseConcluded": "BSD-3-Clause AND GFDL-1.3-no-invariants-only AND GPL-2.0-only AND (GPL-3.0-only WITH Qt-GPL-exception-1.0) AND LGPL-3.0-only",
+      "downloadLocation": "https://download.qt.io/official_releases/qt/6.11/6.11.1/submodules/md5sums.txt",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [],
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "9e6bcc7f14c6776eb9dd480ec3df75a5bb458ab76cfb3b91b14e999968a62e73"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Package-SPDXRef-assimp-6.0.5",
+      "name": "assimp",
+      "versionInfo": "6.0.5",
+      "filesAnalyzed": false,
+      "licenseDeclared": "NOASSERTION",
+      "licenseConcluded": "BSD-3-Clause AND CC-PDDC AND MIT AND BSL-1.0 AND Unlicense AND Zlib",
+      "downloadLocation": "https://ghcr.io/v2/homebrew/core/assimp/blobs/sha256:8d2cea4c896625a1772b252a6ef47a6f92170d5cd6d627d4fa02baea0803cb22",
+      "copyrightText": "NOASSERTION",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "8d2cea4c896625a1772b252a6ef47a6f92170d5cd6d627d4fa02baea0803cb22"
+        }
+      ],
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceLocator": "pkg:brew/assimp@6.0.5",
+          "referenceType": "purl"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Package-SPDXRef-brotli-1.2.0",
+      "name": "brotli",
+      "versionInfo": "1.2.0",
+      "filesAnalyzed": false,
+      "licenseDeclared": "NOASSERTION",
+      "licenseConcluded": "MIT",
+      "downloadLocation": "https://ghcr.io/v2/homebrew/core/brotli/blobs/sha256:71ffd30ccd74a9f28cfb210c21fcdc1aa5fec79e23ad2264b6dbceb73437601f",
+      "copyrightText": "NOASSERTION",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "71ffd30ccd74a9f28cfb210c21fcdc1aa5fec79e23ad2264b6dbceb73437601f"
+        }
+      ],
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceLocator": "pkg:brew/brotli@1.2.0",
+          "referenceType": "purl"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Package-SPDXRef-dbus-1.16.2_1",
+      "name": "dbus",
+      "versionInfo": "1.16.2_1",
+      "filesAnalyzed": false,
+      "licenseDeclared": "NOASSERTION",
+      "licenseConcluded": "AFL-2.1 OR GPL-2.0-or-later",
+      "downloadLocation": "https://ghcr.io/v2/homebrew/core/dbus/blobs/sha256:708eed3cc7031e486c760cc9debe777b7e8de93faf74320b66d3bc42e27499c3",
+      "copyrightText": "NOASSERTION",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "708eed3cc7031e486c760cc9debe777b7e8de93faf74320b66d3bc42e27499c3"
+        }
+      ],
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceLocator": "pkg:brew/dbus@1.16.2_1",
+          "referenceType": "purl"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Package-SPDXRef-double-conversion-3.4.0",
+      "name": "double-conversion",
+      "versionInfo": "3.4.0",
+      "filesAnalyzed": false,
+      "licenseDeclared": "NOASSERTION",
+      "licenseConcluded": "BSD-3-Clause",
+      "downloadLocation": "https://ghcr.io/v2/homebrew/core/double-conversion/blobs/sha256:0954007c6e1b25d54f10e4c95144658a0f682c52c2b6880e1943ed6c95cc17b5",
+      "copyrightText": "NOASSERTION",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "0954007c6e1b25d54f10e4c95144658a0f682c52c2b6880e1943ed6c95cc17b5"
+        }
+      ],
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceLocator": "pkg:brew/double-conversion@3.4.0",
+          "referenceType": "purl"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Package-SPDXRef-libpng-1.6.58",
+      "name": "libpng",
+      "versionInfo": "1.6.58",
+      "filesAnalyzed": false,
+      "licenseDeclared": "NOASSERTION",
+      "licenseConcluded": "libpng-2.0",
+      "downloadLocation": "https://ghcr.io/v2/homebrew/core/libpng/blobs/sha256:a28e1e29bf508ddf89800c215a013694c2751ca63e8ae40aca859aff7bf7b02c",
+      "copyrightText": "NOASSERTION",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "a28e1e29bf508ddf89800c215a013694c2751ca63e8ae40aca859aff7bf7b02c"
+        }
+      ],
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceLocator": "pkg:brew/libpng@1.6.58",
+          "referenceType": "purl"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Package-SPDXRef-freetype-2.14.3",
+      "name": "freetype",
+      "versionInfo": "2.14.3",
+      "filesAnalyzed": false,
+      "licenseDeclared": "NOASSERTION",
+      "licenseConcluded": "FTL",
+      "downloadLocation": "https://ghcr.io/v2/homebrew/core/freetype/blobs/sha256:449e22351da81ba5c8c398f87c295decac6b396bd6fab54becbb3d18800b62d1",
+      "copyrightText": "NOASSERTION",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "449e22351da81ba5c8c398f87c295decac6b396bd6fab54becbb3d18800b62d1"
+        }
+      ],
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceLocator": "pkg:brew/freetype@2.14.3",
+          "referenceType": "purl"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Package-SPDXRef-pcre2-10.47_1",
+      "name": "pcre2",
+      "versionInfo": "10.47_1",
+      "filesAnalyzed": false,
+      "licenseDeclared": "NOASSERTION",
+      "licenseConcluded": "BSD-3-Clause",
+      "downloadLocation": "https://ghcr.io/v2/homebrew/core/pcre2/blobs/sha256:948b00bdaf75a842341f08a949ca3d414ae5333df2c305a7e371be31a2c30963",
+      "copyrightText": "NOASSERTION",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "948b00bdaf75a842341f08a949ca3d414ae5333df2c305a7e371be31a2c30963"
+        }
+      ],
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceLocator": "pkg:brew/pcre2@10.47_1",
+          "referenceType": "purl"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Package-SPDXRef-json-c-0.19",
+      "name": "json-c",
+      "versionInfo": "0.19",
+      "filesAnalyzed": false,
+      "licenseDeclared": "NOASSERTION",
+      "licenseConcluded": "MIT",
+      "downloadLocation": "https://ghcr.io/v2/homebrew/core/json-c/blobs/sha256:4095feba36f7d453ae23ddb2656038e0784e857e1c860e70fe26a7c5089c36f5",
+      "copyrightText": "NOASSERTION",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "4095feba36f7d453ae23ddb2656038e0784e857e1c860e70fe26a7c5089c36f5"
+        }
+      ],
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceLocator": "pkg:brew/json-c@0.19",
+          "referenceType": "purl"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Package-SPDXRef-libunistring-1.4.2",
+      "name": "libunistring",
+      "versionInfo": "1.4.2",
+      "filesAnalyzed": false,
+      "licenseDeclared": "NOASSERTION",
+      "licenseConcluded": "GPL-2.0-or-later OR LGPL-3.0-or-later",
+      "downloadLocation": "https://ghcr.io/v2/homebrew/core/libunistring/blobs/sha256:bae6d6d8dffc573c039a850a96e36f1b7fd846abd9ccada8260b7e888b5a3646",
+      "copyrightText": "NOASSERTION",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "bae6d6d8dffc573c039a850a96e36f1b7fd846abd9ccada8260b7e888b5a3646"
+        }
+      ],
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceLocator": "pkg:brew/libunistring@1.4.2",
+          "referenceType": "purl"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Package-SPDXRef-gettext-1.0",
+      "name": "gettext",
+      "versionInfo": "1.0",
+      "filesAnalyzed": false,
+      "licenseDeclared": "NOASSERTION",
+      "licenseConcluded": "GPL-3.0-or-later AND LGPL-2.1-or-later",
+      "downloadLocation": "https://ghcr.io/v2/homebrew/core/gettext/blobs/sha256:2b713227e438f51d025d76df24cfa45a2b813b61718df7bb91a6cedb1091037b",
+      "copyrightText": "NOASSERTION",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "2b713227e438f51d025d76df24cfa45a2b813b61718df7bb91a6cedb1091037b"
+        }
+      ],
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceLocator": "pkg:brew/gettext@1.0",
+          "referenceType": "purl"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Package-SPDXRef-glib-2.88.3",
+      "name": "glib",
+      "versionInfo": "2.88.3",
+      "filesAnalyzed": false,
+      "licenseDeclared": "NOASSERTION",
+      "licenseConcluded": "LGPL-2.1-or-later",
+      "downloadLocation": "https://ghcr.io/v2/homebrew/core/glib/blobs/sha256:56f78bc6c2d3e68fa15a1c37e3ea6531ac90c3af20665e4a6418d285514ba5ce",
+      "copyrightText": "NOASSERTION",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "56f78bc6c2d3e68fa15a1c37e3ea6531ac90c3af20665e4a6418d285514ba5ce"
+        }
+      ],
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceLocator": "pkg:brew/glib@2.88.3",
+          "referenceType": "purl"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Package-SPDXRef-fontconfig-2.18.3",
+      "name": "fontconfig",
+      "versionInfo": "2.18.3",
+      "filesAnalyzed": false,
+      "licenseDeclared": "NOASSERTION",
+      "licenseConcluded": "HPND-sell-variant AND Unicode-3.0 AND MIT-Modern-Variant AND MIT AND LicenseRef-Homebrew-public-domain",
+      "downloadLocation": "https://ghcr.io/v2/homebrew/core/fontconfig/blobs/sha256:ad1c5a3054313853e9eefa9a07c32a3ff7b11c4fbcff9e73affc2a50233dbafe",
+      "copyrightText": "NOASSERTION",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "ad1c5a3054313853e9eefa9a07c32a3ff7b11c4fbcff9e73affc2a50233dbafe"
+        }
+      ],
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceLocator": "pkg:brew/fontconfig@2.18.3",
+          "referenceType": "purl"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Package-SPDXRef-xorgproto-2025.1",
+      "name": "xorgproto",
+      "versionInfo": "2025.1",
+      "filesAnalyzed": false,
+      "licenseDeclared": "NOASSERTION",
+      "licenseConcluded": "MIT",
+      "downloadLocation": "https://ghcr.io/v2/homebrew/core/xorgproto/blobs/sha256:c65163b3daadd9160d9e2ba92f0541800577833c6b06b50c10aab69c1ce38f25",
+      "copyrightText": "NOASSERTION",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "c65163b3daadd9160d9e2ba92f0541800577833c6b06b50c10aab69c1ce38f25"
+        }
+      ],
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceLocator": "pkg:brew/xorgproto@2025.1",
+          "referenceType": "purl"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Package-SPDXRef-libxau-1.0.12",
+      "name": "libxau",
+      "versionInfo": "1.0.12",
+      "filesAnalyzed": false,
+      "licenseDeclared": "NOASSERTION",
+      "licenseConcluded": "MIT",
+      "downloadLocation": "https://ghcr.io/v2/homebrew/core/libxau/blobs/sha256:503040606c5d29dd415f2c8dcba7e181d259e4cdff02d1d8bde4e9ea5244765a",
+      "copyrightText": "NOASSERTION",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "503040606c5d29dd415f2c8dcba7e181d259e4cdff02d1d8bde4e9ea5244765a"
+        }
+      ],
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceLocator": "pkg:brew/libxau@1.0.12",
+          "referenceType": "purl"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Package-SPDXRef-libxdmcp-1.1.5",
+      "name": "libxdmcp",
+      "versionInfo": "1.1.5",
+      "filesAnalyzed": false,
+      "licenseDeclared": "NOASSERTION",
+      "licenseConcluded": "MIT",
+      "downloadLocation": "https://ghcr.io/v2/homebrew/core/libxdmcp/blobs/sha256:34ca0da1c319eeea93ce31badfb5c29c8876cea644754279e93f6cf032ab5cb1",
+      "copyrightText": "NOASSERTION",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "34ca0da1c319eeea93ce31badfb5c29c8876cea644754279e93f6cf032ab5cb1"
+        }
+      ],
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceLocator": "pkg:brew/libxdmcp@1.1.5",
+          "referenceType": "purl"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Package-SPDXRef-libxcb-1.17.0",
+      "name": "libxcb",
+      "versionInfo": "1.17.0",
+      "filesAnalyzed": false,
+      "licenseDeclared": "NOASSERTION",
+      "licenseConcluded": "MIT",
+      "downloadLocation": "https://ghcr.io/v2/homebrew/core/libxcb/blobs/sha256:059edd054b17234abb0ce8a34dcbbd927e104445d09a3f5904ea82f7c5aa7ded",
+      "copyrightText": "NOASSERTION",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "059edd054b17234abb0ce8a34dcbbd927e104445d09a3f5904ea82f7c5aa7ded"
+        }
+      ],
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceLocator": "pkg:brew/libxcb@1.17.0",
+          "referenceType": "purl"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Package-SPDXRef-libx11-1.8.13",
+      "name": "libx11",
+      "versionInfo": "1.8.13",
+      "filesAnalyzed": false,
+      "licenseDeclared": "NOASSERTION",
+      "licenseConcluded": "MIT",
+      "downloadLocation": "https://ghcr.io/v2/homebrew/core/libx11/blobs/sha256:cddc8c50c6140f0f64724e4f7c508fe7d26676b24cf7ae2b2527bf884a07a5ea",
+      "copyrightText": "NOASSERTION",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "cddc8c50c6140f0f64724e4f7c508fe7d26676b24cf7ae2b2527bf884a07a5ea"
+        }
+      ],
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceLocator": "pkg:brew/libx11@1.8.13",
+          "referenceType": "purl"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Package-SPDXRef-libxext-1.3.7",
+      "name": "libxext",
+      "versionInfo": "1.3.7",
+      "filesAnalyzed": false,
+      "licenseDeclared": "NOASSERTION",
+      "licenseConcluded": "MIT",
+      "downloadLocation": "https://ghcr.io/v2/homebrew/core/libxext/blobs/sha256:7cf2c8903d82f28e0e854c8d6d3dff46ea98c5512724e5349af40f1edca88e9c",
+      "copyrightText": "NOASSERTION",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "7cf2c8903d82f28e0e854c8d6d3dff46ea98c5512724e5349af40f1edca88e9c"
+        }
+      ],
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceLocator": "pkg:brew/libxext@1.3.7",
+          "referenceType": "purl"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Package-SPDXRef-libxrender-0.9.12",
+      "name": "libxrender",
+      "versionInfo": "0.9.12",
+      "filesAnalyzed": false,
+      "licenseDeclared": "NOASSERTION",
+      "licenseConcluded": "MIT",
+      "downloadLocation": "https://ghcr.io/v2/homebrew/core/libxrender/blobs/sha256:6405639931b8924b009e16163b7d99f50a10274189cb7f7eba12a4585d1ef255",
+      "copyrightText": "NOASSERTION",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "6405639931b8924b009e16163b7d99f50a10274189cb7f7eba12a4585d1ef255"
+        }
+      ],
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceLocator": "pkg:brew/libxrender@0.9.12",
+          "referenceType": "purl"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Package-SPDXRef-lzo-2.10",
+      "name": "lzo",
+      "versionInfo": "2.10",
+      "filesAnalyzed": false,
+      "licenseDeclared": "NOASSERTION",
+      "licenseConcluded": "GPL-2.0-or-later",
+      "downloadLocation": "https://ghcr.io/v2/homebrew/core/lzo/blobs/sha256:9863be33af38858d028657bdfbceaff00465b23a9857ce6ed93e2ad24f6adbd8",
+      "copyrightText": "NOASSERTION",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "9863be33af38858d028657bdfbceaff00465b23a9857ce6ed93e2ad24f6adbd8"
+        }
+      ],
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceLocator": "pkg:brew/lzo@2.10",
+          "referenceType": "purl"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Package-SPDXRef-pixman-0.46.4",
+      "name": "pixman",
+      "versionInfo": "0.46.4",
+      "filesAnalyzed": false,
+      "licenseDeclared": "NOASSERTION",
+      "licenseConcluded": "MIT",
+      "downloadLocation": "https://ghcr.io/v2/homebrew/core/pixman/blobs/sha256:2b011051909d7f9ad432a76d32c0490f796ad545f7acbd6445356024f0c712e5",
+      "copyrightText": "NOASSERTION",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "2b011051909d7f9ad432a76d32c0490f796ad545f7acbd6445356024f0c712e5"
+        }
+      ],
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceLocator": "pkg:brew/pixman@0.46.4",
+          "referenceType": "purl"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Package-SPDXRef-cairo-1.18.4",
+      "name": "cairo",
+      "versionInfo": "1.18.4",
+      "filesAnalyzed": false,
+      "licenseDeclared": "NOASSERTION",
+      "licenseConcluded": "LGPL-2.1-only OR MPL-1.1",
+      "downloadLocation": "https://ghcr.io/v2/homebrew/core/cairo/blobs/sha256:3099d9356456b9aced4b35bfb6723c45014c09d7b090190bcd8d17053244dd3c",
+      "copyrightText": "NOASSERTION",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "3099d9356456b9aced4b35bfb6723c45014c09d7b090190bcd8d17053244dd3c"
+        }
+      ],
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceLocator": "pkg:brew/cairo@1.18.4",
+          "referenceType": "purl"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Package-SPDXRef-graphite2-1.3.15",
+      "name": "graphite2",
+      "versionInfo": "1.3.15",
+      "filesAnalyzed": false,
+      "licenseDeclared": "NOASSERTION",
+      "licenseConcluded": "MIT OR MPL-2.0 OR LGPL-2.1-or-later OR GPL-2.0-or-later",
+      "downloadLocation": "https://ghcr.io/v2/homebrew/core/graphite2/blobs/sha256:c05e664c8872f3a9e08ada587a33d71b841673126840fe0cd301300c1f59acea",
+      "copyrightText": "NOASSERTION",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "c05e664c8872f3a9e08ada587a33d71b841673126840fe0cd301300c1f59acea"
+        }
+      ],
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceLocator": "pkg:brew/graphite2@1.3.15",
+          "referenceType": "purl"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Package-SPDXRef-icu4c@78-78.3",
+      "name": "icu4c@78",
+      "versionInfo": "78.3",
+      "filesAnalyzed": false,
+      "licenseDeclared": "NOASSERTION",
+      "licenseConcluded": "Unicode-3.0",
+      "downloadLocation": "https://ghcr.io/v2/homebrew/core/icu4c/78/blobs/sha256:0476be299494b97e50a48b0ba08811255300228aef664058e555480d6aee4fb5",
+      "copyrightText": "NOASSERTION",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "0476be299494b97e50a48b0ba08811255300228aef664058e555480d6aee4fb5"
+        }
+      ],
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceLocator": "pkg:brew/icu4c@78@78.3",
+          "referenceType": "purl"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Package-SPDXRef-harfbuzz-14.3.0",
+      "name": "harfbuzz",
+      "versionInfo": "14.3.0",
+      "filesAnalyzed": false,
+      "licenseDeclared": "NOASSERTION",
+      "licenseConcluded": "MIT",
+      "downloadLocation": "https://ghcr.io/v2/homebrew/core/harfbuzz/blobs/sha256:a4d727f73af8892743817d9557e139866060de41302e1e6461908e9d31e2aa0a",
+      "copyrightText": "NOASSERTION",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "a4d727f73af8892743817d9557e139866060de41302e1e6461908e9d31e2aa0a"
+        }
+      ],
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceLocator": "pkg:brew/harfbuzz@14.3.0",
+          "referenceType": "purl"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Package-SPDXRef-jpeg-turbo-3.2.0",
+      "name": "jpeg-turbo",
+      "versionInfo": "3.2.0",
+      "filesAnalyzed": false,
+      "licenseDeclared": "NOASSERTION",
+      "licenseConcluded": "IJG AND Zlib AND BSD-3-Clause",
+      "downloadLocation": "https://ghcr.io/v2/homebrew/core/jpeg-turbo/blobs/sha256:516f4fcf68020aea477a82ac745d5a89bff9fb4908e01c7529c191a563fd1a7b",
+      "copyrightText": "NOASSERTION",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "516f4fcf68020aea477a82ac745d5a89bff9fb4908e01c7529c191a563fd1a7b"
+        }
+      ],
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceLocator": "pkg:brew/jpeg-turbo@3.2.0",
+          "referenceType": "purl"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Package-SPDXRef-libb2-0.98.1",
+      "name": "libb2",
+      "versionInfo": "0.98.1",
+      "filesAnalyzed": false,
+      "licenseDeclared": "NOASSERTION",
+      "licenseConcluded": "CC0-1.0",
+      "downloadLocation": "https://ghcr.io/v2/homebrew/core/libb2/blobs/sha256:4c161a089a39249a589b88d39f57998c6a2183426647ce886708861774b001eb",
+      "copyrightText": "NOASSERTION",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "4c161a089a39249a589b88d39f57998c6a2183426647ce886708861774b001eb"
+        }
+      ],
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceLocator": "pkg:brew/libb2@0.98.1",
+          "referenceType": "purl"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Package-SPDXRef-md4c-0.5.3",
+      "name": "md4c",
+      "versionInfo": "0.5.3",
+      "filesAnalyzed": false,
+      "licenseDeclared": "NOASSERTION",
+      "licenseConcluded": "MIT",
+      "downloadLocation": "https://ghcr.io/v2/homebrew/core/md4c/blobs/sha256:32f2359b9c497452dfc897a44bdd10031aa1a2f1d85639844942bd844bf2a42c",
+      "copyrightText": "NOASSERTION",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "32f2359b9c497452dfc897a44bdd10031aa1a2f1d85639844942bd844bf2a42c"
+        }
+      ],
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceLocator": "pkg:brew/md4c@0.5.3",
+          "referenceType": "purl"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Package-SPDXRef-ca-certificates-2026-07-16",
+      "name": "ca-certificates",
+      "versionInfo": "2026-07-16",
+      "filesAnalyzed": false,
+      "licenseDeclared": "NOASSERTION",
+      "licenseConcluded": "MPL-2.0",
+      "downloadLocation": "https://ghcr.io/v2/homebrew/core/ca-certificates/blobs/sha256:0f62fd67d5a0cc3109ce51568cd7e1603049fb627a0626a0ad5a15d357a2c834",
+      "copyrightText": "NOASSERTION",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "0f62fd67d5a0cc3109ce51568cd7e1603049fb627a0626a0ad5a15d357a2c834"
+        }
+      ],
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceLocator": "pkg:brew/ca-certificates@2026-07-16",
+          "referenceType": "purl"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Package-SPDXRef-openssl@3-3.6.3",
+      "name": "openssl@3",
+      "versionInfo": "3.6.3",
+      "filesAnalyzed": false,
+      "licenseDeclared": "NOASSERTION",
+      "licenseConcluded": "Apache-2.0",
+      "downloadLocation": "https://ghcr.io/v2/homebrew/core/openssl/3/blobs/sha256:2d995a1bbbd8e6ee6a9042990dde87e7321d1ddd5716ffee53b140d23cb9f92f",
+      "copyrightText": "NOASSERTION",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "2d995a1bbbd8e6ee6a9042990dde87e7321d1ddd5716ffee53b140d23cb9f92f"
+        }
+      ],
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceLocator": "pkg:brew/openssl@3@3.6.3",
+          "referenceType": "purl"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Package-SPDXRef-lz4-1.10.0",
+      "name": "lz4",
+      "versionInfo": "1.10.0",
+      "filesAnalyzed": false,
+      "licenseDeclared": "NOASSERTION",
+      "licenseConcluded": "BSD-2-Clause",
+      "downloadLocation": "https://ghcr.io/v2/homebrew/core/lz4/blobs/sha256:caf14ac1b6c922611db94615341ed6dc97f5601664280bc1d397e10f62e37222",
+      "copyrightText": "NOASSERTION",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "caf14ac1b6c922611db94615341ed6dc97f5601664280bc1d397e10f62e37222"
+        }
+      ],
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceLocator": "pkg:brew/lz4@1.10.0",
+          "referenceType": "purl"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Package-SPDXRef-xz-5.8.3",
+      "name": "xz",
+      "versionInfo": "5.8.3",
+      "filesAnalyzed": false,
+      "licenseDeclared": "NOASSERTION",
+      "licenseConcluded": "0BSD AND GPL-2.0-or-later",
+      "downloadLocation": "https://ghcr.io/v2/homebrew/core/xz/blobs/sha256:55c891f5d47142fe923c87df0e3343d7ef2bc7d368c67892b4ad2c80e53069d5",
+      "copyrightText": "NOASSERTION",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "55c891f5d47142fe923c87df0e3343d7ef2bc7d368c67892b4ad2c80e53069d5"
+        }
+      ],
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceLocator": "pkg:brew/xz@5.8.3",
+          "referenceType": "purl"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Package-SPDXRef-zstd-1.5.7_1",
+      "name": "zstd",
+      "versionInfo": "1.5.7_1",
+      "filesAnalyzed": false,
+      "licenseDeclared": "NOASSERTION",
+      "licenseConcluded": "(BSD-3-Clause OR GPL-2.0-only) AND BSD-2-Clause AND MIT",
+      "downloadLocation": "https://ghcr.io/v2/homebrew/core/zstd/blobs/sha256:628a4ef53428d0078e3d76d297171ce8d0294f5ec1de3f20305e08c4dd333565",
+      "copyrightText": "NOASSERTION",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "628a4ef53428d0078e3d76d297171ce8d0294f5ec1de3f20305e08c4dd333565"
+        }
+      ],
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceLocator": "pkg:brew/zstd@1.5.7_1",
+          "referenceType": "purl"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Package-SPDXRef-qtbase-6.11.1",
+      "name": "qtbase",
+      "versionInfo": "6.11.1",
+      "filesAnalyzed": false,
+      "licenseDeclared": "NOASSERTION",
+      "licenseConcluded": "(LGPL-3.0-only OR GPL-2.0-only OR GPL-3.0-only) AND (GPL-3.0-only WITH Qt-GPL-exception-1.0) AND BSD-3-Clause AND GFDL-1.3-no-invariants-only",
+      "downloadLocation": "https://ghcr.io/v2/homebrew/core/qtbase/blobs/sha256:6419abdf69aad16d191e9436c0bee2f9ff76d9de35ebc92f618773824e299e1e",
+      "copyrightText": "NOASSERTION",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "6419abdf69aad16d191e9436c0bee2f9ff76d9de35ebc92f618773824e299e1e"
+        }
+      ],
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceLocator": "pkg:brew/qtbase@6.11.1",
+          "referenceType": "purl"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Package-SPDXRef-qtsvg-6.11.1",
+      "name": "qtsvg",
+      "versionInfo": "6.11.1",
+      "filesAnalyzed": false,
+      "licenseDeclared": "NOASSERTION",
+      "licenseConcluded": "(LGPL-3.0-only OR GPL-2.0-only OR GPL-3.0-only) AND BSD-3-Clause",
+      "downloadLocation": "https://ghcr.io/v2/homebrew/core/qtsvg/blobs/sha256:63a90b82065224a984a49acb79c9093d4cfe49604773275259ec38d71aa6b540",
+      "copyrightText": "NOASSERTION",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "63a90b82065224a984a49acb79c9093d4cfe49604773275259ec38d71aa6b540"
+        }
+      ],
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceLocator": "pkg:brew/qtsvg@6.11.1",
+          "referenceType": "purl"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Package-SPDXRef-qtdeclarative-6.11.1",
+      "name": "qtdeclarative",
+      "versionInfo": "6.11.1",
+      "filesAnalyzed": false,
+      "licenseDeclared": "NOASSERTION",
+      "licenseConcluded": "(LGPL-3.0-only OR GPL-2.0-only OR GPL-3.0-only) AND (GPL-3.0-only WITH Qt-GPL-exception-1.0) AND BSD-2-Clause AND BSD-3-Clause",
+      "downloadLocation": "https://ghcr.io/v2/homebrew/core/qtdeclarative/blobs/sha256:aacbb6dcaeea70c2c3bd94cd1202791245d8c66cd9bccc23f3d8913f73a8b8ae",
+      "copyrightText": "NOASSERTION",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "aacbb6dcaeea70c2c3bd94cd1202791245d8c66cd9bccc23f3d8913f73a8b8ae"
+        }
+      ],
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceLocator": "pkg:brew/qtdeclarative@6.11.1",
+          "referenceType": "purl"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Package-SPDXRef-qtshadertools-6.11.1",
+      "name": "qtshadertools",
+      "versionInfo": "6.11.1",
+      "filesAnalyzed": false,
+      "licenseDeclared": "NOASSERTION",
+      "licenseConcluded": "(LGPL-3.0-only OR GPL-2.0-only OR GPL-3.0-only) AND (GPL-3.0-only WITH Qt-GPL-exception-1.0) AND (Apache-2.0 AND MIT-Khronos-old) AND (BSD-3-Clause AND MIT-Khronos-old AND Apache-2.0 AND AML-glslang AND (GPL-3.0-or-later WITH Bison-exception-2.2)) AND BSD-3-Clause",
+      "downloadLocation": "https://ghcr.io/v2/homebrew/core/qtshadertools/blobs/sha256:065bad3c5f4249b497cf50cc7e5134313b9c93d67b3736d662eecf3df75c0542",
+      "copyrightText": "NOASSERTION",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "065bad3c5f4249b497cf50cc7e5134313b9c93d67b3736d662eecf3df75c0542"
+        }
+      ],
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceLocator": "pkg:brew/qtshadertools@6.11.1",
+          "referenceType": "purl"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Package-SPDXRef-qt3d-6.11.1",
+      "name": "qt3d",
+      "versionInfo": "6.11.1",
+      "filesAnalyzed": false,
+      "licenseDeclared": "NOASSERTION",
+      "licenseConcluded": "(LGPL-3.0-only OR GPL-2.0-only OR GPL-3.0-only) AND BSD-3-Clause AND MIT",
+      "downloadLocation": "https://ghcr.io/v2/homebrew/core/qt3d/blobs/sha256:4a18a782e5e6f486e116b88dc23cc66eb910d2bd7ab9ea25cb11912b5e185fa7",
+      "copyrightText": "NOASSERTION",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "4a18a782e5e6f486e116b88dc23cc66eb910d2bd7ab9ea25cb11912b5e185fa7"
+        }
+      ],
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceLocator": "pkg:brew/qt3d@6.11.1",
+          "referenceType": "purl"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Package-SPDXRef-qt5compat-6.11.1",
+      "name": "qt5compat",
+      "versionInfo": "6.11.1",
+      "filesAnalyzed": false,
+      "licenseDeclared": "NOASSERTION",
+      "licenseConcluded": "(LGPL-3.0-only OR GPL-2.0-only OR GPL-3.0-only) AND BSD-2-Clause AND BSD-3-Clause",
+      "downloadLocation": "https://ghcr.io/v2/homebrew/core/qt5compat/blobs/sha256:2376fe0465520d4d298fb7798aeec85bfdef5882034a393958d5dea0c8f85f8d",
+      "copyrightText": "NOASSERTION",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "2376fe0465520d4d298fb7798aeec85bfdef5882034a393958d5dea0c8f85f8d"
+        }
+      ],
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceLocator": "pkg:brew/qt5compat@6.11.1",
+          "referenceType": "purl"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Package-SPDXRef-qtcanvaspainter-6.11.1",
+      "name": "qtcanvaspainter",
+      "versionInfo": "6.11.1",
+      "filesAnalyzed": false,
+      "licenseDeclared": "NOASSERTION",
+      "licenseConcluded": "GPL-3.0-only AND (GPL-3.0-only WITH Qt-GPL-exception-1.0) AND BSD-3-Clause AND Zlib",
+      "downloadLocation": "https://ghcr.io/v2/homebrew/core/qtcanvaspainter/blobs/sha256:4ad224d80791ae2b03872aaadb254eafbe5a7bd000e0eeb3346131cc28019c42",
+      "copyrightText": "NOASSERTION",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "4ad224d80791ae2b03872aaadb254eafbe5a7bd000e0eeb3346131cc28019c42"
+        }
+      ],
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceLocator": "pkg:brew/qtcanvaspainter@6.11.1",
+          "referenceType": "purl"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Package-SPDXRef-qtcharts-6.11.1",
+      "name": "qtcharts",
+      "versionInfo": "6.11.1",
+      "filesAnalyzed": false,
+      "licenseDeclared": "NOASSERTION",
+      "licenseConcluded": "GPL-3.0-only AND BSD-3-Clause",
+      "downloadLocation": "https://ghcr.io/v2/homebrew/core/qtcharts/blobs/sha256:d0c14b7f8a8086197f082f166657bf84207d065248dbc6ab824c24e0390727ec",
+      "copyrightText": "NOASSERTION",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "d0c14b7f8a8086197f082f166657bf84207d065248dbc6ab824c24e0390727ec"
+        }
+      ],
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceLocator": "pkg:brew/qtcharts@6.11.1",
+          "referenceType": "purl"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Package-SPDXRef-qtconnectivity-6.11.1",
+      "name": "qtconnectivity",
+      "versionInfo": "6.11.1",
+      "filesAnalyzed": false,
+      "licenseDeclared": "NOASSERTION",
+      "licenseConcluded": "(LGPL-3.0-only OR GPL-2.0-only OR GPL-3.0-only) AND BSD-3-Clause",
+      "downloadLocation": "https://ghcr.io/v2/homebrew/core/qtconnectivity/blobs/sha256:74bd9d47a3867ee962c3422e1720b785f866023e44df467953e5c8edd1253ec3",
+      "copyrightText": "NOASSERTION",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "74bd9d47a3867ee962c3422e1720b785f866023e44df467953e5c8edd1253ec3"
+        }
+      ],
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceLocator": "pkg:brew/qtconnectivity@6.11.1",
+          "referenceType": "purl"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Package-SPDXRef-qtdatavis3d-6.11.1",
+      "name": "qtdatavis3d",
+      "versionInfo": "6.11.1",
+      "filesAnalyzed": false,
+      "licenseDeclared": "NOASSERTION",
+      "licenseConcluded": "GPL-3.0-only AND BSD-3-Clause",
+      "downloadLocation": "https://ghcr.io/v2/homebrew/core/qtdatavis3d/blobs/sha256:542be0af66d64d482edc83fe1da954bd59acc8c67b1f8181fc6fa0de949734b3",
+      "copyrightText": "NOASSERTION",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "542be0af66d64d482edc83fe1da954bd59acc8c67b1f8181fc6fa0de949734b3"
+        }
+      ],
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceLocator": "pkg:brew/qtdatavis3d@6.11.1",
+          "referenceType": "purl"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Package-SPDXRef-qtquicktimeline-6.11.1",
+      "name": "qtquicktimeline",
+      "versionInfo": "6.11.1",
+      "filesAnalyzed": false,
+      "licenseDeclared": "NOASSERTION",
+      "licenseConcluded": "GPL-3.0-only AND BSD-3-Clause",
+      "downloadLocation": "https://ghcr.io/v2/homebrew/core/qtquicktimeline/blobs/sha256:18e3c91b58370dd4fda989475a2096e1eea599d78b2687a38b9439b1b10de26b",
+      "copyrightText": "NOASSERTION",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "18e3c91b58370dd4fda989475a2096e1eea599d78b2687a38b9439b1b10de26b"
+        }
+      ],
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceLocator": "pkg:brew/qtquicktimeline@6.11.1",
+          "referenceType": "purl"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Package-SPDXRef-qtquick3d-6.11.1",
+      "name": "qtquick3d",
+      "versionInfo": "6.11.1",
+      "filesAnalyzed": false,
+      "licenseDeclared": "NOASSERTION",
+      "licenseConcluded": "GPL-3.0-only AND (GPL-3.0-only WITH Qt-GPL-exception-1.0) AND Apache-2.0 AND BSD-3-Clause AND MIT",
+      "downloadLocation": "https://ghcr.io/v2/homebrew/core/qtquick3d/blobs/sha256:1f249aa6a9a60893be5c4cb19576b2dc6a8c7c30ec479a13b2b257590c744194",
+      "copyrightText": "NOASSERTION",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "1f249aa6a9a60893be5c4cb19576b2dc6a8c7c30ec479a13b2b257590c744194"
+        }
+      ],
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceLocator": "pkg:brew/qtquick3d@6.11.1",
+          "referenceType": "purl"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Package-SPDXRef-qtgraphs-6.11.1",
+      "name": "qtgraphs",
+      "versionInfo": "6.11.1",
+      "filesAnalyzed": false,
+      "licenseDeclared": "NOASSERTION",
+      "licenseConcluded": "GPL-3.0-only AND BSD-3-Clause",
+      "downloadLocation": "https://ghcr.io/v2/homebrew/core/qtgraphs/blobs/sha256:af276327073063436f437185e7b6a4cbb09cb088cc3e21a3511e8ea717a6e7c8",
+      "copyrightText": "NOASSERTION",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "af276327073063436f437185e7b6a4cbb09cb088cc3e21a3511e8ea717a6e7c8"
+        }
+      ],
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceLocator": "pkg:brew/qtgraphs@6.11.1",
+          "referenceType": "purl"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Package-SPDXRef-abseil-20260107.1",
+      "name": "abseil",
+      "versionInfo": "20260107.1",
+      "filesAnalyzed": false,
+      "licenseDeclared": "NOASSERTION",
+      "licenseConcluded": "Apache-2.0",
+      "downloadLocation": "https://ghcr.io/v2/homebrew/core/abseil/blobs/sha256:90697dc0727974c4a873ed19e63c30bc4c9525566cbd0ff968f980ce15047ae8",
+      "copyrightText": "NOASSERTION",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "90697dc0727974c4a873ed19e63c30bc4c9525566cbd0ff968f980ce15047ae8"
+        }
+      ],
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceLocator": "pkg:brew/abseil@20260107.1",
+          "referenceType": "purl"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Package-SPDXRef-protobuf-35.1",
+      "name": "protobuf",
+      "versionInfo": "35.1",
+      "filesAnalyzed": false,
+      "licenseDeclared": "NOASSERTION",
+      "licenseConcluded": "BSD-3-Clause",
+      "downloadLocation": "https://ghcr.io/v2/homebrew/core/protobuf/blobs/sha256:24d73dd02d4ddf3b105b546c61d0c9f7756888b2b5b8bb1418cf4fc77095c560",
+      "copyrightText": "NOASSERTION",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "24d73dd02d4ddf3b105b546c61d0c9f7756888b2b5b8bb1418cf4fc77095c560"
+        }
+      ],
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceLocator": "pkg:brew/protobuf@35.1",
+          "referenceType": "purl"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Package-SPDXRef-qtgrpc-6.11.1_2",
+      "name": "qtgrpc",
+      "versionInfo": "6.11.1_2",
+      "filesAnalyzed": false,
+      "licenseDeclared": "NOASSERTION",
+      "licenseConcluded": "GPL-3.0-only AND (LGPL-3.0-only OR GPL-2.0-only OR GPL-3.0-only) AND (GPL-3.0-only WITH Qt-GPL-exception-1.0) AND BSD-3-Clause",
+      "downloadLocation": "https://ghcr.io/v2/homebrew/core/qtgrpc/blobs/sha256:d1001cea27ffcbecb05dd6e81fd52bb62672124665923ed0588fd9d8cd0cb385",
+      "copyrightText": "NOASSERTION",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "d1001cea27ffcbecb05dd6e81fd52bb62672124665923ed0588fd9d8cd0cb385"
+        }
+      ],
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceLocator": "pkg:brew/qtgrpc@6.11.1_2",
+          "referenceType": "purl"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Package-SPDXRef-qtwebsockets-6.11.1",
+      "name": "qtwebsockets",
+      "versionInfo": "6.11.1",
+      "filesAnalyzed": false,
+      "licenseDeclared": "NOASSERTION",
+      "licenseConcluded": "(LGPL-3.0-only OR GPL-2.0-only OR GPL-3.0-only) AND BSD-3-Clause",
+      "downloadLocation": "https://ghcr.io/v2/homebrew/core/qtwebsockets/blobs/sha256:515b1fffe664d577880912a557abdb489a6594fb543f36d8a12c4ed4b7dca55f",
+      "copyrightText": "NOASSERTION",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "515b1fffe664d577880912a557abdb489a6594fb543f36d8a12c4ed4b7dca55f"
+        }
+      ],
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceLocator": "pkg:brew/qtwebsockets@6.11.1",
+          "referenceType": "purl"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Package-SPDXRef-qthttpserver-6.11.1",
+      "name": "qthttpserver",
+      "versionInfo": "6.11.1",
+      "filesAnalyzed": false,
+      "licenseDeclared": "NOASSERTION",
+      "licenseConcluded": "GPL-3.0-only AND BSD-3-Clause",
+      "downloadLocation": "https://ghcr.io/v2/homebrew/core/qthttpserver/blobs/sha256:1b31323e38067b47d0de4c4f0d3343ed3cde4b571bf26c43681618159c1acb37",
+      "copyrightText": "NOASSERTION",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "1b31323e38067b47d0de4c4f0d3343ed3cde4b571bf26c43681618159c1acb37"
+        }
+      ],
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceLocator": "pkg:brew/qthttpserver@6.11.1",
+          "referenceType": "purl"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Package-SPDXRef-jasper-4.2.9",
+      "name": "jasper",
+      "versionInfo": "4.2.9",
+      "filesAnalyzed": false,
+      "licenseDeclared": "NOASSERTION",
+      "licenseConcluded": "JasPer-2.0",
+      "downloadLocation": "https://ghcr.io/v2/homebrew/core/jasper/blobs/sha256:bc734fadc3ec13b979742b8be1aec388ae7ff06f514057253397af67f302ff96",
+      "copyrightText": "NOASSERTION",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "bc734fadc3ec13b979742b8be1aec388ae7ff06f514057253397af67f302ff96"
+        }
+      ],
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceLocator": "pkg:brew/jasper@4.2.9",
+          "referenceType": "purl"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Package-SPDXRef-giflib-6.1.3",
+      "name": "giflib",
+      "versionInfo": "6.1.3",
+      "filesAnalyzed": false,
+      "licenseDeclared": "NOASSERTION",
+      "licenseConcluded": "MIT",
+      "downloadLocation": "https://ghcr.io/v2/homebrew/core/giflib/blobs/sha256:bef1f5fb654184cce8af628e3a0c222eeab3c61fcaa4ff169974b22c22f01a8c",
+      "copyrightText": "NOASSERTION",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "bef1f5fb654184cce8af628e3a0c222eeab3c61fcaa4ff169974b22c22f01a8c"
+        }
+      ],
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceLocator": "pkg:brew/giflib@6.1.3",
+          "referenceType": "purl"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Package-SPDXRef-webp-1.6.0",
+      "name": "webp",
+      "versionInfo": "1.6.0",
+      "filesAnalyzed": false,
+      "licenseDeclared": "NOASSERTION",
+      "licenseConcluded": "BSD-3-Clause",
+      "downloadLocation": "https://ghcr.io/v2/homebrew/core/webp/blobs/sha256:11a19ac5db13a8485d4d6f712d65d48531f99e8d7237407ab42718777eefacb3",
+      "copyrightText": "NOASSERTION",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "11a19ac5db13a8485d4d6f712d65d48531f99e8d7237407ab42718777eefacb3"
+        }
+      ],
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceLocator": "pkg:brew/webp@1.6.0",
+          "referenceType": "purl"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Package-SPDXRef-libtiff-4.7.2",
+      "name": "libtiff",
+      "versionInfo": "4.7.2",
+      "filesAnalyzed": false,
+      "licenseDeclared": "NOASSERTION",
+      "licenseConcluded": "libtiff",
+      "downloadLocation": "https://ghcr.io/v2/homebrew/core/libtiff/blobs/sha256:5d1873ffd3458d6288110874c349921206349359cf6564443bf2ed92ef9e5d46",
+      "copyrightText": "NOASSERTION",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "5d1873ffd3458d6288110874c349921206349359cf6564443bf2ed92ef9e5d46"
+        }
+      ],
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceLocator": "pkg:brew/libtiff@4.7.2",
+          "referenceType": "purl"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Package-SPDXRef-little-cms2-2.19",
+      "name": "little-cms2",
+      "versionInfo": "2.19",
+      "filesAnalyzed": false,
+      "licenseDeclared": "NOASSERTION",
+      "licenseConcluded": "MIT",
+      "downloadLocation": "https://ghcr.io/v2/homebrew/core/little-cms2/blobs/sha256:09a863e549255993de3f73d705328b1202417dff324edd30c703b77fcee09b01",
+      "copyrightText": "NOASSERTION",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "09a863e549255993de3f73d705328b1202417dff324edd30c703b77fcee09b01"
+        }
+      ],
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceLocator": "pkg:brew/little-cms2@2.19",
+          "referenceType": "purl"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Package-SPDXRef-libmng-2.0.3_1",
+      "name": "libmng",
+      "versionInfo": "2.0.3_1",
+      "filesAnalyzed": false,
+      "licenseDeclared": "NOASSERTION",
+      "licenseConcluded": "Zlib",
+      "downloadLocation": "https://ghcr.io/v2/homebrew/core/libmng/blobs/sha256:c1e187e0cbf4b730d8116e16edab09cc0b774101d4af55605239de0afe858d8f",
+      "copyrightText": "NOASSERTION",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "c1e187e0cbf4b730d8116e16edab09cc0b774101d4af55605239de0afe858d8f"
+        }
+      ],
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceLocator": "pkg:brew/libmng@2.0.3_1",
+          "referenceType": "purl"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Package-SPDXRef-qtimageformats-6.11.1",
+      "name": "qtimageformats",
+      "versionInfo": "6.11.1",
+      "filesAnalyzed": false,
+      "licenseDeclared": "NOASSERTION",
+      "licenseConcluded": "(LGPL-3.0-only OR GPL-2.0-only OR GPL-3.0-only) AND BSD-3-Clause",
+      "downloadLocation": "https://ghcr.io/v2/homebrew/core/qtimageformats/blobs/sha256:da6df7c6bd5379f35e828e5a330d94a762da3d680dffc25ba0f0e15054c0c067",
+      "copyrightText": "NOASSERTION",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "da6df7c6bd5379f35e828e5a330d94a762da3d680dffc25ba0f0e15054c0c067"
+        }
+      ],
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceLocator": "pkg:brew/qtimageformats@6.11.1",
+          "referenceType": "purl"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Package-SPDXRef-qtlanguageserver-6.11.1",
+      "name": "qtlanguageserver",
+      "versionInfo": "6.11.1",
+      "filesAnalyzed": false,
+      "licenseDeclared": "NOASSERTION",
+      "licenseConcluded": "(LGPL-3.0-only OR GPL-2.0-only OR GPL-3.0-only) AND BSD-3-Clause",
+      "downloadLocation": "https://ghcr.io/v2/homebrew/core/qtlanguageserver/blobs/sha256:e0f73a69f7d2a7a0aa1149e41f424a38487e690534618bc9e08190894b5b8c3a",
+      "copyrightText": "NOASSERTION",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "e0f73a69f7d2a7a0aa1149e41f424a38487e690534618bc9e08190894b5b8c3a"
+        }
+      ],
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceLocator": "pkg:brew/qtlanguageserver@6.11.1",
+          "referenceType": "purl"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Package-SPDXRef-qtserialport-6.11.1",
+      "name": "qtserialport",
+      "versionInfo": "6.11.1",
+      "filesAnalyzed": false,
+      "licenseDeclared": "NOASSERTION",
+      "licenseConcluded": "(LGPL-3.0-only OR GPL-2.0-only OR GPL-3.0-only) AND BSD-3-Clause",
+      "downloadLocation": "https://ghcr.io/v2/homebrew/core/qtserialport/blobs/sha256:2f9c1f32c5ffe25029526e6d90698338aeefa29bd7be7ff2e22a8881e48b5bae",
+      "copyrightText": "NOASSERTION",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "2f9c1f32c5ffe25029526e6d90698338aeefa29bd7be7ff2e22a8881e48b5bae"
+        }
+      ],
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceLocator": "pkg:brew/qtserialport@6.11.1",
+          "referenceType": "purl"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Package-SPDXRef-qtpositioning-6.11.1",
+      "name": "qtpositioning",
+      "versionInfo": "6.11.1",
+      "filesAnalyzed": false,
+      "licenseDeclared": "NOASSERTION",
+      "licenseConcluded": "(LGPL-3.0-only OR GPL-2.0-only OR GPL-3.0-only) AND BSD-3-Clause AND BSL-1.0 AND MIT",
+      "downloadLocation": "https://ghcr.io/v2/homebrew/core/qtpositioning/blobs/sha256:3eae7c50185a2099527a1456e72b746bcaf709569b69a7c5a1802d99b9dcf50b",
+      "copyrightText": "NOASSERTION",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "3eae7c50185a2099527a1456e72b746bcaf709569b69a7c5a1802d99b9dcf50b"
+        }
+      ],
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceLocator": "pkg:brew/qtpositioning@6.11.1",
+          "referenceType": "purl"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Package-SPDXRef-qtlocation-6.11.1",
+      "name": "qtlocation",
+      "versionInfo": "6.11.1",
+      "filesAnalyzed": false,
+      "licenseDeclared": "NOASSERTION",
+      "licenseConcluded": "(LGPL-3.0-only OR GPL-2.0-only OR GPL-3.0-only) AND BSD-3-Clause",
+      "downloadLocation": "https://ghcr.io/v2/homebrew/core/qtlocation/blobs/sha256:9dd048d8aca752fa67ed5faa1736774b960511c03d7647d541e0c76f5e26b0f8",
+      "copyrightText": "NOASSERTION",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "9dd048d8aca752fa67ed5faa1736774b960511c03d7647d541e0c76f5e26b0f8"
+        }
+      ],
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceLocator": "pkg:brew/qtlocation@6.11.1",
+          "referenceType": "purl"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Package-SPDXRef-qtlottie-6.11.1",
+      "name": "qtlottie",
+      "versionInfo": "6.11.1",
+      "filesAnalyzed": false,
+      "licenseDeclared": "NOASSERTION",
+      "licenseConcluded": "GPL-3.0-only AND BSD-3-Clause",
+      "downloadLocation": "https://ghcr.io/v2/homebrew/core/qtlottie/blobs/sha256:730896d58afd137de7739ff4970bc06124a9779707ec405784b5772f4bc92d7a",
+      "copyrightText": "NOASSERTION",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "730896d58afd137de7739ff4970bc06124a9779707ec405784b5772f4bc92d7a"
+        }
+      ],
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceLocator": "pkg:brew/qtlottie@6.11.1",
+          "referenceType": "purl"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Package-SPDXRef-qtmultimedia-6.11.1",
+      "name": "qtmultimedia",
+      "versionInfo": "6.11.1",
+      "filesAnalyzed": false,
+      "licenseDeclared": "NOASSERTION",
+      "licenseConcluded": "(LGPL-3.0-only OR GPL-2.0-only OR GPL-3.0-only) AND (MPL-2.0 AND BSD-3-Clause) AND Apache-2.0 AND BSD-3-Clause AND GPL-3.0-only AND MIT",
+      "downloadLocation": "https://ghcr.io/v2/homebrew/core/qtmultimedia/blobs/sha256:2af68cbebbb2bb8babe819343cb284f3ff08587f69180d0f889c769f2e4f1eea",
+      "copyrightText": "NOASSERTION",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "2af68cbebbb2bb8babe819343cb284f3ff08587f69180d0f889c769f2e4f1eea"
+        }
+      ],
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceLocator": "pkg:brew/qtmultimedia@6.11.1",
+          "referenceType": "purl"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Package-SPDXRef-qtnetworkauth-6.11.1",
+      "name": "qtnetworkauth",
+      "versionInfo": "6.11.1",
+      "filesAnalyzed": false,
+      "licenseDeclared": "NOASSERTION",
+      "licenseConcluded": "GPL-3.0-only AND BSD-3-Clause",
+      "downloadLocation": "https://ghcr.io/v2/homebrew/core/qtnetworkauth/blobs/sha256:bd4080bac44121ac510ec81870a259a66ca1053cebe9707f4d9ac6c6e669dddf",
+      "copyrightText": "NOASSERTION",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "bd4080bac44121ac510ec81870a259a66ca1053cebe9707f4d9ac6c6e669dddf"
+        }
+      ],
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceLocator": "pkg:brew/qtnetworkauth@6.11.1",
+          "referenceType": "purl"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Package-SPDXRef-qtquick3dphysics-6.11.1",
+      "name": "qtquick3dphysics",
+      "versionInfo": "6.11.1",
+      "filesAnalyzed": false,
+      "licenseDeclared": "NOASSERTION",
+      "licenseConcluded": "GPL-3.0-only AND (GPL-3.0-only WITH Qt-GPL-exception-1.0) AND BSD-3-Clause",
+      "downloadLocation": "https://ghcr.io/v2/homebrew/core/qtquick3dphysics/blobs/sha256:83e10c8b76ac83647bf79d5f5e522d3b8938c2439a94b7b6de3a9b09dd7aa366",
+      "copyrightText": "NOASSERTION",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "83e10c8b76ac83647bf79d5f5e522d3b8938c2439a94b7b6de3a9b09dd7aa366"
+        }
+      ],
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceLocator": "pkg:brew/qtquick3dphysics@6.11.1",
+          "referenceType": "purl"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Package-SPDXRef-qtquickeffectmaker-6.11.1",
+      "name": "qtquickeffectmaker",
+      "versionInfo": "6.11.1",
+      "filesAnalyzed": false,
+      "licenseDeclared": "NOASSERTION",
+      "licenseConcluded": "(GPL-3.0-only WITH Qt-GPL-exception-1.0) AND BSD-3-Clause",
+      "downloadLocation": "https://ghcr.io/v2/homebrew/core/qtquickeffectmaker/blobs/sha256:4bfc9b0e8279512f39bbc4657e6f01ba3fe500cc2d68a1778af868d657732597",
+      "copyrightText": "NOASSERTION",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "4bfc9b0e8279512f39bbc4657e6f01ba3fe500cc2d68a1778af868d657732597"
+        }
+      ],
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceLocator": "pkg:brew/qtquickeffectmaker@6.11.1",
+          "referenceType": "purl"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Package-SPDXRef-qtremoteobjects-6.11.1",
+      "name": "qtremoteobjects",
+      "versionInfo": "6.11.1",
+      "filesAnalyzed": false,
+      "licenseDeclared": "NOASSERTION",
+      "licenseConcluded": "(LGPL-3.0-only OR GPL-2.0-only OR GPL-3.0-only) AND (GPL-3.0-only WITH Qt-GPL-exception-1.0) AND BSD-3-Clause",
+      "downloadLocation": "https://ghcr.io/v2/homebrew/core/qtremoteobjects/blobs/sha256:ab2db40d8b166d62f5ff0178ebc1720ad932f2ebdaac3e6be2407409fc36eb8f",
+      "copyrightText": "NOASSERTION",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "ab2db40d8b166d62f5ff0178ebc1720ad932f2ebdaac3e6be2407409fc36eb8f"
+        }
+      ],
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceLocator": "pkg:brew/qtremoteobjects@6.11.1",
+          "referenceType": "purl"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Package-SPDXRef-qtscxml-6.11.1",
+      "name": "qtscxml",
+      "versionInfo": "6.11.1",
+      "filesAnalyzed": false,
+      "licenseDeclared": "NOASSERTION",
+      "licenseConcluded": "(LGPL-3.0-only OR GPL-2.0-only OR GPL-3.0-only) AND (GPL-3.0-only WITH Qt-GPL-exception-1.0) AND BSD-3-Clause",
+      "downloadLocation": "https://ghcr.io/v2/homebrew/core/qtscxml/blobs/sha256:60d0280424a2e901869fcffb99ba99bac966c2ca4da32df15f541e06195a0636",
+      "copyrightText": "NOASSERTION",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "60d0280424a2e901869fcffb99ba99bac966c2ca4da32df15f541e06195a0636"
+        }
+      ],
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceLocator": "pkg:brew/qtscxml@6.11.1",
+          "referenceType": "purl"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Package-SPDXRef-qtsensors-6.11.1",
+      "name": "qtsensors",
+      "versionInfo": "6.11.1",
+      "filesAnalyzed": false,
+      "licenseDeclared": "NOASSERTION",
+      "licenseConcluded": "(LGPL-3.0-only OR GPL-2.0-only OR GPL-3.0-only) AND BSD-3-Clause",
+      "downloadLocation": "https://ghcr.io/v2/homebrew/core/qtsensors/blobs/sha256:a5c7f669f591e40ea7c7926e8e084fdff4799dcd71b9a019d7ebda9e4100f22c",
+      "copyrightText": "NOASSERTION",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "a5c7f669f591e40ea7c7926e8e084fdff4799dcd71b9a019d7ebda9e4100f22c"
+        }
+      ],
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceLocator": "pkg:brew/qtsensors@6.11.1",
+          "referenceType": "purl"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Package-SPDXRef-qtserialbus-6.11.1",
+      "name": "qtserialbus",
+      "versionInfo": "6.11.1",
+      "filesAnalyzed": false,
+      "licenseDeclared": "NOASSERTION",
+      "licenseConcluded": "(LGPL-3.0-only OR GPL-2.0-only OR GPL-3.0-only) AND (GPL-3.0-only WITH Qt-GPL-exception-1.0) AND BSD-3-Clause",
+      "downloadLocation": "https://ghcr.io/v2/homebrew/core/qtserialbus/blobs/sha256:34f00db80fca021b7ba9dd038e46b7cbf46b6d830099c5bed43409d35b3b7ecd",
+      "copyrightText": "NOASSERTION",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "34f00db80fca021b7ba9dd038e46b7cbf46b6d830099c5bed43409d35b3b7ecd"
+        }
+      ],
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceLocator": "pkg:brew/qtserialbus@6.11.1",
+          "referenceType": "purl"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Package-SPDXRef-qtspeech-6.11.1",
+      "name": "qtspeech",
+      "versionInfo": "6.11.1",
+      "filesAnalyzed": false,
+      "licenseDeclared": "NOASSERTION",
+      "licenseConcluded": "(LGPL-3.0-only OR GPL-2.0-only OR GPL-3.0-only) AND BSD-3-Clause",
+      "downloadLocation": "https://ghcr.io/v2/homebrew/core/qtspeech/blobs/sha256:799ae8c9b034e0ecf2a433a04b9d10d00d31cb4cf7e3bedc879afd74408d482e",
+      "copyrightText": "NOASSERTION",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "799ae8c9b034e0ecf2a433a04b9d10d00d31cb4cf7e3bedc879afd74408d482e"
+        }
+      ],
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceLocator": "pkg:brew/qtspeech@6.11.1",
+          "referenceType": "purl"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Package-SPDXRef-qttasktree-6.11.1",
+      "name": "qttasktree",
+      "versionInfo": "6.11.1",
+      "filesAnalyzed": false,
+      "licenseDeclared": "NOASSERTION",
+      "licenseConcluded": "(LGPL-3.0-only OR GPL-2.0-only OR GPL-3.0-only) AND BSD-3-Clause",
+      "downloadLocation": "https://ghcr.io/v2/homebrew/core/qttasktree/blobs/sha256:44d8803de1d5759dafc94f0acee6ac70f1269b6f7f159cef3bf248aec8e49ec1",
+      "copyrightText": "NOASSERTION",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "44d8803de1d5759dafc94f0acee6ac70f1269b6f7f159cef3bf248aec8e49ec1"
+        }
+      ],
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceLocator": "pkg:brew/qttasktree@6.11.1",
+          "referenceType": "purl"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Package-SPDXRef-gumbo-parser-0.13.2",
+      "name": "gumbo-parser",
+      "versionInfo": "0.13.2",
+      "filesAnalyzed": false,
+      "licenseDeclared": "NOASSERTION",
+      "licenseConcluded": "Apache-2.0",
+      "downloadLocation": "https://ghcr.io/v2/homebrew/core/gumbo-parser/blobs/sha256:5f81617fa746f60ded3bddbb1254836ede96ed65636f382122c72462a8cc11dd",
+      "copyrightText": "NOASSERTION",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "5f81617fa746f60ded3bddbb1254836ede96ed65636f382122c72462a8cc11dd"
+        }
+      ],
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceLocator": "pkg:brew/gumbo-parser@0.13.2",
+          "referenceType": "purl"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Package-SPDXRef-litehtml-0.10",
+      "name": "litehtml",
+      "versionInfo": "0.10",
+      "filesAnalyzed": false,
+      "licenseDeclared": "NOASSERTION",
+      "licenseConcluded": "BSD-3-Clause",
+      "downloadLocation": "https://ghcr.io/v2/homebrew/core/litehtml/blobs/sha256:0c80f1c5ae85acca5068625a06a74fd02185a7901ecd1312b47556b91629152e",
+      "copyrightText": "NOASSERTION",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "0c80f1c5ae85acca5068625a06a74fd02185a7901ecd1312b47556b91629152e"
+        }
+      ],
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceLocator": "pkg:brew/litehtml@0.10",
+          "referenceType": "purl"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Package-SPDXRef-qttools-6.11.1",
+      "name": "qttools",
+      "versionInfo": "6.11.1",
+      "filesAnalyzed": false,
+      "licenseDeclared": "NOASSERTION",
+      "licenseConcluded": "(LGPL-3.0-only OR GPL-2.0-only OR GPL-3.0-only) AND (GPL-3.0-only WITH Qt-GPL-exception-1.0) AND BSD-3-Clause AND BSL-1.0",
+      "downloadLocation": "https://ghcr.io/v2/homebrew/core/qttools/blobs/sha256:20aecfa9eb080d4f211b712ea9615fff4402f88c1fcdd1502f19cb762aa334f3",
+      "copyrightText": "NOASSERTION",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "20aecfa9eb080d4f211b712ea9615fff4402f88c1fcdd1502f19cb762aa334f3"
+        }
+      ],
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceLocator": "pkg:brew/qttools@6.11.1",
+          "referenceType": "purl"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Package-SPDXRef-qttranslations-6.11.1",
+      "name": "qttranslations",
+      "versionInfo": "6.11.1",
+      "filesAnalyzed": false,
+      "licenseDeclared": "NOASSERTION",
+      "licenseConcluded": "BSD-3-Clause",
+      "downloadLocation": "https://ghcr.io/v2/homebrew/core/qttranslations/blobs/sha256:44feb5838957db5caf22f10f49f32825640b1b373f18c0981707d0725e928674",
+      "copyrightText": "NOASSERTION",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "44feb5838957db5caf22f10f49f32825640b1b373f18c0981707d0725e928674"
+        }
+      ],
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceLocator": "pkg:brew/qttranslations@6.11.1",
+          "referenceType": "purl"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Package-SPDXRef-readline-8.3.3",
+      "name": "readline",
+      "versionInfo": "8.3.3",
+      "filesAnalyzed": false,
+      "licenseDeclared": "NOASSERTION",
+      "licenseConcluded": "GPL-3.0-or-later",
+      "downloadLocation": "https://ghcr.io/v2/homebrew/core/readline/blobs/sha256:1c6234c033c83ea742d50aa45fd60821947fa800d5cadecb0a1aa045564bb7d1",
+      "copyrightText": "NOASSERTION",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "1c6234c033c83ea742d50aa45fd60821947fa800d5cadecb0a1aa045564bb7d1"
+        }
+      ],
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceLocator": "pkg:brew/readline@8.3.3",
+          "referenceType": "purl"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Package-SPDXRef-hunspell-1.7.3",
+      "name": "hunspell",
+      "versionInfo": "1.7.3",
+      "filesAnalyzed": false,
+      "licenseDeclared": "NOASSERTION",
+      "licenseConcluded": "MPL-1.1 OR GPL-2.0-or-later OR LGPL-2.1-or-later",
+      "downloadLocation": "https://ghcr.io/v2/homebrew/core/hunspell/blobs/sha256:503e2e2d4928cbe8a5423b5ec26025fe60f31bdeecb6e9769562a169d4de9073",
+      "copyrightText": "NOASSERTION",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "503e2e2d4928cbe8a5423b5ec26025fe60f31bdeecb6e9769562a169d4de9073"
+        }
+      ],
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceLocator": "pkg:brew/hunspell@1.7.3",
+          "referenceType": "purl"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Package-SPDXRef-qtvirtualkeyboard-6.11.1",
+      "name": "qtvirtualkeyboard",
+      "versionInfo": "6.11.1",
+      "filesAnalyzed": false,
+      "licenseDeclared": "NOASSERTION",
+      "licenseConcluded": "GPL-3.0-only AND Apache-2.0 AND BSD-3-Clause",
+      "downloadLocation": "https://ghcr.io/v2/homebrew/core/qtvirtualkeyboard/blobs/sha256:0964465eaf42a3ff32cc2571fea8c84614c72bb05ff8924b9090e26b69d8b5b2",
+      "copyrightText": "NOASSERTION",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "0964465eaf42a3ff32cc2571fea8c84614c72bb05ff8924b9090e26b69d8b5b2"
+        }
+      ],
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceLocator": "pkg:brew/qtvirtualkeyboard@6.11.1",
+          "referenceType": "purl"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Package-SPDXRef-qtwebchannel-6.11.1",
+      "name": "qtwebchannel",
+      "versionInfo": "6.11.1",
+      "filesAnalyzed": false,
+      "licenseDeclared": "NOASSERTION",
+      "licenseConcluded": "(LGPL-3.0-only OR GPL-2.0-only OR GPL-3.0-only) AND BSD-3-Clause",
+      "downloadLocation": "https://ghcr.io/v2/homebrew/core/qtwebchannel/blobs/sha256:9499b5be92b9cdd93f092ac33c4dc770c0b6f2e7e5bc93dad9f24bc0616ae72d",
+      "copyrightText": "NOASSERTION",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "9499b5be92b9cdd93f092ac33c4dc770c0b6f2e7e5bc93dad9f24bc0616ae72d"
+        }
+      ],
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceLocator": "pkg:brew/qtwebchannel@6.11.1",
+          "referenceType": "purl"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Package-SPDXRef-qtwebengine-6.11.1",
+      "name": "qtwebengine",
+      "versionInfo": "6.11.1",
+      "filesAnalyzed": false,
+      "licenseDeclared": "NOASSERTION",
+      "licenseConcluded": "(LGPL-3.0-only OR GPL-2.0-only OR GPL-3.0-only) AND (GPL-3.0-only WITH Qt-GPL-exception-1.0) AND BSD-3-Clause AND Apache-2.0 AND blessing AND BSD-2-Clause AND LGPL-2.1-or-later AND libpng-2.0 AND MIT AND MPL-1.1 AND NCL AND SGI-B-2.0 AND SunPro AND Zlib AND LicenseRef-Homebrew-public-domain",
+      "downloadLocation": "https://ghcr.io/v2/homebrew/core/qtwebengine/blobs/sha256:f0ee3e5e9596bd506d2110a696f29850af219710b49be91afe7684ef8328fcc3",
+      "copyrightText": "NOASSERTION",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "f0ee3e5e9596bd506d2110a696f29850af219710b49be91afe7684ef8328fcc3"
+        }
+      ],
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceLocator": "pkg:brew/qtwebengine@6.11.1",
+          "referenceType": "purl"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Package-SPDXRef-qtwebview-6.11.1",
+      "name": "qtwebview",
+      "versionInfo": "6.11.1",
+      "filesAnalyzed": false,
+      "licenseDeclared": "NOASSERTION",
+      "licenseConcluded": "(LGPL-3.0-only OR GPL-2.0-only OR GPL-3.0-only) AND BSD-3-Clause",
+      "downloadLocation": "https://ghcr.io/v2/homebrew/core/qtwebview/blobs/sha256:b984232e4807c0b2b0392b70de63c69af350674ee1f5943ede098604572f424d",
+      "copyrightText": "NOASSERTION",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "b984232e4807c0b2b0392b70de63c69af350674ee1f5943ede098604572f424d"
+        }
+      ],
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceLocator": "pkg:brew/qtwebview@6.11.1",
+          "referenceType": "purl"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Compiler",
+      "name": "clang",
+      "versionInfo": "26.6",
+      "filesAnalyzed": false,
+      "licenseDeclared": "NOASSERTION",
+      "licenseConcluded": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "downloadLocation": "NOASSERTION",
+      "checksums": [],
+      "externalRefs": []
+    },
+    {
+      "SPDXID": "SPDXRef-Bottle-qt",
+      "name": "qt",
+      "versionInfo": "6.11.1",
+      "filesAnalyzed": false,
+      "licenseDeclared": "NOASSERTION",
+      "builtDate": "2026-08-09T20:08:35Z",
+      "licenseConcluded": "BSD-3-Clause AND GFDL-1.3-no-invariants-only AND GPL-2.0-only AND (GPL-3.0-only WITH Qt-GPL-exception-1.0) AND LGPL-3.0-only",
+      "downloadLocation": "https://ghcr.io/v2/homebrew/core/qt/blobs/sha256:000845228bc27a71853e1953defa82d014fe7dc8360552a451b088667de3b07b",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceLocator": "pkg:brew/qt@6.11.1",
+          "referenceType": "purl"
+        }
+      ],
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "000845228bc27a71853e1953defa82d014fe7dc8360552a451b088667de3b07b"
+        }
+      ]
+    }
+  ],
+  "relationships": [
+    {
+      "spdxElementId": "SPDXRef-File-qt",
+      "relationshipType": "PACKAGE_OF",
+      "relatedSpdxElement": "SPDXRef-Archive-qt-src"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-SPDXRef-assimp-6.0.5",
+      "relationshipType": "RUNTIME_DEPENDENCY_OF",
+      "relatedSpdxElement": "SPDXRef-Bottle-qt"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-SPDXRef-brotli-1.2.0",
+      "relationshipType": "RUNTIME_DEPENDENCY_OF",
+      "relatedSpdxElement": "SPDXRef-Bottle-qt"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-SPDXRef-dbus-1.16.2_1",
+      "relationshipType": "RUNTIME_DEPENDENCY_OF",
+      "relatedSpdxElement": "SPDXRef-Bottle-qt"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-SPDXRef-double-conversion-3.4.0",
+      "relationshipType": "RUNTIME_DEPENDENCY_OF",
+      "relatedSpdxElement": "SPDXRef-Bottle-qt"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-SPDXRef-libpng-1.6.58",
+      "relationshipType": "RUNTIME_DEPENDENCY_OF",
+      "relatedSpdxElement": "SPDXRef-Bottle-qt"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-SPDXRef-freetype-2.14.3",
+      "relationshipType": "RUNTIME_DEPENDENCY_OF",
+      "relatedSpdxElement": "SPDXRef-Bottle-qt"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-SPDXRef-pcre2-10.47_1",
+      "relationshipType": "RUNTIME_DEPENDENCY_OF",
+      "relatedSpdxElement": "SPDXRef-Bottle-qt"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-SPDXRef-json-c-0.19",
+      "relationshipType": "RUNTIME_DEPENDENCY_OF",
+      "relatedSpdxElement": "SPDXRef-Bottle-qt"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-SPDXRef-libunistring-1.4.2",
+      "relationshipType": "RUNTIME_DEPENDENCY_OF",
+      "relatedSpdxElement": "SPDXRef-Bottle-qt"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-SPDXRef-gettext-1.0",
+      "relationshipType": "RUNTIME_DEPENDENCY_OF",
+      "relatedSpdxElement": "SPDXRef-Bottle-qt"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-SPDXRef-glib-2.88.3",
+      "relationshipType": "RUNTIME_DEPENDENCY_OF",
+      "relatedSpdxElement": "SPDXRef-Bottle-qt"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-SPDXRef-fontconfig-2.18.3",
+      "relationshipType": "RUNTIME_DEPENDENCY_OF",
+      "relatedSpdxElement": "SPDXRef-Bottle-qt"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-SPDXRef-xorgproto-2025.1",
+      "relationshipType": "RUNTIME_DEPENDENCY_OF",
+      "relatedSpdxElement": "SPDXRef-Bottle-qt"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-SPDXRef-libxau-1.0.12",
+      "relationshipType": "RUNTIME_DEPENDENCY_OF",
+      "relatedSpdxElement": "SPDXRef-Bottle-qt"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-SPDXRef-libxdmcp-1.1.5",
+      "relationshipType": "RUNTIME_DEPENDENCY_OF",
+      "relatedSpdxElement": "SPDXRef-Bottle-qt"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-SPDXRef-libxcb-1.17.0",
+      "relationshipType": "RUNTIME_DEPENDENCY_OF",
+      "relatedSpdxElement": "SPDXRef-Bottle-qt"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-SPDXRef-libx11-1.8.13",
+      "relationshipType": "RUNTIME_DEPENDENCY_OF",
+      "relatedSpdxElement": "SPDXRef-Bottle-qt"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-SPDXRef-libxext-1.3.7",
+      "relationshipType": "RUNTIME_DEPENDENCY_OF",
+      "relatedSpdxElement": "SPDXRef-Bottle-qt"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-SPDXRef-libxrender-0.9.12",
+      "relationshipType": "RUNTIME_DEPENDENCY_OF",
+      "relatedSpdxElement": "SPDXRef-Bottle-qt"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-SPDXRef-lzo-2.10",
+      "relationshipType": "RUNTIME_DEPENDENCY_OF",
+      "relatedSpdxElement": "SPDXRef-Bottle-qt"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-SPDXRef-pixman-0.46.4",
+      "relationshipType": "RUNTIME_DEPENDENCY_OF",
+      "relatedSpdxElement": "SPDXRef-Bottle-qt"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-SPDXRef-cairo-1.18.4",
+      "relationshipType": "RUNTIME_DEPENDENCY_OF",
+      "relatedSpdxElement": "SPDXRef-Bottle-qt"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-SPDXRef-graphite2-1.3.15",
+      "relationshipType": "RUNTIME_DEPENDENCY_OF",
+      "relatedSpdxElement": "SPDXRef-Bottle-qt"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-SPDXRef-icu4c@78-78.3",
+      "relationshipType": "RUNTIME_DEPENDENCY_OF",
+      "relatedSpdxElement": "SPDXRef-Bottle-qt"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-SPDXRef-harfbuzz-14.3.0",
+      "relationshipType": "RUNTIME_DEPENDENCY_OF",
+      "relatedSpdxElement": "SPDXRef-Bottle-qt"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-SPDXRef-jpeg-turbo-3.2.0",
+      "relationshipType": "RUNTIME_DEPENDENCY_OF",
+      "relatedSpdxElement": "SPDXRef-Bottle-qt"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-SPDXRef-libb2-0.98.1",
+      "relationshipType": "RUNTIME_DEPENDENCY_OF",
+      "relatedSpdxElement": "SPDXRef-Bottle-qt"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-SPDXRef-md4c-0.5.3",
+      "relationshipType": "RUNTIME_DEPENDENCY_OF",
+      "relatedSpdxElement": "SPDXRef-Bottle-qt"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-SPDXRef-ca-certificates-2026-07-16",
+      "relationshipType": "RUNTIME_DEPENDENCY_OF",
+      "relatedSpdxElement": "SPDXRef-Bottle-qt"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-SPDXRef-openssl@3-3.6.3",
+      "relationshipType": "RUNTIME_DEPENDENCY_OF",
+      "relatedSpdxElement": "SPDXRef-Bottle-qt"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-SPDXRef-lz4-1.10.0",
+      "relationshipType": "RUNTIME_DEPENDENCY_OF",
+      "relatedSpdxElement": "SPDXRef-Bottle-qt"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-SPDXRef-xz-5.8.3",
+      "relationshipType": "RUNTIME_DEPENDENCY_OF",
+      "relatedSpdxElement": "SPDXRef-Bottle-qt"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-SPDXRef-zstd-1.5.7_1",
+      "relationshipType": "RUNTIME_DEPENDENCY_OF",
+      "relatedSpdxElement": "SPDXRef-Bottle-qt"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-SPDXRef-qtbase-6.11.1",
+      "relationshipType": "RUNTIME_DEPENDENCY_OF",
+      "relatedSpdxElement": "SPDXRef-Bottle-qt"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-SPDXRef-qtsvg-6.11.1",
+      "relationshipType": "RUNTIME_DEPENDENCY_OF",
+      "relatedSpdxElement": "SPDXRef-Bottle-qt"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-SPDXRef-qtdeclarative-6.11.1",
+      "relationshipType": "RUNTIME_DEPENDENCY_OF",
+      "relatedSpdxElement": "SPDXRef-Bottle-qt"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-SPDXRef-qtshadertools-6.11.1",
+      "relationshipType": "RUNTIME_DEPENDENCY_OF",
+      "relatedSpdxElement": "SPDXRef-Bottle-qt"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-SPDXRef-qt3d-6.11.1",
+      "relationshipType": "RUNTIME_DEPENDENCY_OF",
+      "relatedSpdxElement": "SPDXRef-Bottle-qt"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-SPDXRef-qt5compat-6.11.1",
+      "relationshipType": "RUNTIME_DEPENDENCY_OF",
+      "relatedSpdxElement": "SPDXRef-Bottle-qt"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-SPDXRef-qtcanvaspainter-6.11.1",
+      "relationshipType": "RUNTIME_DEPENDENCY_OF",
+      "relatedSpdxElement": "SPDXRef-Bottle-qt"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-SPDXRef-qtcharts-6.11.1",
+      "relationshipType": "RUNTIME_DEPENDENCY_OF",
+      "relatedSpdxElement": "SPDXRef-Bottle-qt"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-SPDXRef-qtconnectivity-6.11.1",
+      "relationshipType": "RUNTIME_DEPENDENCY_OF",
+      "relatedSpdxElement": "SPDXRef-Bottle-qt"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-SPDXRef-qtdatavis3d-6.11.1",
+      "relationshipType": "RUNTIME_DEPENDENCY_OF",
+      "relatedSpdxElement": "SPDXRef-Bottle-qt"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-SPDXRef-qtquicktimeline-6.11.1",
+      "relationshipType": "RUNTIME_DEPENDENCY_OF",
+      "relatedSpdxElement": "SPDXRef-Bottle-qt"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-SPDXRef-qtquick3d-6.11.1",
+      "relationshipType": "RUNTIME_DEPENDENCY_OF",
+      "relatedSpdxElement": "SPDXRef-Bottle-qt"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-SPDXRef-qtgraphs-6.11.1",
+      "relationshipType": "RUNTIME_DEPENDENCY_OF",
+      "relatedSpdxElement": "SPDXRef-Bottle-qt"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-SPDXRef-abseil-20260107.1",
+      "relationshipType": "RUNTIME_DEPENDENCY_OF",
+      "relatedSpdxElement": "SPDXRef-Bottle-qt"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-SPDXRef-protobuf-35.1",
+      "relationshipType": "RUNTIME_DEPENDENCY_OF",
+      "relatedSpdxElement": "SPDXRef-Bottle-qt"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-SPDXRef-qtgrpc-6.11.1_2",
+      "relationshipType": "RUNTIME_DEPENDENCY_OF",
+      "relatedSpdxElement": "SPDXRef-Bottle-qt"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-SPDXRef-qtwebsockets-6.11.1",
+      "relationshipType": "RUNTIME_DEPENDENCY_OF",
+      "relatedSpdxElement": "SPDXRef-Bottle-qt"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-SPDXRef-qthttpserver-6.11.1",
+      "relationshipType": "RUNTIME_DEPENDENCY_OF",
+      "relatedSpdxElement": "SPDXRef-Bottle-qt"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-SPDXRef-jasper-4.2.9",
+      "relationshipType": "RUNTIME_DEPENDENCY_OF",
+      "relatedSpdxElement": "SPDXRef-Bottle-qt"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-SPDXRef-giflib-6.1.3",
+      "relationshipType": "RUNTIME_DEPENDENCY_OF",
+      "relatedSpdxElement": "SPDXRef-Bottle-qt"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-SPDXRef-webp-1.6.0",
+      "relationshipType": "RUNTIME_DEPENDENCY_OF",
+      "relatedSpdxElement": "SPDXRef-Bottle-qt"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-SPDXRef-libtiff-4.7.2",
+      "relationshipType": "RUNTIME_DEPENDENCY_OF",
+      "relatedSpdxElement": "SPDXRef-Bottle-qt"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-SPDXRef-little-cms2-2.19",
+      "relationshipType": "RUNTIME_DEPENDENCY_OF",
+      "relatedSpdxElement": "SPDXRef-Bottle-qt"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-SPDXRef-libmng-2.0.3_1",
+      "relationshipType": "RUNTIME_DEPENDENCY_OF",
+      "relatedSpdxElement": "SPDXRef-Bottle-qt"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-SPDXRef-qtimageformats-6.11.1",
+      "relationshipType": "RUNTIME_DEPENDENCY_OF",
+      "relatedSpdxElement": "SPDXRef-Bottle-qt"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-SPDXRef-qtlanguageserver-6.11.1",
+      "relationshipType": "RUNTIME_DEPENDENCY_OF",
+      "relatedSpdxElement": "SPDXRef-Bottle-qt"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-SPDXRef-qtserialport-6.11.1",
+      "relationshipType": "RUNTIME_DEPENDENCY_OF",
+      "relatedSpdxElement": "SPDXRef-Bottle-qt"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-SPDXRef-qtpositioning-6.11.1",
+      "relationshipType": "RUNTIME_DEPENDENCY_OF",
+      "relatedSpdxElement": "SPDXRef-Bottle-qt"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-SPDXRef-qtlocation-6.11.1",
+      "relationshipType": "RUNTIME_DEPENDENCY_OF",
+      "relatedSpdxElement": "SPDXRef-Bottle-qt"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-SPDXRef-qtlottie-6.11.1",
+      "relationshipType": "RUNTIME_DEPENDENCY_OF",
+      "relatedSpdxElement": "SPDXRef-Bottle-qt"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-SPDXRef-qtmultimedia-6.11.1",
+      "relationshipType": "RUNTIME_DEPENDENCY_OF",
+      "relatedSpdxElement": "SPDXRef-Bottle-qt"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-SPDXRef-qtnetworkauth-6.11.1",
+      "relationshipType": "RUNTIME_DEPENDENCY_OF",
+      "relatedSpdxElement": "SPDXRef-Bottle-qt"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-SPDXRef-qtquick3dphysics-6.11.1",
+      "relationshipType": "RUNTIME_DEPENDENCY_OF",
+      "relatedSpdxElement": "SPDXRef-Bottle-qt"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-SPDXRef-qtquickeffectmaker-6.11.1",
+      "relationshipType": "RUNTIME_DEPENDENCY_OF",
+      "relatedSpdxElement": "SPDXRef-Bottle-qt"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-SPDXRef-qtremoteobjects-6.11.1",
+      "relationshipType": "RUNTIME_DEPENDENCY_OF",
+      "relatedSpdxElement": "SPDXRef-Bottle-qt"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-SPDXRef-qtscxml-6.11.1",
+      "relationshipType": "RUNTIME_DEPENDENCY_OF",
+      "relatedSpdxElement": "SPDXRef-Bottle-qt"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-SPDXRef-qtsensors-6.11.1",
+      "relationshipType": "RUNTIME_DEPENDENCY_OF",
+      "relatedSpdxElement": "SPDXRef-Bottle-qt"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-SPDXRef-qtserialbus-6.11.1",
+      "relationshipType": "RUNTIME_DEPENDENCY_OF",
+      "relatedSpdxElement": "SPDXRef-Bottle-qt"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-SPDXRef-qtspeech-6.11.1",
+      "relationshipType": "RUNTIME_DEPENDENCY_OF",
+      "relatedSpdxElement": "SPDXRef-Bottle-qt"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-SPDXRef-qttasktree-6.11.1",
+      "relationshipType": "RUNTIME_DEPENDENCY_OF",
+      "relatedSpdxElement": "SPDXRef-Bottle-qt"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-SPDXRef-gumbo-parser-0.13.2",
+      "relationshipType": "RUNTIME_DEPENDENCY_OF",
+      "relatedSpdxElement": "SPDXRef-Bottle-qt"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-SPDXRef-litehtml-0.10",
+      "relationshipType": "RUNTIME_DEPENDENCY_OF",
+      "relatedSpdxElement": "SPDXRef-Bottle-qt"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-SPDXRef-qttools-6.11.1",
+      "relationshipType": "RUNTIME_DEPENDENCY_OF",
+      "relatedSpdxElement": "SPDXRef-Bottle-qt"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-SPDXRef-qttranslations-6.11.1",
+      "relationshipType": "RUNTIME_DEPENDENCY_OF",
+      "relatedSpdxElement": "SPDXRef-Bottle-qt"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-SPDXRef-readline-8.3.3",
+      "relationshipType": "RUNTIME_DEPENDENCY_OF",
+      "relatedSpdxElement": "SPDXRef-Bottle-qt"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-SPDXRef-hunspell-1.7.3",
+      "relationshipType": "RUNTIME_DEPENDENCY_OF",
+      "relatedSpdxElement": "SPDXRef-Bottle-qt"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-SPDXRef-qtvirtualkeyboard-6.11.1",
+      "relationshipType": "RUNTIME_DEPENDENCY_OF",
+      "relatedSpdxElement": "SPDXRef-Bottle-qt"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-SPDXRef-qtwebchannel-6.11.1",
+      "relationshipType": "RUNTIME_DEPENDENCY_OF",
+      "relatedSpdxElement": "SPDXRef-Bottle-qt"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-SPDXRef-qtwebengine-6.11.1",
+      "relationshipType": "RUNTIME_DEPENDENCY_OF",
+      "relatedSpdxElement": "SPDXRef-Bottle-qt"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-SPDXRef-qtwebview-6.11.1",
+      "relationshipType": "RUNTIME_DEPENDENCY_OF",
+      "relatedSpdxElement": "SPDXRef-Bottle-qt"
+    },
+    {
+      "spdxElementId": "SPDXRef-Compiler",
+      "relationshipType": "BUILD_TOOL_OF",
+      "relatedSpdxElement": "SPDXRef-Archive-qt-src"
+    }
+  ]
+}

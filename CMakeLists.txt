@@ -4,7 +4,7 @@ cmake_minimum_required(VERSION 3.31)
 
 project(
   Signet
-  VERSION 0.5.0
+  VERSION 0.5.1
   DESCRIPTION "A geometric emblem editor"
   LANGUAGES CXX
 )
@@ -85,6 +85,39 @@ if(SIGNET_ENABLE_CLANG_TIDY)
   )
 endif()
 
+# Qt's supported deployment API invokes macdeployqt on Apple app bundles.  Qt
+# 6.11's macOS implementation does not forward EXCLUDE_PLUGINS to macdeployqt,
+# so using it still scans optional plugins and fails on unavailable QtPdf,
+# QtSvg, and QtVirtualKeyboard frameworks.  Stop plugin scanning at the tool
+# boundary and install the plugins recorded by the runtime manifest explicitly.
+set(SIGNET_REQUIRED_QT_PLUGIN_RELATIVE_PATHS
+  "platforms/libqcocoa.dylib"
+  "styles/libqmacstyle.dylib"
+  "imageformats/libqgif.dylib"
+  "imageformats/libqicns.dylib"
+  "imageformats/libqico.dylib"
+  "imageformats/libqjp2.dylib"
+  "imageformats/libqjpeg.dylib"
+  "imageformats/libqmacheif.dylib"
+  "imageformats/libqmng.dylib"
+  "imageformats/libqtga.dylib"
+  "imageformats/libqtiff.dylib"
+  "imageformats/libqwbmp.dylib"
+  "imageformats/libqwebp.dylib"
+)
+set(SIGNET_QT_DEPLOY_PLUGIN_OPTIONS)
+foreach(SIGNET_QT_PLUGIN_RELATIVE_PATH IN LISTS SIGNET_REQUIRED_QT_PLUGIN_RELATIVE_PATHS)
+  list(APPEND SIGNET_QT_DEPLOY_PLUGIN_OPTIONS
+    "-executable=Signet.app/Contents/PlugIns/${SIGNET_QT_PLUGIN_RELATIVE_PATH}")
+endforeach()
+qt_generate_deploy_app_script(
+  TARGET Signet
+  OUTPUT_SCRIPT signet_deploy_script
+  NO_PLUGINS
+  NO_TRANSLATIONS
+  DEPLOY_TOOL_OPTIONS -no-codesign ${SIGNET_QT_DEPLOY_PLUGIN_OPTIONS}
+)
+
 include(CTest)
 if(BUILD_TESTING)
   add_executable(signet_document_tests tests/document_tests.cpp)
@@ -152,4 +185,90 @@ if(BUILD_TESTING)
   endif()
 endif()
 
+set(SIGNET_BUNDLE_LICENSE_DESTINATION "Signet.app/Contents/Resources/licenses")
+
+# Release installs are distribution candidates. The checked-in runtime tree is
+# made from the exact upstream files recorded in licenses/runtime/manifest.tsv;
+# keeping those bytes in the source tree makes install and verification use the
+# same license inventory.
+if(CMAKE_BUILD_TYPE STREQUAL "Release")
+  install(FILES
+    "${CMAKE_CURRENT_SOURCE_DIR}/LICENSE"
+    DESTINATION "${SIGNET_BUNDLE_LICENSE_DESTINATION}"
+    RENAME "Signet-LICENSE"
+  )
+  install(FILES
+    "${CMAKE_CURRENT_SOURCE_DIR}/THIRD_PARTY_NOTICES.md"
+    DESTINATION "${SIGNET_BUNDLE_LICENSE_DESTINATION}"
+    RENAME "THIRD_PARTY_NOTICES.md"
+  )
+  install(DIRECTORY
+    "${CMAKE_CURRENT_SOURCE_DIR}/licenses/runtime/"
+    DESTINATION "${SIGNET_BUNDLE_LICENSE_DESTINATION}/runtime"
+    FILES_MATCHING
+    PATTERN "*"
+  )
+endif()
+
 install(TARGETS Signet BUNDLE DESTINATION .)
+
+if(NOT TARGET Qt6::QCocoaIntegrationPlugin)
+  message(FATAL_ERROR "Qt6::QCocoaIntegrationPlugin is required for macOS deployment")
+endif()
+get_target_property(SIGNET_QCOCOA_PLUGIN Qt6::QCocoaIntegrationPlugin
+  IMPORTED_LOCATION_RELEASE)
+if(NOT SIGNET_QCOCOA_PLUGIN OR NOT EXISTS "${SIGNET_QCOCOA_PLUGIN}")
+  get_target_property(SIGNET_QCOCOA_PLUGIN Qt6::QCocoaIntegrationPlugin IMPORTED_LOCATION)
+endif()
+if(NOT SIGNET_QCOCOA_PLUGIN OR NOT EXISTS "${SIGNET_QCOCOA_PLUGIN}")
+  message(FATAL_ERROR
+    "Cannot locate the Qt6::QCocoaIntegrationPlugin deployment artifact")
+endif()
+get_filename_component(SIGNET_QT_PLUGIN_TYPE_DIR "${SIGNET_QCOCOA_PLUGIN}" DIRECTORY)
+get_filename_component(SIGNET_QT_PLUGIN_DIR "${SIGNET_QT_PLUGIN_TYPE_DIR}" DIRECTORY)
+
+set(SIGNET_REQUIRED_QT_PLUGINS)
+set(SIGNET_REQUIRED_QT_PLUGIN_REALPATHS)
+foreach(SIGNET_QT_PLUGIN_RELATIVE_PATH IN LISTS SIGNET_REQUIRED_QT_PLUGIN_RELATIVE_PATHS)
+  list(APPEND SIGNET_REQUIRED_QT_PLUGINS
+    "${SIGNET_QT_PLUGIN_DIR}/${SIGNET_QT_PLUGIN_RELATIVE_PATH}")
+endforeach()
+set(SIGNET_REQUIRED_QT_PLUGINS
+  ${SIGNET_REQUIRED_QT_PLUGINS}
+)
+foreach(SIGNET_QT_PLUGIN IN LISTS SIGNET_REQUIRED_QT_PLUGINS)
+  if(NOT EXISTS "${SIGNET_QT_PLUGIN}")
+    message(FATAL_ERROR "Required Qt plugin is missing: ${SIGNET_QT_PLUGIN}")
+  endif()
+  get_filename_component(SIGNET_QT_PLUGIN_REALPATH "${SIGNET_QT_PLUGIN}" REALPATH)
+  if(NOT EXISTS "${SIGNET_QT_PLUGIN_REALPATH}")
+    message(FATAL_ERROR "Required Qt plugin realpath is missing: ${SIGNET_QT_PLUGIN}")
+  endif()
+  list(APPEND SIGNET_REQUIRED_QT_PLUGIN_REALPATHS "${SIGNET_QT_PLUGIN_REALPATH}")
+  get_filename_component(SIGNET_QT_PLUGIN_TYPE_DIR "${SIGNET_QT_PLUGIN}" DIRECTORY)
+  get_filename_component(SIGNET_QT_PLUGIN_TYPE "${SIGNET_QT_PLUGIN_TYPE_DIR}" NAME)
+  install(FILES "${SIGNET_QT_PLUGIN_REALPATH}"
+    DESTINATION "Signet.app/Contents/PlugIns/${SIGNET_QT_PLUGIN_TYPE}")
+endforeach()
+
+set(SIGNET_QT_RUNTIME_DIRECTORIES)
+foreach(SIGNET_QT_PLUGIN IN LISTS SIGNET_REQUIRED_QT_PLUGINS)
+  get_filename_component(SIGNET_QT_PLUGIN_REALPATH "${SIGNET_QT_PLUGIN}" REALPATH)
+  get_filename_component(SIGNET_QT_PLUGIN_TYPE_DIR "${SIGNET_QT_PLUGIN_REALPATH}" DIRECTORY)
+  get_filename_component(SIGNET_QT_PLUGIN_ROOT "${SIGNET_QT_PLUGIN_TYPE_DIR}" DIRECTORY)
+  get_filename_component(SIGNET_QT_DATA_DIR "${SIGNET_QT_PLUGIN_ROOT}" DIRECTORY)
+  get_filename_component(SIGNET_QT_SHARE_DIR "${SIGNET_QT_DATA_DIR}" DIRECTORY)
+  get_filename_component(SIGNET_QT_PREFIX_DIR "${SIGNET_QT_SHARE_DIR}" DIRECTORY)
+  list(APPEND SIGNET_QT_RUNTIME_DIRECTORIES "${SIGNET_QT_PREFIX_DIR}/lib")
+endforeach()
+list(REMOVE_DUPLICATES SIGNET_REQUIRED_QT_PLUGIN_REALPATHS)
+list(REMOVE_DUPLICATES SIGNET_QT_RUNTIME_DIRECTORIES)
+configure_file(
+  "${CMAKE_CURRENT_SOURCE_DIR}/cmake/deploy_macos.cmake.in"
+  "${CMAKE_CURRENT_BINARY_DIR}/deploy_macos.cmake"
+  @ONLY
+)
+
+install(SCRIPT "${signet_deploy_script}")
+install(SCRIPT "${CMAKE_CURRENT_BINARY_DIR}/deploy_macos.cmake")
+install(SCRIPT "${CMAKE_CURRENT_SOURCE_DIR}/cmake/fix_macos_bundle_paths.cmake")

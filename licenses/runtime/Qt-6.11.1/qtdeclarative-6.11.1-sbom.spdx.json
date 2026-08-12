@@ -1,0 +1,44 @@
+{
+  "SPDXID": "SPDXRef-DOCUMENT",
+  "spdxVersion": "SPDX-2.3",
+  "name": "SBOM-SPDX-qtdeclarative-6.11.1",
+  "creationInfo": {
+    "created": "2026-08-11T14:27:39Z",
+    "creators": [
+      "Tool: https://github.com/Homebrew/brew@6.0.15"
+    ]
+  },
+  "dataLicense": "CC0-1.0",
+  "documentNamespace": "https://formulae.brew.sh/spdx/qtdeclarative-6.11.1.json",
+  "documentDescribes": [
+    "SPDXRef-Archive-qtdeclarative-src"
+  ],
+  "files": [],
+  "packages": [
+    {
+      "SPDXID": "SPDXRef-Archive-qtdeclarative-src",
+      "name": "qtdeclarative",
+      "versionInfo": "6.11.1",
+      "filesAnalyzed": false,
+      "licenseDeclared": "NOASSERTION",
+      "builtDate": "2026-05-07T20:59:48Z",
+      "licenseConcluded": "(LGPL-3.0-only OR GPL-2.0-only OR GPL-3.0-only) AND (GPL-3.0-only WITH Qt-GPL-exception-1.0) AND BSD-2-Clause AND BSD-3-Clause",
+      "downloadLocation": "https://download.qt.io/official_releases/qt/6.11/6.11.1/submodules/qtdeclarative-everywhere-src-6.11.1.tar.xz",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [],
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "52e670f670b0304f534b24f98c47ceb8a41bb710464414ebc9527ec71cc86aa4"
+        }
+      ]
+    }
+  ],
+  "relationships": [
+    {
+      "spdxElementId": "SPDXRef-File-qtdeclarative",
+      "relationshipType": "PACKAGE_OF",
+      "relatedSpdxElement": "SPDXRef-Archive-qtdeclarative-src"
+    }
+  ]
+}

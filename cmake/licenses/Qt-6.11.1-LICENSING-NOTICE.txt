@@ -1,0 +1,21 @@
+Qt 6.11.1 licensing notice
+===========================
+
+This bundle contains Qt Core, Qt GUI, Qt Widgets, and the macOS platform
+plugin deployed from the Qt 6.11.1 installation used for this build.
+
+This notice identifies the upstream licensing information; it does not modify
+or replace any upstream license text. The applicable terms depend on the Qt
+modules and third-party components actually present in the bundle. Consult the
+official Qt pages below for the authoritative terms and acknowledgements.
+
+Upstream version and licensing sources:
+
+* Qt 6.11 licensing: https://doc.qt.io/qt-6.11/licensing.html
+* Qt 6.11 third-party code: https://doc.qt.io/qt-6.11/licenses-used-in-qt.html
+* Qt 6.11.1 source release:
+  https://download.qt.io/official_releases/qt/6.11/6.11.1/
+* Qt 6.11.1 SBOM: Qt-6.11.1-sbom.spdx.json in this directory
+
+The complete Signet source license and the unmodified dependency license files
+are included in the neighbouring Resources/licenses directories.

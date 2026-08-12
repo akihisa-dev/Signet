@@ -1,0 +1,35 @@
+Qt 6.11.1 licensing notice
+===========================
+
+This bundle contains Qt Core, Qt GUI, Qt Widgets, and the macOS platform
+plugin deployed from the Qt 6.11.1 installation used for this build.
+
+This notice identifies the upstream licensing information; it does not modify
+or replace any upstream license text. The applicable terms depend on the Qt
+modules and third-party components actually present in the bundle. Consult the
+official Qt pages below for the authoritative terms and acknowledgements.
+
+Upstream version and licensing sources:
+
+* Qt 6.11 licensing: https://doc.qt.io/qt-6.11/licensing.html
+* Qt 6.11 third-party code: https://doc.qt.io/qt-6.11/licenses-used-in-qt.html
+* Qt 6.11.1 source release:
+  https://download.qt.io/official_releases/qt/6.11/6.11.1/
+* Qt 6.11.1 SBOM: Qt-6.11.1-sbom.spdx.json in this directory
+
+Selected runtime license text:
+
+* LGPL-3.0-only: `LGPL-3.0.txt`, an unmodified copy of the GNU LGPL v3 text
+  from `/opt/homebrew/Cellar/gmp/6.3.0/COPYING.LESSERv3`.
+* SHA-256: a853c2ffec17057872340eee242ae4d96cbf2b520ae27d903e1b2fef1a5f9d1c
+* GNU source URL: https://www.gnu.org/licenses/lgpl-3.0.txt
+* Qt licensing correspondence: https://doc.qt.io/qt-6.11/licensing.html
+
+The runtime selection for Qt Core, GUI, and Widgets is LGPL-3.0-only. The
+Qt-GPL exception is retained in the SBOM's alternative-license inventory but
+is not selected for this LGPL runtime. Whether additional Qt-specific notices
+apply to a future module or build remains version- and module-dependent; this
+notice does not claim legal completeness.
+
+The complete Signet source license and the unmodified dependency license files
+are included in the neighbouring Resources/licenses directories.
