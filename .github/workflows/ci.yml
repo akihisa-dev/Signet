@@ -1,0 +1,89 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build-and-test:
+    name: macOS 26 / arm64 / AppleClang
+    runs-on: macos-26
+    timeout-minutes: 30
+
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Verify runner architecture
+        run: test "$(uname -m)" = "arm64"
+
+      - name: Check version policy wiring
+        run: scripts/verify.sh version
+
+      - name: Run version policy self-test
+        run: scripts/verify.sh version-self-test
+
+      - name: Run secret guard self-test
+        run: scripts/verify.sh secret-self-test
+
+      - name: Scan current worktree for secrets
+        run: scripts/verify.sh secret
+
+      - name: Scan changed range for secrets
+        env:
+          SIGNET_EVENT_NAME: ${{ github.event_name }}
+          SIGNET_EVENT_BEFORE: ${{ github.event.before }}
+          SIGNET_PR_BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          SIGNET_HEAD_SHA: ${{ github.sha }}
+        run: |
+          if [ "$SIGNET_EVENT_NAME" = pull_request ]; then
+            scripts/secret-guard.sh range "$SIGNET_PR_BASE_SHA" "$SIGNET_HEAD_SHA"
+          elif [ -n "$SIGNET_EVENT_BEFORE" ] &&
+               [ "$SIGNET_EVENT_BEFORE" != "0000000000000000000000000000000000000000" ]; then
+            scripts/secret-guard.sh range "$SIGNET_EVENT_BEFORE" "$SIGNET_HEAD_SHA"
+          else
+            scripts/secret-guard.sh worktree
+          fi
+
+      - name: Install build dependencies
+        run: brew install cmake ninja qt cgal llvm
+
+      - name: Check patch whitespace
+        run: git diff --check
+
+      - name: Configure development build
+        run: cmake --preset dev
+
+      - name: Build development targets
+        run: cmake --build --preset dev --parallel
+
+      - name: Run development tests
+        run: ctest --preset dev --output-on-failure
+
+      - name: Run clang-tidy analysis
+        run: scripts/verify.sh lint
+
+      - name: Configure sanitizer build
+        run: cmake --preset sanitize
+
+      - name: Build sanitizer targets
+        run: cmake --build --preset sanitize --parallel
+
+      - name: Run sanitizer tests
+        run: ctest --preset sanitize --output-on-failure
+
+      - name: Check C++ formatting
+        run: scripts/verify.sh format
+
+      - name: Build and verify release bundle
+        run: scripts/verify.sh bundle
