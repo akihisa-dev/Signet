@@ -4,7 +4,7 @@ cmake_minimum_required(VERSION 3.31)
 
 project(
   Signet
-  VERSION 0.5.3
+  VERSION 0.6.0
   DESCRIPTION "A geometric emblem editor"
   LANGUAGES CXX
 )
