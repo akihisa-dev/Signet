@@ -1,0 +1,14 @@
+.DS_Store
+node_modules/
+dist/
+.env
+.env.*
+!.env.example
+build/
+build-*/
+out/
+*.dSYM/
+*.app/
+compile_commands.json
+.cache/
+.clangd/
