@@ -3,6 +3,7 @@
 
 #include <cstdint>
 #include <compare>
+#include <functional>
 #include <numbers>
 #include <optional>
 #include <string>
@@ -253,6 +254,13 @@ struct RegionFilterResult final {
   [[nodiscard]] explicit operator bool() const noexcept { return accepted; }
 };
 
+struct AtomicApplyResult final {
+  bool accepted{false};
+  std::string reason;
+
+  [[nodiscard]] explicit operator bool() const noexcept { return accepted; }
+};
+
 class Document final {
  public:
   static constexpr std::uint32_t current_schema_version = 1;
@@ -294,6 +302,7 @@ class Document final {
   RemoveResult removeSelected(
       const std::vector<NodeId>& selected,
       RemovePolicy policy);
+  AtomicApplyResult applyAtomic(const std::function<AtomicApplyResult(Document&)>& builder);
 
  private:
   friend class DocumentHistory;
@@ -311,6 +320,7 @@ class DocumentHistory final {
   [[nodiscard]] const Document& document() const noexcept;
   [[nodiscard]] bool canUndo() const noexcept;
   [[nodiscard]] bool canRedo() const noexcept;
+  [[nodiscard]] std::uint64_t revision() const noexcept;
 
   NodeId addPrimitive(std::string name, Primitive primitive, Transform transform = {});
   NodeId addBoolean(std::string name, BooleanOperation operation, NodeId left, NodeId right);
@@ -342,6 +352,7 @@ class DocumentHistory final {
   RemoveResult removeSelected(
       const std::vector<NodeId>& selected,
       RemovePolicy policy);
+  AtomicApplyResult applyAtomic(const std::function<AtomicApplyResult(Document&)>& builder);
   bool undo();
   bool redo();
 
@@ -353,6 +364,7 @@ class DocumentHistory final {
   std::vector<Document> undo_stack_;
   std::vector<Document> redo_stack_;
   NodeId next_id_high_water_{};
+  std::uint64_t revision_{};
 };
 
 }  // namespace signet::core

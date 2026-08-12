@@ -59,7 +59,7 @@ cmake --build --preset sanitize --parallel
 ctest --preset sanitize --output-on-failure
 ```
 
-現在のCTestには次の7件が登録されています。
+現在のCTestには次の10件が登録されています。
 
 | CTest | 主な範囲 |
 |---|---|
@@ -68,7 +68,10 @@ ctest --preset sanitize --output-on-failure
 | `snap` | grid、candidate、angleの純粋API |
 | `alignment` | 6種整列とhorizontal/vertical distribution |
 | `document_evaluator` | primitive／Boolean／Symmetry／Split／RegionSelection／RegionFilterのsnapshot再評価 |
+| `ai_plan` | LogoConstructionPlan v1のJSON解析・厳格な上限・参照検証・コンパイル／atomic apply |
+| `ai_provider` | Codex CLI providerの入力検証、非同期要求、キャンセル、出力制限、失敗分類 |
 | `ui` | placement、選択、drag、Split、region selection/delete、Duplicate/Delete、Undo/Redo、focus、pan、zoom |
+| `ai_ui` | AIダイアログの同意、入力検証、preview、stale revision、Apply、cancel、provider状態 |
 | `editor_interaction` | 座標変換とselection transformの純粋API |
 
 `scripts/verify.sh format`は`.clang-format`によるC++形式を確認します。`scripts/verify.sh lint`は`.clang-tidy`を使うclang-tidy専用configure/build経路を使用します。どちらもローカルツールを自動インストールせず、未導入なら`brew install llvm`の案内とともに終了します。CIではllvmを導入して両方をgateします。
@@ -92,6 +95,8 @@ scripts/secret-guard.sh range <base> <head>
 ```
 
 `build/`、`build-*`、`dist/`、`out/`、app bundle、binary、third-party license tree、`*.sha256`は検査対象外です。fixtureは一時ディレクトリ内で値を分割して組み立て、リポジトリへ保存しません。hookの自動installは行いません。
+
+AIロゴ生成の実環境確認には、ユーザーがインストールしてログインしたCodex CLIが必要です。providerは外部送信前にダイアログで同意を要求し、read-only／ephemeralで非同期実行します。実Codex、ネットワーク、認証、GUIの手動確認は通常の`dev`検証には含まれず、配布・サブスクリプション条件と正式な結果保存は未決定です。
 
 ## 変更、commit、version、公開
 

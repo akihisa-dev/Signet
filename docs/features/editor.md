@@ -8,12 +8,12 @@
 4. 平面分割で生じた領域から残す領域を選ぶ。
 5. 元図形を編集し、下流の構成結果を再評価する。
 
-現行実装では、Canvasは評価スナップショットを入力としてCircle、Rectangle、GoldenRectangle、Arc（full-circleを含む）を表示し、NodeIdで選択してdragで移動できる。hit判定はscreen-spaceの許容幅を使う。
+現行実装では、Canvasを主領域として評価スナップショットのCircle、Rectangle、GoldenRectangle、Arc（full-circleを含む）を表示し、NodeIdで選択してdragで移動できる。上部のコマンドバーは意味別glyphのicon-only図形配置群と編集群を分け、右側の`Shapes`ドックは初期幅300（最小240）の図形一覧、件数、診断件数、選択概要を提供する。Canvas内には評価集計を表示せず、形状と直接操作オーバーレイだけを表示する。hit判定はscreen-spaceの許容幅を使う。
 操作中は一時状態を表示し、pointer releaseで`DocumentHistory`へ確定し、Escape、focus喪失、mouse ungrabでは中断して文書上の位置を変更しない。
 middle buttonまたはSpace併用のpan、wheelによるanchor付きzoom、矢印キーによる移動を利用できる。
-keyboard移動とUndo/RedoはHistoryを経由し、Objects一覧とCanvasの選択を同期する。
+keyboard移動とUndo/RedoはHistoryを経由し、Shapes一覧とCanvasの選択を同期する。
 選択中のCircleには中心、半径線、半径数値を表示し、preview・cancel・commit・Undoに追従する。
-offscreen UIテストで選択、focus、座標変換、確定、中断、pan、zoom、keyboard操作、Objects一覧同期を確認している。
+offscreen UIテストで選択、focus、座標変換、確定、中断、pan、zoom、keyboard操作、Shapes一覧同期、コマンドバーの排他モード、意味glyphのtooltip/accessibility、Shapesドックの実幅（280〜320、最小240）、ドック切替、ステータス表示とエラー後のtool hint復帰を確認している。狭幅表示ではShapesドックを明示的に閉じ、Canvas実サイズ720×520以上を確保できる。高DPIでは論理座標とcosmetic penを使い、Canvasの選択・preview・split・snap色はpaletteのHighlight/Link/Text/Midから派生する。暗色paletteのDPR2 renderが背景と描画を分離することもoffscreenで確認している。glyphの視覚的な分かりやすさ、高コントラスト完全保証、実GUIでの見た目は未確認である。アニメーションは追加しない。
 Circle、Rectangle、Arc、Golden Rectangleの配置をpointer操作で確定できる。Splitは閉じた選択対象に軸を指定して確定し、評価された全cellを保持する。open Arcや不正な候補は確定しない。
 Split cellは`RegionKey`で追跡され、領域を選択してDeleteすると、元のSplitを変更せずRegionSelectionとRegionFilterを一つのHistory操作として追加する。ノードのDuplicateとDeleteはSelectionから実行でき、参照中のノードは削除を拒否する。
 
@@ -40,4 +40,4 @@ DTOのdouble値は表示用近似であり、面の`FaceId`と`RegionHit::face_i
 Booleanの評価結果は`DocumentEvaluationSnapshot.booleans`にNodeId付きで格納され、元primitiveのtransform変更とUndo/Redoの後に文書から再評価される。
 交差、非交差、接線、包含、同一円、空結果、切り抜きの入力順、xor、境界閉鎖、hitをテストしている。
 この評価は幾何モジュールと文書スナップショットまで実装済みだが、Canvasと`MainWindow`のBoolean操作・結果表示へは接続していない。
-open ArcはBooleanとSplitのoperand非対応で、Boolean結果のSymmetryも非対応である。Boolean操作の配置方式、複数選択方式、alignment UI既定値、色、線、透明度、レイヤー、保存、書き出し、AI機能は未実装または未決定である。
+open ArcはBooleanとSplitのoperand非対応で、Boolean結果のSymmetryも非対応である。Boolean操作の配置方式、複数選択方式、alignment UI既定値、色、線、透明度、レイヤー、保存、書き出しは未実装または未決定である。`AI`メニューの`AIロゴ…`からmodeless生成ダイアログを開き、文章入力、任意のPNG/JPEG参照画像、明示同意、生成プレビュー、構成ノード一覧、stale revisionの拒否、明示的なApplyを提供する。ApplyはPlanCompilerを介して編集可能なDAGを一つのUndo単位で追加する。provider接続、外部送信、生成成功の実動作はこのUIテストでは確認していない。

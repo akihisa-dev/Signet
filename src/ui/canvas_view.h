@@ -105,10 +105,12 @@ class CanvasView final : public QWidget {
   void flipSelectionHorizontal();
   void flipSelectionVertical();
 
- signals:
+signals:
   void selectionChanged();
   void documentChanged();
   void statusMessage(QString message);
+  void toolChanged(Tool tool);
+  void viewportChanged();
 
  protected:
   bool event(QEvent* event) override;

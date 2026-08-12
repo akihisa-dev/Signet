@@ -9,6 +9,10 @@ flowchart LR
     Document --> Evaluator["DocumentEvaluator"]
     Evaluator --> Snapshot["不変の表示スナップショット"]
     Snapshot --> Canvas["Qtキャンバス"]
+    AiInput["AIダイアログ"] --> Provider["任意のAI provider"]
+    Provider --> Plan["LogoConstructionPlan v1"]
+    Plan --> Compiler["PlanCompiler: 検証・コピーでpreview"]
+    Compiler --> Document
 ```
 
 文書DAGが正本であり、CGAL評価結果とQt表示は再生成可能な派生データとする。
@@ -23,6 +27,14 @@ DTOのdouble値は表示用近似であり、`FaceId`と`RegionHit::face_id`は�
 Splitは閉じたprimitive、Symmetry、またはBooleanの評価を軸で分割し、全material cellと境界provenanceから安定した`RegionKey`を生成する。RegionSelectionはそのkeyを入力Splitの評価snapshotへ解決し、RegionFilterは選択cellの保持または除外を派生結果として返す。open ArcはBooleanとSplitのoperandにできず、Boolean結果に対するSymmetryは未対応診断となる。
 Booleanの操作作成と結果表示はCanvasと`MainWindow`へ接続していない。
 
+## AIロゴ生成の境界
+
+AIロゴ生成は既存の文書DAGを置き換えず、構成計画をDAGへ変換する任意経路である。`LogoConstructionPlan`のschema versionは1で、primitiveはCircle、Rectangle、GoldenRectangle、Arc、Booleanはunite、intersect、subtract、xorの4種、さらにSymmetryを扱う。JSONは最大64 KiB、ノードは最大64個、参照深さは最大32、座標の絶対値は最大1.0e6で、IDは1〜64文字、ノード名は1〜128文字に制限する。入力キー、図形パラメータ、参照、root、座標系を厳格に検証し、縮退・循環・未対応形状を受け付けない。
+
+`CodexCliProvider`はユーザーが用意したCodex CLIを`codex exec --json --ephemeral --sandbox read-only`で非同期に実行する。プロンプトはダイアログで最大4000文字、画像は最大8枚、各20 MiB以下、各辺4096px以下かつ総画素16 Mi以下のPNG/JPEGだけを受け付ける。providerは一時ディレクトリへ入力をコピーし、SignetはCLIの認証情報を読み取らない。providerは任意であり、未設定・失敗・キャンセルは文書編集を中断しない。
+
+`PlanCompiler::preview`は入力文書のコピーだけを変更してプレビューを作る。生成開始時のdocument revisionと適用時のrevisionが異なる場合はstaleとして拒否する。明示的なApplyが成功したときだけ`PlanCompiler::apply`が文書DAGへ一つのHistory操作として追加し、DAGを正本とする。プロンプト、画像パス、CLI出力はDocument、設定、ログへ保存しない。
+
 ## 更新
 
 現行実装では、Canvasは`DocumentEvaluationSnapshot`を入力として全primitiveを表示し、NodeIdで選択する。hit判定はscreen-spaceの許容幅を使い、操作中は一時的な位置を表示し、pointer releaseでだけHistory経由の位置更新を確定する。Escape、focus喪失、mouse ungrabでは元の位置へ戻す。
@@ -32,6 +44,6 @@ RegionKeyはFaceIdや座標を含まず、元入力のprovenanceから再評価�
 
 ## エラー
 
-保存形式、書き出し、色、レイヤー、AI送信の境界は未決定であり、この構成図から導入を確定しない。
+保存形式、書き出し、色、レイヤー、AI providerの配布・契約条件は未決定である。AI外部送信はダイアログの明示同意を境界とし、この構成図からネットワークやアカウントを必須化しない。
 
 不正入力、評価不能、空結果を区別する。評価失敗時に以前の形状を新しい正しい結果として保存しない。UIは元データを保持したまま、該当ノードへエラーを関連付ける。

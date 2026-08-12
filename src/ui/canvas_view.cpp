@@ -3,6 +3,7 @@
 
 #include "geometry/snap.h"
 
+#include <QCoreApplication>
 #include <QFocusEvent>
 #include <QFontMetricsF>
 #include <QKeyEvent>
@@ -48,6 +49,30 @@ constexpr double kSelectionHitToleranceLogicalPx = 8.0;
 constexpr double kSnapToleranceLogicalPx = 8.0;
 constexpr double kSnapGridSpacing = 10.0;
 constexpr double kPi = std::numbers::pi_v<double>;
+
+QColor selectionAccent(const QPalette& palette) {
+  const QColor highlight = palette.color(QPalette::Highlight);
+  if (highlight != palette.color(QPalette::Base)) {
+    return highlight;
+  }
+  return palette.color(QPalette::Link);
+}
+
+QColor splitAccent(const QPalette& palette) {
+  const QColor link = palette.color(QPalette::Link);
+  if (link != palette.color(QPalette::Base)) {
+    return link;
+  }
+  return palette.color(QPalette::Highlight);
+}
+
+QColor guideAccent(const QPalette& palette, const SnapGuideKind kind) {
+  const QColor base = palette.color(QPalette::Base);
+  const QColor candidate = kind == SnapGuideKind::center
+                               ? palette.color(QPalette::Link)
+                               : palette.color(QPalette::Highlight);
+  return candidate == base ? palette.color(QPalette::Text) : candidate;
+}
 
 struct ArcGeometry final {
   QPointF center;
@@ -501,29 +526,39 @@ bool isClosedCurveSet(
 QString splitStatusMessage(const geometry::SplitStatus status) {
   switch (status) {
     case geometry::SplitStatus::invalid_input:
-      return QStringLiteral("Split evaluation failed: invalid input");
+      return QCoreApplication::translate(
+          "signet::ui::CanvasView", "Cannot split this shape");
     case geometry::SplitStatus::success:
       return {};
     case geometry::SplitStatus::nonintersection:
-      return QStringLiteral("Split axis does not intersect the selected material");
+      return QCoreApplication::translate(
+          "signet::ui::CanvasView", "The split line does not cross the shape");
     case geometry::SplitStatus::tangent:
-      return QStringLiteral("Split axis is tangent to the selected material");
+      return QCoreApplication::translate(
+          "signet::ui::CanvasView", "The split line only touches the shape");
     case geometry::SplitStatus::boundary_coincident:
-      return QStringLiteral("Split axis is coincident with a source boundary");
+      return QCoreApplication::translate(
+          "signet::ui::CanvasView", "The split line follows the shape boundary");
     case geometry::SplitStatus::vertex_touch:
-      return QStringLiteral("Split axis touches a source vertex or shared boundary");
+      return QCoreApplication::translate(
+          "signet::ui::CanvasView", "Move the split line away from a corner");
     case geometry::SplitStatus::odd_intersections:
-      return QStringLiteral("Split axis produced an odd number of material intersections");
+      return QCoreApplication::translate(
+          "signet::ui::CanvasView",
+          "The split line must cross the shape twice");
     case geometry::SplitStatus::branch_ambiguity:
-      return QStringLiteral("Split evaluation failed: branch ambiguity");
+      return QCoreApplication::translate(
+          "signet::ui::CanvasView", "Cannot determine the split regions");
   }
-  return QStringLiteral("Split evaluation failed: unknown status");
+  return QCoreApplication::translate(
+      "signet::ui::CanvasView", "Cannot split this shape");
 }
 
 }  // namespace
 
 CanvasView::CanvasView(core::DocumentHistory& history, QWidget* parent)
     : QWidget(parent), history_(history) {
+  setObjectName(QStringLiteral("constructionCanvas"));
   setFocusPolicy(Qt::StrongFocus);
   setMinimumSize(720, 520);
   setAccessibleName(tr("Geometric construction canvas"));
@@ -569,6 +604,7 @@ void CanvasView::refreshFromDocument() {
     emit selectionChanged();
   }
   update();
+  emit viewportChanged();
 }
 
 void CanvasView::setSelectedNode(const std::optional<core::NodeId> node_id) {
@@ -606,6 +642,7 @@ void CanvasView::setTool(const Tool tool) {
   }
   cancelTransientInteraction();
   tool_ = tool;
+  emit toolChanged(tool_);
   update();
 }
 
@@ -654,7 +691,7 @@ void CanvasView::paintEvent(QPaintEvent* event) {
     if (preview_geometry && isSelected(evaluated.node_id)) {
       continue;
     }
-    painter.setPen(QPen(isSelected(evaluated.node_id) ? QColor(68, 133, 255)
+    painter.setPen(QPen(isSelected(evaluated.node_id) ? selectionAccent(palette())
                                                       : palette().color(QPalette::Text),
                          isSelected(evaluated.node_id) ? 2.5 : 1.5));
     const QPointF offset = previewOffset(evaluated.node_id);
@@ -668,7 +705,7 @@ void CanvasView::paintEvent(QPaintEvent* event) {
     if (preview_geometry && isSelected(evaluated.node_id)) {
       continue;
     }
-    painter.setPen(QPen(isSelected(evaluated.node_id) ? QColor(68, 133, 255)
+    painter.setPen(QPen(isSelected(evaluated.node_id) ? selectionAccent(palette())
                                                       : palette().color(QPalette::Text),
                          isSelected(evaluated.node_id) ? 2.5 : 1.5));
     const QPointF offset = previewOffset(evaluated.node_id);
@@ -686,9 +723,13 @@ void CanvasView::paintEvent(QPaintEvent* event) {
       }
       const bool selected = isSelected(evaluated.node_id);
       painter.save();
-      painter.setPen(QPen(selected ? QColor(68, 133, 255) : QColor(105, 105, 105),
+      painter.setPen(QPen(selected ? selectionAccent(palette()) : palette().color(QPalette::Mid),
                           selected ? 2.5 : 1.25));
-      painter.setBrush(selected ? QColor(68, 133, 255, 45) : QColor(120, 120, 120, 25));
+      const QColor accent = selectionAccent(palette());
+      painter.setBrush(selected ? QColor(accent.red(), accent.green(), accent.blue(), 45)
+                              : QColor(palette().color(QPalette::Mid).red(),
+                                       palette().color(QPalette::Mid).green(),
+                                       palette().color(QPalette::Mid).blue(), 25));
       painter.drawPath(path);
       painter.restore();
     }
@@ -707,9 +748,13 @@ void CanvasView::paintEvent(QPaintEvent* event) {
                             std::ranges::find(
                                 selected_region_keys_, region.key) != selected_region_keys_.end();
       painter.save();
-      painter.setPen(QPen(selected ? QColor(38, 126, 170) : QColor(70, 125, 145),
+      painter.setPen(QPen(selected ? splitAccent(palette()) : palette().color(QPalette::Mid),
                           selected ? 2.5 : 1.0));
-      painter.setBrush(selected ? QColor(38, 126, 170, 75) : QColor(70, 155, 180, 24));
+      const QColor accent = splitAccent(palette());
+      painter.setBrush(selected ? QColor(accent.red(), accent.green(), accent.blue(), 75)
+                              : QColor(palette().color(QPalette::Mid).red(),
+                                       palette().color(QPalette::Mid).green(),
+                                       palette().color(QPalette::Mid).blue(), 24));
       painter.drawPath(path);
       painter.restore();
     }
@@ -717,7 +762,7 @@ void CanvasView::paintEvent(QPaintEvent* event) {
 
   if (preview_geometry) {
     painter.save();
-    QPen preview_pen(QColor(68, 133, 255), 2.5);
+    QPen preview_pen(selectionAccent(palette()), 2.5);
     preview_pen.setCosmetic(true);
     painter.setPen(preview_pen);
     painter.setBrush(Qt::NoBrush);
@@ -737,7 +782,7 @@ void CanvasView::paintEvent(QPaintEvent* event) {
 
   if (placement_preview_.has_value()) {
     painter.save();
-    QPen preview_pen(QColor(68, 133, 255), 1.5, Qt::DashLine);
+    QPen preview_pen(selectionAccent(palette()), 1.5, Qt::DashLine);
     preview_pen.setCosmetic(true);
     painter.setPen(preview_pen);
     painter.setBrush(Qt::NoBrush);
@@ -746,7 +791,7 @@ void CanvasView::paintEvent(QPaintEvent* event) {
   } else if (interaction_ == Interaction::place_arc && placement_cursor_.has_value() &&
              !placement_points_.empty()) {
     painter.save();
-    QPen preview_pen(QColor(68, 133, 255), 1.5, Qt::DashLine);
+    QPen preview_pen(selectionAccent(palette()), 1.5, Qt::DashLine);
     preview_pen.setCosmetic(true);
     painter.setPen(preview_pen);
     const QPointF start = documentToView(
@@ -764,7 +809,7 @@ void CanvasView::paintEvent(QPaintEvent* event) {
 
   if (const auto line = splitPreviewLine(); line.has_value()) {
     painter.save();
-    QPen preview_pen(QColor(38, 126, 170), 1.5, Qt::DashLine);
+    QPen preview_pen(splitAccent(palette()), 1.5, Qt::DashLine);
     preview_pen.setCosmetic(true);
     painter.setPen(preview_pen);
     painter.drawLine(*line);
@@ -773,7 +818,7 @@ void CanvasView::paintEvent(QPaintEvent* event) {
 
   for (const auto& guide : circleGuideOverlays()) {
     painter.save();
-    QPen guide_pen(QColor(68, 133, 255), 1.25);
+    QPen guide_pen(selectionAccent(palette()), 1.25);
     guide_pen.setCosmetic(true);
     painter.setPen(guide_pen);
     painter.drawLine(guide.center_view, guide.radius_endpoint_view);
@@ -807,12 +852,7 @@ void CanvasView::paintEvent(QPaintEvent* event) {
 
   for (const auto& guide : snapGuideOverlays()) {
     painter.save();
-    QColor color = QColor(235, 126, 50);
-    if (guide.kind == SnapGuideKind::center) {
-      color = QColor(125, 80, 210);
-    } else if (guide.kind == SnapGuideKind::geometry) {
-      color = QColor(40, 150, 110);
-    }
+    QColor color = guideAccent(palette(), guide.kind);
     QPen guide_pen(color, 1.0, Qt::DashLine);
     guide_pen.setCosmetic(true);
     painter.setPen(guide_pen);
@@ -838,20 +878,20 @@ void CanvasView::paintEvent(QPaintEvent* event) {
     if (layout.has_value()) {
       const auto points = selectionHandlePointsInView();
       painter.save();
-      QPen bounds_pen(QColor(68, 133, 255), 1.0, Qt::DashLine);
+      QPen bounds_pen(selectionAccent(palette()), 1.0, Qt::DashLine);
       bounds_pen.setCosmetic(true);
       painter.setPen(bounds_pen);
       painter.setBrush(Qt::NoBrush);
       painter.drawRect(QRectF(QPointF(layout->bounds.min.x, layout->bounds.min.y),
                               QPointF(layout->bounds.max.x, layout->bounds.max.y)));
       for (const auto point : points) {
-        painter.setPen(QPen(QColor(68, 133, 255), 1.0));
+        painter.setPen(QPen(selectionAccent(palette()), 1.0));
         painter.setBrush(palette().color(QPalette::Base));
         painter.drawRect(QRectF(point.x - layout->handle_size_view / 2.0,
                                 point.y - layout->handle_size_view / 2.0,
                                 layout->handle_size_view, layout->handle_size_view));
       }
-      painter.setPen(QPen(QColor(68, 133, 255), 1.0));
+      painter.setPen(QPen(selectionAccent(palette()), 1.0));
       painter.setBrush(palette().color(QPalette::Base));
       painter.drawLine(QPointF(layout->rotate_handle.x, layout->bounds.min.y),
                        QPointF(layout->rotate_handle.x, layout->rotate_handle.y));
@@ -862,16 +902,6 @@ void CanvasView::paintEvent(QPaintEvent* event) {
     }
   }
 
-  painter.setPen(palette().color(QPalette::Text));
-  painter.drawText(
-      QRectF(18.0, 18.0, std::max(0.0, static_cast<double>(width()) - 36.0), 40.0),
-      Qt::AlignLeft | Qt::AlignTop,
-      tr("%1 evaluated circles · %2 curve sets · %3 Boolean results · %4 splits · %5 diagnostics")
-          .arg(evaluation_.circles.size())
-          .arg(evaluation_.curve_sets.size())
-          .arg(evaluation_.booleans.size())
-          .arg(evaluation_.splits.size())
-          .arg(evaluation_.diagnostics.size()));
 }
 
 void CanvasView::mousePressEvent(QMouseEvent* event) {
@@ -1108,6 +1138,7 @@ void CanvasView::wheelEvent(QWheelEvent* event) {
   zoom_ = std::clamp(zoom_ * factor, 0.1, 20.0);
   pan_offset_ = event->position() - QPointF(width() / 2.0, height() / 2.0) -
                 QPointF(anchor.x() * zoom_, -anchor.y() * zoom_);
+  emit viewportChanged();
   update();
   event->accept();
 }
@@ -1152,7 +1183,7 @@ void CanvasView::keyPressEvent(QKeyEvent* event) {
                      event->key() == Qt::Key_Up || event->key() == Qt::Key_Down;
   if (interaction_ == Interaction::none && arrow && !selected_node_ids_.empty()) {
     if (!selectionIsPrimitive()) {
-      emit statusMessage(tr("Operation nodes cannot be moved with primitives"));
+      emit statusMessage(tr("Select shapes of the same kind to move them together"));
       event->accept();
       return;
     }
@@ -1870,11 +1901,11 @@ bool CanvasView::validateSplitCandidate(
   if (!std::isfinite(axis.origin.x) || !std::isfinite(axis.origin.y) ||
       !std::isfinite(axis.direction.x) || !std::isfinite(axis.direction.y) ||
       std::hypot(axis.direction.x, axis.direction.y) <= kGeometryEpsilon) {
-    return fail(tr("Split direction must not be zero"));
+    return fail(tr("Draw a split line with a direction"));
   }
   const auto* target = history_.document().findNode(target_node_id);
   if (target == nullptr) {
-    return fail(tr("Cannot split a missing object"));
+    return fail(tr("Select a shape before splitting"));
   }
   bool open_arc = false;
   for (const auto& curve_set : evaluation_.curve_sets) {
@@ -1891,8 +1922,8 @@ bool CanvasView::validateSplitCandidate(
         open_arc = true;
       }
     }
-    return fail(open_arc ? tr("Split requires a closed object; open Arc is not supported")
-                         : tr("Cannot split the selected object: evaluation failed"));
+    return fail(open_arc ? tr("Split needs a closed shape")
+                         : tr("Cannot read the selected shape"));
   }
 
   core::Document candidate = history_.document();
@@ -1907,13 +1938,13 @@ bool CanvasView::validateSplitCandidate(
         candidate_evaluation.splits,
         [split_id](const geometry::EvaluatedSplit& value) { return value.node_id == split_id; });
     if (split == candidate_evaluation.splits.end()) {
-      return fail(tr("Split evaluation failed: result is unavailable"));
+      return fail(tr("The split result is unavailable"));
     }
     if (split->status != geometry::SplitStatus::success) {
       return fail(splitStatusMessage(split->status));
     }
     if (split->cells.empty()) {
-      return fail(tr("Split evaluation produced no regions"));
+      return fail(tr("The split produced no regions"));
     }
     const auto diagnostic = std::ranges::find_if(
         candidate_evaluation.diagnostics,
@@ -1929,7 +1960,7 @@ bool CanvasView::validateSplitCandidate(
     return true;
   } catch (const std::exception& error) {
     return fail(
-        tr("Split evaluation failed: %1").arg(QString::fromUtf8(error.what())));
+        tr("Cannot split this shape: %1").arg(QString::fromUtf8(error.what())));
   }
 }
 
@@ -2017,7 +2048,7 @@ void CanvasView::beginPrimitiveDrag(
     const QPointF document_point,
     const Qt::KeyboardModifiers modifiers) {
   if (!selectionIsPrimitive()) {
-    emit statusMessage(tr("Only primitive objects can be moved together"));
+    emit statusMessage(tr("Select shapes of the same kind to move them together"));
     return;
   }
   std::vector<PreviewTransform> previews;
@@ -2026,7 +2057,7 @@ void CanvasView::beginPrimitiveDrag(
     const auto* node = history_.document().findNode(node_id);
     const auto* primitive = node == nullptr ? nullptr : std::get_if<core::PrimitiveNode>(&node->definition);
     if (primitive == nullptr) {
-      emit statusMessage(tr("Only primitive objects can be moved together"));
+      emit statusMessage(tr("Select shapes of the same kind to move them together"));
       return;
     }
     previews.push_back(PreviewTransform{node_id, primitive->transform, primitive->transform});
@@ -2084,7 +2115,7 @@ void CanvasView::updatePlacementPreview(
 
 void CanvasView::commitPlacement() {
   if (!placement_preview_.has_value()) {
-    emit statusMessage(tr("Placement is degenerate or incomplete"));
+    emit statusMessage(tr("Drag farther to place the shape"));
     cancelTransientInteraction();
     return;
   }
@@ -2117,7 +2148,7 @@ void CanvasView::commitPlacement() {
 
 void CanvasView::beginSplit(const QPointF document_point) {
   if (selected_node_ids_.size() != 1) {
-    emit statusMessage(tr("Select one closed object before using Split"));
+    emit statusMessage(tr("Select one closed shape before splitting"));
     return;
   }
   const core::NodeId target_node_id = selected_node_ids_.front();
@@ -2139,8 +2170,8 @@ void CanvasView::beginSplit(const QPointF document_point) {
     }
   }
   if (!isClosedSplitTarget(target_node_id)) {
-    emit statusMessage(open_arc ? tr("Split requires a closed object; open Arc is not supported")
-                                : tr("Cannot split the selected object: evaluation failed"));
+    emit statusMessage(open_arc ? tr("Split needs a closed shape")
+                                : tr("Cannot read the selected shape"));
     return;
   }
   interaction_ = Interaction::split;
@@ -2175,7 +2206,7 @@ void CanvasView::commitSplit() {
   if (!validateSplitCandidate(
           target_node_id, axis, &candidate_split_id, &failure_message)) {
     emit statusMessage(failure_message.isEmpty()
-                           ? tr("Split was cancelled")
+                           ? tr("Split cancelled")
                            : failure_message);
     cancelTransientInteraction();
     return;
@@ -2190,12 +2221,12 @@ void CanvasView::commitSplit() {
         axis.direction);
   } catch (const std::exception& error) {
     emit statusMessage(
-        tr("Split could not be committed: %1").arg(QString::fromUtf8(error.what())));
+        tr("Cannot apply the split: %1").arg(QString::fromUtf8(error.what())));
     cancelTransientInteraction();
     return;
   }
   if (split_node_id == 0) {
-    emit statusMessage(tr("Split could not be committed: result identity is invalid"));
+    emit statusMessage(tr("Cannot apply the split result"));
     cancelTransientInteraction();
     return;
   }
@@ -2251,7 +2282,7 @@ void CanvasView::deleteSelectedRegions() {
       history_.document().findNode(*selected_region_split_id_) == nullptr) {
     clearRegionSelection();
     emit selectionChanged();
-    emit statusMessage(tr("Selected regions are no longer available"));
+    emit statusMessage(tr("Those regions are no longer available"));
     return;
   }
   const core::NodeId split_node_id = *selected_region_split_id_;
@@ -2268,7 +2299,7 @@ void CanvasView::deleteSelectedRegions() {
       clearRegionSelection();
       emit selectionChanged();
     }
-    emit statusMessage(tr("Cannot filter the selected regions"));
+    emit statusMessage(tr("Cannot keep the selected regions"));
     return;
   }
   refreshFromDocument();
@@ -2323,7 +2354,7 @@ void CanvasView::duplicateSelection() {
   }
   const auto result = history_.duplicateSelected(selected_node_ids_);
   if (!result.accepted) {
-    emit statusMessage(tr("Cannot duplicate the selected objects"));
+    emit statusMessage(tr("Cannot duplicate the selected shapes"));
     return;
   }
   if (result.mapping.empty()) {
@@ -2351,7 +2382,7 @@ void CanvasView::deleteSelection() {
   const auto result = history_.removeSelected(
       selected_node_ids_, core::RemovePolicy::reject_if_referenced);
   if (!result.accepted) {
-    emit statusMessage(tr("Cannot remove a referenced object"));
+    emit statusMessage(tr("This shape is used by another shape"));
     return;
   }
   if (result.removed_ids.empty()) {
@@ -2365,12 +2396,12 @@ void CanvasView::deleteSelection() {
 void CanvasView::flipSelectionHorizontal() {
   if (interaction_ != Interaction::none || selected_node_ids_.size() != 1 ||
       !selectionIsPrimitive()) {
-    emit statusMessage(tr("Select one primitive object before flipping"));
+    emit statusMessage(tr("Select one shape before flipping"));
     return;
   }
   const auto axis = selectionSymmetryAxis(interaction::ReflectionAxis::vertical);
   if (!axis.has_value()) {
-    emit statusMessage(tr("Cannot determine the selected object's vertical axis"));
+    emit statusMessage(tr("Cannot find the shape's vertical axis"));
     return;
   }
   const core::NodeId input = selected_node_ids_.front();
@@ -2383,12 +2414,12 @@ void CanvasView::flipSelectionHorizontal() {
 void CanvasView::flipSelectionVertical() {
   if (interaction_ != Interaction::none || selected_node_ids_.size() != 1 ||
       !selectionIsPrimitive()) {
-    emit statusMessage(tr("Select one primitive object before flipping"));
+    emit statusMessage(tr("Select one shape before flipping"));
     return;
   }
   const auto axis = selectionSymmetryAxis(interaction::ReflectionAxis::horizontal);
   if (!axis.has_value()) {
-    emit statusMessage(tr("Cannot determine the selected object's horizontal axis"));
+    emit statusMessage(tr("Cannot find the shape's horizontal axis"));
     return;
   }
   const core::NodeId input = selected_node_ids_.front();

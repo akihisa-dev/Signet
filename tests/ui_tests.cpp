@@ -4,12 +4,22 @@
 #include "ui/main_window.h"
 
 #include <QApplication>
+#include <QDockWidget>
 #include <QFocusEvent>
 #include <QImage>
 #include <QKeyEvent>
 #include <QKeySequence>
+#include <QLabel>
 #include <QListWidget>
+#include <QLocale>
 #include <QMouseEvent>
+#include <QMenu>
+#include <QTranslator>
+#include <QToolBar>
+#include <QStatusBar>
+#include <QMenuBar>
+#include <QSet>
+#include <QToolButton>
 #include <QWheelEvent>
 
 #include <algorithm>
@@ -731,6 +741,10 @@ void testFlipSnapAndHighDpiContracts() {
   assert(action_window.history().document().nodes().size() == 3);
   assert(std::holds_alternative<signet::core::SymmetryNode>(
       action_window.history().document().nodes().back().definition));
+  action_window.canvasView()->setSelectedNode(3);
+  assert(!action_window.flipHorizontalAction()->isEnabled());
+  action_window.canvasView()->setSelectedNodes({1, 2});
+  assert(!action_window.flipVerticalAction()->isEnabled());
   assert(action_window.undoAction()->isEnabled());
   action_window.undoAction()->trigger();
   assert(action_window.history().document().nodes().size() == 2);
@@ -742,6 +756,24 @@ void testFlipSnapAndHighDpiContracts() {
 
 int main(int argc, char** argv) {
   QApplication application(argc, argv);
+  {
+    signet::ui::MainWindow english_window;
+    assert(english_window.selectAction()->text() == QStringLiteral("Select"));
+  }
+  QTranslator japanese_translator;
+  assert(japanese_translator.load(QLocale(QStringLiteral("ja_JP")), QStringLiteral("Signet"),
+                                  QStringLiteral("_"), QStringLiteral(":/i18n")));
+  assert(japanese_translator.translate("MainWindow", "Shapes") == QStringLiteral("図形"));
+  assert(japanese_translator.translate("MainWindow", "Select") == QStringLiteral("選択"));
+  assert(japanese_translator.translate("MainWindow", "Undo") == QStringLiteral("元に戻す"));
+  assert(japanese_translator.translate("MainWindow", "AI") == QStringLiteral("AI"));
+  assert(japanese_translator.translate("MainWindow", "AI Logo…") == QStringLiteral("AIロゴ…"));
+  assert(japanese_translator.translate("MainWindow", "Generate AI logo") ==
+         QStringLiteral("AIロゴを生成"));
+  assert(japanese_translator.translate(
+             "MainWindow", "Generate an editable geometric logo from a prompt or image") ==
+         QStringLiteral("文章または画像から編集可能な幾何ロゴを生成します"));
+  application.installTranslator(&japanese_translator);
 
   signet::core::DocumentHistory history(makeDocument());
   signet::ui::CanvasView canvas(history);
@@ -1047,11 +1079,171 @@ int main(int argc, char** argv) {
   assert(!high_dpi_view.isNull());
 
   signet::ui::MainWindow window;
+  window.show();
+  QApplication::processEvents();
+  assert(window.objectName() == QStringLiteral("mainWindow"));
+  assert(window.canvasView()->objectName() == QStringLiteral("constructionCanvas"));
+  assert(window.objectsList()->objectName() == QStringLiteral("shapesList"));
+  assert(window.shapesDock()->windowTitle() == QStringLiteral("図形"));
+  assert(window.shapesDock()->minimumWidth() >= 240);
+  assert(window.shapesDock()->width() >= 280);
+  assert(window.shapesDock()->width() <= 320);
+  assert(window.commandBar()->objectName() == QStringLiteral("commandBar"));
+  assert(window.commandBar()->toolButtonStyle() == Qt::ToolButtonIconOnly);
+  assert(window.commandBar()->actions().contains(window.selectAction()));
+  assert(window.commandBar()->actions().contains(window.undoAction()));
+  assert(!window.commandBar()->actions().contains(window.flipHorizontalAction()));
+  assert(!window.commandBar()->actions().contains(window.flipVerticalAction()));
+  assert(!window.selectionSummary()->text().isEmpty());
+  assert(!window.shapeCountLabel()->text().isEmpty());
+  assert(!window.shapeDiagnosticsLabel()->text().isEmpty());
+  for (const auto& button_name : {QStringLiteral("selectToolButton"),
+                                  QStringLiteral("circleToolButton"),
+                                  QStringLiteral("rectangleToolButton"),
+                                  QStringLiteral("arcToolButton"),
+                                  QStringLiteral("goldenRectangleToolButton"),
+                                  QStringLiteral("splitToolButton"),
+                                  QStringLiteral("undoToolButton"),
+                                  QStringLiteral("redoToolButton"),
+                                  QStringLiteral("duplicateToolButton"),
+                                  QStringLiteral("deleteToolButton"),
+                                  QStringLiteral("duplicateShapeButton"),
+                                  QStringLiteral("deleteShapeButton")}) {
+    const auto* button = window.findChild<QToolButton*>(button_name);
+    assert(button != nullptr);
+    assert(!button->toolTip().isEmpty());
+    assert(!button->accessibleName().isEmpty());
+    assert(!button->accessibleDescription().isEmpty());
+    assert(!button->icon().isNull());
+  }
+  assert(window.selectAction()->text() == QStringLiteral("選択"));
+  assert(window.undoAction()->text() == QStringLiteral("元に戻す"));
+  assert(window.aiLogoAction()->text() == QStringLiteral("AIロゴ…"));
+  assert(window.aiLogoAction()->toolTip() ==
+         QStringLiteral("文章または画像から編集可能な幾何ロゴを生成します"));
+  assert(window.aiLogoAction()->statusTip() == window.aiLogoAction()->toolTip());
+  QMenu* ai_menu = nullptr;
+  for (QAction* action : window.menuBar()->actions()) {
+    if (action->text() == QStringLiteral("AI")) {
+      ai_menu = action->menu();
+      break;
+    }
+  }
+  assert(ai_menu != nullptr);
+  assert(ai_menu->actions().contains(window.aiLogoAction()));
+  assert(window.shapeCountLabel()->text().contains(QStringLiteral("図形")));
+  assert(window.shapeDiagnosticsLabel()->text() == QStringLiteral("問題なし"));
+  assert(window.selectionSummary()->text() == QStringLiteral("図形が選択されていません"));
+  assert(window.diagnosticsStatusLabel()->text() == QStringLiteral("診断情報はありません"));
+  assert(window.statusBar()->currentMessage().contains(QStringLiteral("選択")));
+  QMenu* transform_menu = nullptr;
+  for (QAction* action : window.menuBar()->actions()) {
+    if (action->text() == QStringLiteral("変形")) {
+      transform_menu = action->menu();
+      break;
+    }
+  }
+  assert(transform_menu != nullptr);
+  assert(transform_menu->actions().contains(window.flipHorizontalAction()));
+  assert(transform_menu->actions().contains(window.flipVerticalAction()));
+  assert(window.selectAction()->shortcut() == QKeySequence(Qt::Key_V));
+  assert(window.circleAction()->shortcut() == QKeySequence(Qt::Key_C));
+  assert(window.flipHorizontalAction()->shortcut() ==
+         QKeySequence(Qt::META | Qt::ALT | Qt::Key_H));
+  assert(window.canvasView()->focusPolicy() == Qt::StrongFocus);
+  window.selectAction()->trigger();
+  const QString select_hint = window.statusBar()->currentMessage();
+  assert(!select_hint.isEmpty());
+  window.canvasView()->statusMessage(QStringLiteral("Temporary error"));
+  assert(window.statusBar()->currentMessage() == QStringLiteral("Temporary error"));
+  window.statusBar()->clearMessage();
+  assert(window.statusBar()->currentMessage() == select_hint);
+  window.circleAction()->trigger();
+  const QString circle_hint = window.statusBar()->currentMessage();
+  window.canvasView()->statusMessage(QStringLiteral("Temporary error"));
+  window.rectangleAction()->trigger();
+  const QString rectangle_hint = window.statusBar()->currentMessage();
+  assert(!rectangle_hint.isEmpty());
+  assert(rectangle_hint != circle_hint);
+  window.statusBar()->clearMessage();
+  assert(window.statusBar()->currentMessage() == rectangle_hint);
+  QPalette dark_palette = window.palette();
+  dark_palette.setColor(QPalette::Window, QColor(Qt::black));
+  dark_palette.setColor(QPalette::Base, QColor(Qt::black));
+  dark_palette.setColor(QPalette::Text, QColor(Qt::white));
+  dark_palette.setColor(QPalette::Highlight, QColor(30, 90, 180));
+  window.canvasView()->setPalette(dark_palette);
+  assert(window.canvasView()->palette().color(QPalette::Base) !=
+         window.canvasView()->palette().color(QPalette::Text));
+  QImage dark_render(QSize{1440, 1040}, QImage::Format_ARGB32_Premultiplied);
+  dark_render.setDevicePixelRatio(2.0);
+  window.canvasView()->render(&dark_render);
+  QSet<QRgb> rendered_colors;
+  for (int y = 0; y < dark_render.height(); ++y) {
+    for (int x = 0; x < dark_render.width(); ++x) {
+      rendered_colors.insert(dark_render.pixel(x, y));
+      if (rendered_colors.size() > 1) {
+        break;
+      }
+    }
+    if (rendered_colors.size() > 1) {
+      break;
+    }
+  }
+  assert(rendered_colors.size() > 1);
+  assert(!window.zoomStatusLabel()->text().isEmpty());
+  assert(!window.diagnosticsStatusLabel()->text().isEmpty());
+  assert(!window.statusBar()->currentMessage().contains(QStringLiteral("evaluated")));
+  window.circleAction()->trigger();
+  assert(window.circleAction()->isChecked());
+  assert(!window.selectAction()->isChecked());
+  assert(!window.flipHorizontalAction()->isEnabled());
+  window.canvasView()->setSelectedNode(1);
+  assert(window.flipHorizontalAction()->isEnabled());
+  assert(window.flipVerticalAction()->isEnabled());
+  window.canvasView()->setSelectedNodes({1, 2});
+  assert(!window.flipHorizontalAction()->isEnabled());
+  window.canvasView()->setSelectedNode(1);
+  assert(window.selectionSummary()->text().contains(QStringLiteral("選択中")));
+  window.canvasView()->setSelectedNodes({1, 2});
+  assert(window.selectionSummary()->text().contains(QStringLiteral("2個の図形")));
+  assert(window.objectsList()->item(0)->text().contains(QStringLiteral("円")));
+  assert(window.objectsList()->item(0)->text().contains(QStringLiteral("Circle 1")));
+  const auto diagnostic_id = window.history().addPrimitive(
+      "Unsupported circle", signet::core::Circle{4.0},
+      signet::core::Transform{signet::core::Point{}, 0.0, signet::core::Point{2.0, 3.0}});
+  assert(diagnostic_id == 3);
+  window.canvasView()->documentChanged();
+  assert(window.canvasView()->diagnosticCount() == 1);
+  assert(window.shapeDiagnosticsLabel()->text().contains(QStringLiteral("問題")));
+  assert(window.shapeDiagnosticsLabel()->text().contains(QStringLiteral("1")));
+  assert(window.diagnosticsStatusLabel()->text().contains(QStringLiteral("診断")));
+  assert(window.history().canUndo());
+  assert(window.history().undo());
+  window.canvasView()->refreshFromDocument();
+  window.canvasView()->documentChanged();
+  assert(window.canvasView()->diagnosticCount() == 0);
+  window.canvasView()->setSelectedNode(std::nullopt);
+  assert(window.selectionSummary()->text() == QStringLiteral("図形が選択されていません"));
+  window.selectAction()->trigger();
+  assert(window.selectAction()->isChecked());
+  window.shapesDock()->setVisible(true);
+  window.shapesDock()->toggleViewAction()->trigger();
+  assert(!window.shapesDock()->isVisible());
+  assert(window.canvasView()->minimumSize() == QSize(720, 520));
+  window.resize(760, 620);
+  QApplication::processEvents();
+  assert(!window.shapesDock()->isVisible());
+  assert(window.canvasView()->size().width() >= 720);
+  assert(window.canvasView()->size().height() >= 520);
+  window.shapesDock()->toggleViewAction()->trigger();
+  assert(!window.selectAction()->text().isEmpty());
+  assert(!window.undoAction()->text().isEmpty());
   assert(window.history().document().nodes().size() == 2);
   assert(window.canvasView()->evaluatedCircleCount() == 2);
   assert(window.objectsList()->count() == 2);
   assert(!window.undoAction()->isEnabled());
-  assert(!window.redoAction()->isEnabled());
+  assert(window.redoAction()->isEnabled());
   window.objectsList()->setCurrentRow(1);
   assert((window.canvasView()->selectedNodeIds() == std::vector<signet::core::NodeId>{second}));
   window.canvasView()->setSelectedNodes({1});
@@ -1069,6 +1261,8 @@ int main(int argc, char** argv) {
   assert(transformOf(window.history(), first) == main_moved);
   assert((window.canvasView()->selectedNodeIds() == std::vector<signet::core::NodeId>{first}));
 
+  window.hide();
+  QApplication::processEvents();
   testMultiSelectionAndCommands();
   testPlacementGestures();
   testSplitGesturesRegionsAndAtomicFiltering();

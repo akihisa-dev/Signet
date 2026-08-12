@@ -4,7 +4,7 @@ cmake_minimum_required(VERSION 3.31)
 
 project(
   Signet
-  VERSION 0.6.0
+  VERSION 0.7.0
   DESCRIPTION "A geometric emblem editor"
   LANGUAGES CXX
 )
@@ -27,9 +27,9 @@ list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 include(SignetWarnings)
 
 find_package(CGAL 6.2 REQUIRED)
-find_package(Qt6 6.11 REQUIRED COMPONENTS Core Gui Widgets Test)
+find_package(Qt6 6.11 REQUIRED COMPONENTS Core Gui Widgets LinguistTools Test)
 
-qt_standard_project_setup()
+qt_standard_project_setup(I18N_TRANSLATED_LANGUAGES ja)
 
 add_library(signet_core STATIC
   src/core/document.cpp
@@ -42,10 +42,22 @@ target_include_directories(signet_core PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/src")
 target_link_libraries(signet_core PUBLIC CGAL::CGAL)
 signet_set_project_warnings(signet_core)
 
+add_library(signet_ai STATIC
+  src/ai/provider.h
+  src/ai/codex_cli_provider.h
+  src/ai/logo_construction_plan.cpp
+  src/ai/plan_compiler.cpp
+  src/ai/codex_cli_provider.cpp
+)
+target_include_directories(signet_ai PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/src")
+target_link_libraries(signet_ai PUBLIC signet_core Qt6::Core Qt6::Gui)
+signet_set_project_warnings(signet_ai)
+
 qt_add_executable(Signet MACOSX_BUNDLE
   src/main.cpp
   src/ui/canvas_view.cpp
   src/ui/editor_interaction.cpp
+  src/ui/ai_generation_dialog.cpp
   src/ui/main_window.cpp
 )
 configure_file(
@@ -54,7 +66,7 @@ configure_file(
   @ONLY
 )
 target_include_directories(Signet PRIVATE "${CMAKE_CURRENT_BINARY_DIR}")
-target_link_libraries(Signet PRIVATE signet_core Qt6::Core Qt6::Gui Qt6::Widgets)
+target_link_libraries(Signet PRIVATE signet_ai signet_core Qt6::Core Qt6::Gui Qt6::Widgets)
 signet_set_project_warnings(Signet)
 
 set_target_properties(Signet PROPERTIES
@@ -68,7 +80,7 @@ set_target_properties(Signet PROPERTIES
 )
 
 if(SIGNET_ENABLE_SANITIZERS)
-  foreach(target signet_core Signet)
+  foreach(target signet_core signet_ai Signet)
     target_compile_options(${target} PRIVATE -fsanitize=address,undefined -fno-omit-frame-pointer)
     target_link_options(${target} PRIVATE -fsanitize=address,undefined)
   endforeach()
@@ -80,7 +92,7 @@ if(SIGNET_ENABLE_CLANG_TIDY)
     "${CLANG_TIDY_EXECUTABLE}"
     "--config-file=${CMAKE_CURRENT_SOURCE_DIR}/.clang-tidy"
   )
-  set_target_properties(signet_core Signet PROPERTIES
+  set_target_properties(signet_core signet_ai Signet PROPERTIES
     CXX_CLANG_TIDY "${SIGNET_CLANG_TIDY_ARGS}"
   )
 endif()
@@ -145,9 +157,22 @@ if(BUILD_TESTING)
   signet_set_project_warnings(signet_document_evaluator_tests)
   add_test(NAME document_evaluator COMMAND signet_document_evaluator_tests)
 
+  add_executable(signet_ai_plan_tests tests/ai_plan_tests.cpp)
+  target_link_libraries(signet_ai_plan_tests PRIVATE signet_ai)
+  target_include_directories(signet_ai_plan_tests PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/src")
+  signet_set_project_warnings(signet_ai_plan_tests)
+  add_test(NAME ai_plan COMMAND signet_ai_plan_tests)
+
+  add_executable(signet_ai_provider_tests tests/ai_provider_tests.cpp)
+  target_link_libraries(signet_ai_provider_tests PRIVATE signet_ai Qt6::Core Qt6::Gui Qt6::Test)
+  target_include_directories(signet_ai_provider_tests PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/src")
+  signet_set_project_warnings(signet_ai_provider_tests)
+  add_test(NAME ai_provider COMMAND signet_ai_provider_tests)
+
   if(SIGNET_ENABLE_SANITIZERS)
     foreach(target signet_document_tests signet_geometry_tests signet_snap_tests
-                  signet_alignment_tests signet_document_evaluator_tests)
+                  signet_alignment_tests signet_document_evaluator_tests signet_ai_plan_tests
+                  signet_ai_provider_tests)
       target_compile_options(${target} PRIVATE -fsanitize=address,undefined -fno-omit-frame-pointer)
       target_link_options(${target} PRIVATE -fsanitize=address,undefined)
     endforeach()
@@ -159,13 +184,27 @@ if(BUILD_TESTING)
     tests/ui_tests.cpp
     src/ui/canvas_view.cpp
     src/ui/editor_interaction.cpp
+    src/ui/ai_generation_dialog.cpp
     src/ui/main_window.cpp
   )
-  target_link_libraries(signet_ui_tests PRIVATE signet_core Qt6::Core Qt6::Gui Qt6::Widgets Qt6::Test)
+  target_link_libraries(signet_ui_tests PRIVATE signet_ai signet_core Qt6::Core Qt6::Gui Qt6::Widgets Qt6::Test)
   target_include_directories(signet_ui_tests PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/src")
   signet_set_project_warnings(signet_ui_tests)
   add_test(NAME ui COMMAND signet_ui_tests)
   set_tests_properties(ui PROPERTIES ENVIRONMENT "QT_QPA_PLATFORM=offscreen")
+
+  add_executable(signet_ai_ui_tests
+    tests/ai_ui_tests.cpp
+    src/ui/canvas_view.cpp
+    src/ui/editor_interaction.cpp
+    src/ui/ai_generation_dialog.cpp
+    src/ui/main_window.cpp
+  )
+  target_link_libraries(signet_ai_ui_tests PRIVATE signet_ai signet_core Qt6::Core Qt6::Gui Qt6::Widgets Qt6::Test)
+  target_include_directories(signet_ai_ui_tests PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/src")
+  signet_set_project_warnings(signet_ai_ui_tests)
+  add_test(NAME ai_ui COMMAND signet_ai_ui_tests)
+  set_tests_properties(ai_ui PROPERTIES ENVIRONMENT "QT_QPA_PLATFORM=offscreen")
 
   add_executable(signet_editor_interaction_tests
     tests/editor_interaction_tests.cpp
@@ -178,12 +217,21 @@ if(BUILD_TESTING)
   add_test(NAME editor_interaction COMMAND signet_editor_interaction_tests)
 
   if(SIGNET_ENABLE_SANITIZERS)
-    foreach(target signet_ui_tests signet_editor_interaction_tests)
+    foreach(target signet_ui_tests signet_ai_ui_tests signet_editor_interaction_tests)
       target_compile_options(${target} PRIVATE -fsanitize=address,undefined -fno-omit-frame-pointer)
       target_link_options(${target} PRIVATE -fsanitize=address,undefined)
     endforeach()
   endif()
 endif()
+
+set(SIGNET_TRANSLATION_TARGETS Signet)
+if(BUILD_TESTING)
+  list(APPEND SIGNET_TRANSLATION_TARGETS signet_ui_tests)
+endif()
+qt_add_translations(TARGETS ${SIGNET_TRANSLATION_TARGETS}
+  TS_FILES "${CMAKE_CURRENT_SOURCE_DIR}/translations/Signet_ja.ts"
+  RESOURCE_PREFIX "/i18n"
+)
 
 set(SIGNET_BUNDLE_LICENSE_DESTINATION "Signet.app/Contents/Resources/licenses")
 

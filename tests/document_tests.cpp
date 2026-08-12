@@ -201,6 +201,27 @@ int main() {
   assert(branch > removed_by_undo);
   assert(!history.canRedo());
 
+  // A direct document transaction is all-or-nothing even when the builder
+  // mutates its temporary copy before rejecting.
+  Document atomic_document("Atomic document");
+  const NodeId atomic_document_seed = atomic_document.addPrimitive("Seed", Circle{2.0});
+  const auto rejected_document_transaction = atomic_document.applyAtomic(
+      [](Document& next) {
+        static_cast<void>(next.addPrimitive("Transient", Rectangle{3.0, 4.0}));
+        return AtomicApplyResult{false, "reject"};
+      });
+  assert(!rejected_document_transaction);
+  assert(atomic_document.nodes().size() == 1);
+  assert(atomic_document.findNode(atomic_document_seed) != nullptr);
+  const auto accepted_document_transaction = atomic_document.applyAtomic(
+      [](Document& next) {
+        static_cast<void>(next.addPrimitive("Committed", Rectangle{3.0, 4.0}));
+        return AtomicApplyResult{true, {}};
+      });
+  assert(accepted_document_transaction);
+  assert(atomic_document.nodes().size() == 2);
+  assert(atomic_document.nodes().back().id > atomic_document_seed);
+
   DocumentHistory golden_history(Document("Golden history"));
   const NodeId golden_history_node =
       golden_history.addPrimitive("Golden", GoldenRectangle{3.0});

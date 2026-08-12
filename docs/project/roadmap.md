@@ -1,7 +1,7 @@
 # 実装ロードマップ
 
 このロードマップは、幾何演算の正しさを先に固定し、その上へ編集操作と製品機能を積み上げる順序を定める。
-書き出し形式、視覚スタイル、AI機能などの未決定事項は、該当仕様が決まるまで実装対象へ含めない。
+書き出し形式、視覚スタイルなどの未決定事項は、該当仕様が決まるまで実装対象へ含めない。
 
 ## 基盤整備
 
@@ -62,11 +62,21 @@ Canvasのsnapは移動、配置、リサイズへ接続済みで、grid、docume
 Booleanの評価は幾何モジュールと文書スナップショットまで実装済みだが、Canvasと`MainWindow`のBoolean操作・結果表示へは接続していない。
 open ArcはBooleanとSplitのoperandにできず、Boolean結果のSymmetryは未対応である。Boolean操作の配置方式と複数選択方式、alignment UI既定値は未決定である。
 
-保存、出力、色、線、透明度、AI機能は未実装または未決定である。snapの追加UI設定とalignment UIの既定値は未決定である。
+保存、出力、色、線、透明度は未実装または未決定である。snapの追加UI設定とalignment UIの既定値は未決定である。
 
 整列6種とhorizontal/verticalの等間隔配置は、stable identityとboundsをcallerから受け取り、selection boundsまたは明示的なanchorを基準にtranslationだけを返す純粋APIとして実装済みである。distributionは外側を固定し、identityでtie-breakし、negative gapを許容し、3項目未満を拒否する。UI接続、複数選択の操作契約、toolbar/shortcut、Historyへのcommitは未実装・未決定である。
 
 完了条件は、pointer操作の確定と中断、keyboard操作、focus、zoom、pan、高DPIで同じ文書結果を得られ、操作中断が文書を変更しないことである。
+
+## AIロゴ生成MVP
+
+状態：限定範囲を実装済み（実provider接続と実GUI操作は未確認）。
+
+`AI`メニューの`AIロゴ…`からmodelessダイアログを開き、自然言語のプロンプトと任意のPNG/JPEG参照画像を受け取る。外部送信前に明示的な同意を求め、同意がない場合は生成を開始しない。ユーザーがインストールしてログインしたCodex CLIを任意providerとして使い、Signetは認証情報を読み取らない。providerの失敗や未設定はエディタの編集を妨げない。
+
+Codex CLI呼び出しは非同期で、read-only sandboxとephemeral実行を指定し、入力と一時ファイルはリクエスト終了時に削除する。生成結果は`LogoConstructionPlan`として厳格に検証し、コピーした文書でプレビューする。文書revisionが変わった結果は適用せず、明示的なApplyだけがDAGへ一つのUndo単位で追加する。プロンプトと画像はDocument、設定、ログへ保存しない。
+
+providerの実ネットワーク送信、Codex CLIの実環境、実GUIでの生成成功は未確認である。配布・サブスクリプション条件と正式なAI結果の永続化形式は未決定である。
 
 ## 製品化
 

@@ -659,6 +659,26 @@ RemoveResult Document::removeSelected(
   return result;
 }
 
+AtomicApplyResult Document::applyAtomic(
+    const std::function<AtomicApplyResult(Document&)>& builder) {
+  if (!builder) {
+    return AtomicApplyResult{false, "Atomic builder is empty"};
+  }
+
+  Document next = *this;
+  AtomicApplyResult result;
+  try {
+    result = builder(next);
+  } catch (const std::exception& error) {
+    return AtomicApplyResult{false, error.what()};
+  }
+  if (!result.accepted) {
+    return result;
+  }
+  *this = std::move(next);
+  return result;
+}
+
 DocumentHistory::DocumentHistory(Document document)
     : current_(std::move(document)), next_id_high_water_(current_.next_id_) {}
 
@@ -667,6 +687,8 @@ const Document& DocumentHistory::document() const noexcept { return current_; }
 bool DocumentHistory::canUndo() const noexcept { return !undo_stack_.empty(); }
 
 bool DocumentHistory::canRedo() const noexcept { return !redo_stack_.empty(); }
+
+std::uint64_t DocumentHistory::revision() const noexcept { return revision_; }
 
 NodeId DocumentHistory::addPrimitive(
     std::string name,
@@ -826,6 +848,30 @@ RemoveResult DocumentHistory::removeSelected(
   return result;
 }
 
+AtomicApplyResult DocumentHistory::applyAtomic(
+    const std::function<AtomicApplyResult(Document&)>& builder) {
+  if (!builder) {
+    return AtomicApplyResult{false, "Atomic builder is empty"};
+  }
+
+  Document next = current_;
+  preserveNodeIdHighWater(next);
+  AtomicApplyResult result;
+  try {
+    result = builder(next);
+  } catch (const std::exception& error) {
+    return AtomicApplyResult{false, error.what()};
+  }
+  if (!result.accepted) {
+    return result;
+  }
+
+  preserveNodeIdHighWater(next);
+  next_id_high_water_ = next.next_id_;
+  commit(std::move(next));
+  return result;
+}
+
 bool DocumentHistory::undo() {
   if (!canUndo()) {
     return false;
@@ -834,6 +880,7 @@ bool DocumentHistory::undo() {
   current_ = std::move(undo_stack_.back());
   undo_stack_.pop_back();
   preserveNodeIdHighWater(current_);
+  ++revision_;
   return true;
 }
 
@@ -845,6 +892,7 @@ bool DocumentHistory::redo() {
   current_ = std::move(redo_stack_.back());
   redo_stack_.pop_back();
   preserveNodeIdHighWater(current_);
+  ++revision_;
   return true;
 }
 
@@ -852,6 +900,7 @@ void DocumentHistory::commit(Document next) {
   undo_stack_.push_back(std::move(current_));
   current_ = std::move(next);
   redo_stack_.clear();
+  ++revision_;
 }
 
 void DocumentHistory::preserveNodeIdHighWater(Document& document) const noexcept {
