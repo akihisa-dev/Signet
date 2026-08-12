@@ -4,7 +4,7 @@ cmake_minimum_required(VERSION 3.31)
 
 project(
   Signet
-  VERSION 0.3.0
+  VERSION 0.4.0
   DESCRIPTION "A geometric emblem editor"
   LANGUAGES CXX
 )
@@ -32,6 +32,7 @@ add_library(signet_core STATIC
   src/core/document.cpp
   src/geometry/arrangement_model.cpp
   src/geometry/alignment.cpp
+  src/geometry/document_evaluator.cpp
   src/geometry/snap.cpp
 )
 target_include_directories(signet_core PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/src")
@@ -45,6 +46,11 @@ if(BUILD_TESTING)
   signet_set_project_warnings(signet_document_tests)
   add_test(NAME document COMMAND signet_document_tests)
 
+  add_executable(signet_geometry_tests tests/arrangement_tests.cpp)
+  target_link_libraries(signet_geometry_tests PRIVATE signet_core)
+  signet_set_project_warnings(signet_geometry_tests)
+  add_test(NAME geometry COMMAND signet_geometry_tests)
+
   add_executable(signet_snap_tests tests/snap_tests.cpp)
   target_link_libraries(signet_snap_tests PRIVATE signet_core)
   signet_set_project_warnings(signet_snap_tests)
@@ -55,8 +61,14 @@ if(BUILD_TESTING)
   signet_set_project_warnings(signet_alignment_tests)
   add_test(NAME alignment COMMAND signet_alignment_tests)
 
+  add_executable(signet_document_evaluator_tests tests/document_evaluator_tests.cpp)
+  target_link_libraries(signet_document_evaluator_tests PRIVATE signet_core)
+  signet_set_project_warnings(signet_document_evaluator_tests)
+  add_test(NAME document_evaluator COMMAND signet_document_evaluator_tests)
+
   if(SIGNET_ENABLE_SANITIZERS)
-    foreach(target signet_core signet_document_tests signet_snap_tests signet_alignment_tests)
+    foreach(target signet_core signet_document_tests signet_geometry_tests signet_snap_tests
+                  signet_alignment_tests signet_document_evaluator_tests)
       target_compile_options(${target} PRIVATE -fsanitize=address,undefined -fno-omit-frame-pointer)
       target_link_options(${target} PRIVATE -fsanitize=address,undefined)
     endforeach()
