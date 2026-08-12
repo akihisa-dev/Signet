@@ -10,8 +10,8 @@ description: SignetのCMake project version、version header、配布設定、�
 1. `AGENTS.md`、開発・リリース正本、`CMakeLists.txt`、配布設定、既存のversion検査を確認する。Signetのversion正本は`CMakeLists.txt`の`project(VERSION ...)`であり、生成version headerはその値を表示へ伝播するconsumerとして確認する。
 2. 製品世代を壊す変更は、ユーザーがMAJORを明示し、かつbreaking changeである場合だけ採用する。根拠をcommit本文とrelease記録へ残す。
 3. `feat`はMINOR、それ以外の固定された10 type（`fix`、`docs`、`test`、`refactor`、`perf`、`build`、`ci`、`chore`、`style`、`revert`）はPATCHとする。複数の影響がある場合はMAJOR > MINOR > PATCHの最大impactを採用する。
-4. version-only commit、同一versionの複数commit、対象変更なしのversion更新を作らない。独立目的はcommit単位へ分け、各commitでversionを順次決める。stage-onlyではversionを更新せず、commit許可時にだけ判定・更新する。
-5. 現在の未commit bootstrap状態は`0.1.0`を維持し、新規規則は次に明示許可されたcommitから適用する。最初のcommitを分割する場合も各commitで順次更新する。
+4. version-only commit、同一versionの複数commit、対象変更なしのversion更新を作らない。独立目的はcommit単位へ分け、対象検証が成功した直後、commit直前にversionを決定・更新する。次目的の編集開始前に前目的のcommitを完了させる。stage-onlyではversionを更新せず、commit許可時にだけ判定・更新する。
+5. 現在の未commit bootstrap状態は`0.1.0`を維持し、新規規則は次に明示許可されたcommitから適用する。各commitでversionを順次更新し、全作業後の事後分割を前提にしない。
 
 ## 更新して検証する
 

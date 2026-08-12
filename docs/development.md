@@ -102,6 +102,32 @@ scripts/secret-guard.sh range <base> <head>
 - Draft Release作成
 - Release公開
 
+### commitのタイミング
+
+ユーザーがcommitを許可した連続作業では、独立目的ごとに次の状態を順番に完了します。
+
+`planned -> editing one purpose -> verified -> versioned -> staged -> committed -> post-commit checked -> next purpose`
+
+- `planned`で目的、対象、検証方法を決め、`editing one purpose`ではその目的だけを実装・編集します。次の独立目的の調査・計画はできますが、実装・編集は前目的のcommit後まで開始しません。
+- `verified`で前目的の対象検証を完了し、その直後かつcommit直前の`versioned`でversionを決定・更新します。`staged`では検証済みの一目的とversionだけを明示パスでstageし、`committed`後にSHA、index、残差分を`post-commit checked`で確認します。
+- 失敗した場合は次の状態や次の目的へ進みません。複数目的をworktreeへ蓄積し、最後にpatch-stageして事後的に複数commitへ分ける運用は禁止です。
+- commit許可がない場合は、各目的の実作業と対象検証が完了した時点で停止し、commit許可を求めます。ただしユーザーが「最後まで実装、commit不要」と明示した場合だけ、version更新・stage・commitを行わず複数目的の変更を蓄積できます。stage-only許可はcommit許可ではないため、対象をstageして報告した時点で停止し、次目的の編集へ進みません。
+- 既に複数目的がdirtyな状態で後からcommit許可を受けた場合の事後分割は、過去状態を忠実に復元でき、各中間commitがbuild/test可能で、ファイル重複を安全にpatch-stageできる場合だけ検討します。通常は現在の全体を一つのbootstrap/integration commitとして扱うか、履歴書換えの明示許可を求めます。
+- 並行agentが独立範囲を編集しても、同一branchのcommit順序はメイン担当が管理し、前commit後に次担当の変更を統合します。commit境界をまたぐversion正本を複数担当が同時編集しません。
+
+正しい流れは次のとおりです。
+
+```text
+feature A edit -> feature A test -> feature A version -> feature A commit -> post-commit check
+-> feature B edit -> feature B test -> feature B version -> feature B commit
+```
+
+次の流れは誤りです。
+
+```text
+feature A/B/Cをすべて編集 -> 最後にpatch-stageして3commitへ事後分割
+```
+
 stage-onlyではversionを更新しません。commit許可を受けた時点でversionを判定し、対象変更と同じcommitへ含めます。versionだけのcommit、同一versionを複数commitで使うこと、対象変更なしのversion更新は禁止です。独立した目的を分割する場合は、各commitでversionを順次更新します。
 
 ### commit形式とversion判定
@@ -132,7 +158,9 @@ Scope: release
 
 versionの正本は`CMakeLists.txt`の`project(VERSION ...)`です。CMake configure、app bundle、install、アプリ表示、checkerの値は正本へ一致させます。bundle checkerへ渡す`SIGNET_EXPECTED_VERSION`は必須で、CMakeの正本から指定します。SBOMはこのversion規則の対象に含めません。機械checkerの実装入口は、別途存在を確認したうえで`scripts/version-policy.sh`、`scripts/verify.sh version`、`scripts/verify.sh version-self-test`を使います。未実装の入口を実装済みとは記載しません。
 
-現在の未commit bootstrap状態では`0.1.0`を維持します。新規規則は次に明示許可されたcommitから適用します。最初のcommitを複数へ分割する場合は、最初のcommitを`0.1.1`、次を`0.1.2`とするよう、各commitで順次更新します。
+checkerだけで編集時系列や、各変更が本当に一目的で進められたことを完全に証明することはできません。`staged` modeは、stage対象外の非ignored tracked/untracked pathが3件以上残っている場合を「次目的が残っている可能性が高い」状態として警告し、専用overrideと理由がなければ停止します。意図的な既存差分などで継続する場合は、`--allow-dirty-next-purpose --override-reason "理由"`、または対応する環境変数へ理由を指定します。少数の残差分は誤検知を避けるため自動判定しません。`range` modeは各commitのCMake version更新、直前commitからの単調増加、commit件名versionとの対応、bump規則を検査しますが、事後分割を完全には見抜けません。
+
+現在の未commit bootstrap状態では`0.1.0`を維持します。新規規則は次に明示許可されたcommitから適用します。各commitで対象検証直後にversionを順次更新し、全作業後の事後分割を前提にしません。
 
 ### tagとRelease
 

@@ -74,6 +74,12 @@ expect_failure() {
   fi
 }
 
+expect_success() {
+  if ! "$@" >/dev/null 2>&1; then
+    fail "expected success: $*"
+  fi
+}
+
 body=$(valid_body)
 
 # Every allowed type is checked: feat is a minor bump and the other ten types
@@ -93,6 +99,31 @@ commit_change 0.2.9 src/chore.txt 'chore: 0.2.9 雑務を整理する' "$body"
 commit_change 0.2.10 src/revert.txt 'revert: 0.2.10 変更を戻す' "$body"
 SIGNET_VERSION_POLICY_ROOT="$fixture" "$policy" range "$base" HEAD >/dev/null
 
+# Staged mode warns when three or more non-ignored paths remain outside the
+# just-staged target. An explicit override requires a non-empty reason.
+new_fixture
+set_version 0.1.1
+printf '%s\n' 'first purpose' > src/first-purpose.txt
+git add CMakeLists.txt src/first-purpose.txt
+printf '%s\n' 'next purpose one' > src/next-purpose-one.txt
+printf '%s\n' 'next purpose two' > src/next-purpose-two.txt
+mkdir -p docs
+printf '%s\n' 'next purpose three' > docs/next-purpose-three.md
+staged_commit_message=$(printf '%s\n' 'fix: 0.1.1 一目的を検証する' "$body")
+expect_failure env SIGNET_VERSION_POLICY_ROOT="$fixture" SIGNET_COMMIT_MESSAGE="$staged_commit_message" "$policy" staged
+expect_failure env SIGNET_VERSION_POLICY_ROOT="$fixture" SIGNET_COMMIT_MESSAGE="$staged_commit_message" "$policy" staged --allow-dirty-next-purpose
+expect_success env SIGNET_VERSION_POLICY_ROOT="$fixture" SIGNET_COMMIT_MESSAGE="$staged_commit_message" "$policy" staged \
+  --allow-dirty-next-purpose --override-reason '既存の並行変更を保持する'
+
+# Two residual paths are below the conservative warning threshold.
+new_fixture
+set_version 0.1.1
+printf '%s\n' 'first purpose' > src/first-purpose.txt
+git add CMakeLists.txt src/first-purpose.txt
+printf '%s\n' 'next purpose one' > src/next-purpose-one.txt
+printf '%s\n' 'next purpose two' > src/next-purpose-two.txt
+expect_success env SIGNET_VERSION_POLICY_ROOT="$fixture" SIGNET_COMMIT_MESSAGE="$staged_commit_message" "$policy" staged
+
 # Duplicate subject versions are rejected before the CMake/subject mismatch check.
 new_fixture
 commit_change 0.2.0 src/feature.txt 'feat: 0.2.0 図形機能を追加' "$body"
@@ -103,6 +134,12 @@ expect_failure env SIGNET_VERSION_POLICY_ROOT="$fixture" "$policy" range "$base"
 # A non-feature commit that keeps the old version is a missing bump.
 new_fixture
 commit_change 0.1.0 src/missing-bump.txt 'fix: 0.1.0 更新を忘れた変更' "$body"
+expect_failure env SIGNET_VERSION_POLICY_ROOT="$fixture" "$policy" range "$base" HEAD
+
+# Range versions must increase monotonically, even before the type-specific bump is checked.
+new_fixture
+commit_change 0.1.1 src/first.txt 'fix: 0.1.1 最初の修正' "$body"
+commit_change 0.1.0 src/decrease.txt 'fix: 0.1.0 版の後退を拒否' "$body"
 expect_failure env SIGNET_VERSION_POLICY_ROOT="$fixture" "$policy" range "$base" HEAD
 
 # A commit containing only the CMake version change is forbidden.
@@ -164,4 +201,4 @@ printf '%s\n' \
   '影響: fixtureだけに限定する' > "$message_file"
 expect_failure env SIGNET_VERSION_POLICY_ROOT="$fixture" "$policy" message "$message_file"
 
-echo "version-policy self-test: passed all 11 types, minor/patch/major authorization, duplicate/missing-bump/version-only, subject Japanese/scope, and body fixtures"
+echo "version-policy self-test: passed sequential range, monotonic/duplicate/missing-bump/version-only, staged dirty-next-purpose warning/override, all 11 types, major authorization, subject Japanese/scope, and body fixtures"

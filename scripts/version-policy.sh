@@ -15,9 +15,13 @@ Usage: scripts/version-policy.sh [--allow-major] <current|message|staged|range> 
   current                 Check the CMake version plumbing and static consumers.
   message <file-or-args>  Check one commit message. A file is read as-is;
                           otherwise the arguments are joined with newlines.
-  staged [message-file]   Check the index and a proposed message. The message
+  staged [options] [message-file]
+                          Check the index and a proposed message. The message
                           comes from the file argument, SIGNET_COMMIT_MESSAGE_FILE,
-                          or SIGNET_COMMIT_MESSAGE, in that order.
+                          or SIGNET_COMMIT_MESSAGE, in that order. If three or
+                          more non-ignored paths remain outside the staged target,
+                          use --allow-dirty-next-purpose and --override-reason,
+                          or the matching SIGNET_* variables, to continue.
   range <base> <head>     Check linear commits in base..head in chronological order.
                           Use --migration-base <commit> to exclude one bootstrap
                           commit from policy and use its CMake version as baseline.
@@ -169,6 +173,20 @@ check_bump() {
   fi
 }
 
+version_is_greater() {
+  previous=$1
+  candidate=$2
+  awk -F. -v previous="$previous" -v candidate="$candidate" 'BEGIN {
+    split(previous, old_parts)
+    split(candidate, new_parts)
+    greater = new_parts[1] > old_parts[1] ||
+      (new_parts[1] == old_parts[1] && new_parts[2] > old_parts[2]) ||
+      (new_parts[1] == old_parts[1] && new_parts[2] == old_parts[2] &&
+       new_parts[3] > old_parts[3])
+    exit greater ? 0 : 1
+  }'
+}
+
 read_message_file_or_args() {
   [ "$#" -gt 0 ] || die "message requires a file or subject/body arguments"
   if [ "$#" -eq 1 ] && [ -f "$1" ]; then
@@ -243,8 +261,76 @@ staged_message() {
   fi
 }
 
+parse_staged_options() {
+  staged_allow_dirty=0
+  staged_override_reason=${SIGNET_DIRTY_NEXT_PURPOSE_OVERRIDE_REASON:-}
+  staged_message_file=
+  if [ "${SIGNET_ALLOW_DIRTY_NEXT_PURPOSE:-}" = 1 ]; then
+    staged_allow_dirty=1
+  fi
+
+  while [ "$#" -gt 0 ]; do
+    case "$1" in
+      --allow-dirty-next-purpose)
+        staged_allow_dirty=1
+        shift
+        ;;
+      --override-reason)
+        [ "$#" -ge 2 ] || die "--override-reason requires a reason"
+        staged_override_reason=$2
+        shift 2
+        ;;
+      --)
+        shift
+        while [ "$#" -gt 0 ]; do
+          [ -z "$staged_message_file" ] || die "staged accepts at most one message file"
+          staged_message_file=$1
+          shift
+        done
+        ;;
+      -*)
+        die "unknown staged option: $1"
+        ;;
+      *)
+        [ -z "$staged_message_file" ] || die "staged accepts at most one message file"
+        staged_message_file=$1
+        shift
+        ;;
+    esac
+  done
+
+  if [ -n "$staged_message_file" ]; then
+    staged_message "$staged_message_file"
+  else
+    staged_message
+  fi
+}
+
+check_staged_worktree() {
+  staged_paths=$1
+  dirty_paths=$( {
+    git diff --name-only
+    git ls-files --others --exclude-standard
+  } | sort -u )
+  dirty_outside_stage=$(printf '%s\n' "$dirty_paths" | while IFS= read -r path; do
+    [ -n "$path" ] || continue
+    if ! printf '%s\n' "$staged_paths" | grep -Fqx "$path"; then
+      printf '%s\n' "$path"
+    fi
+  done)
+  dirty_count=$(printf '%s\n' "$dirty_outside_stage" | awk 'NF { count++ } END { print count + 0 }')
+  [ "$dirty_count" -ge 3 ] || return 0
+
+  echo "version-policy: warning: ${dirty_count} non-ignored tracked/untracked paths remain outside the staged target; this may be a dirty next purpose" >&2
+  if [ "$staged_allow_dirty" -ne 1 ]; then
+    die "staged mode requires an explicit dirty-next-purpose override; use --allow-dirty-next-purpose --override-reason <reason> or SIGNET_ALLOW_DIRTY_NEXT_PURPOSE=1 with SIGNET_DIRTY_NEXT_PURPOSE_OVERRIDE_REASON"
+  fi
+  [ -n "$staged_override_reason" ] || die "dirty-next-purpose override requires a non-empty reason"
+  echo "version-policy: warning: dirty-next-purpose override accepted with an explicit reason" >&2
+}
+
 check_staged() {
-  staged_message "$@"
+  parse_staged_options "$@"
   validate_message "$MESSAGE"
   staged_version=$(git show :CMakeLists.txt 2>/dev/null | version_from_cmake) \
     || die "staged index must contain CMakeLists.txt with one project VERSION"
@@ -261,6 +347,7 @@ check_staged() {
   [ -n "$previous_version" ] || die "cannot determine previous version; set SIGNET_BASE_VERSION for migration"
   valid_version "$previous_version" || die "previous version is not SemVer: $previous_version"
   check_bump "$previous_version" "$staged_version" "$SUBJECT_TYPE" "$SUBJECT_BREAKING"
+  check_staged_worktree "$staged_paths"
   echo "version-policy: staged change is valid (${SUBJECT_TYPE} ${previous_version} -> ${staged_version})"
 }
 
@@ -323,6 +410,8 @@ check_range() {
       || die "commit $commit CMake version ${current_version} does not match subject ${SUBJECT_VERSION}"
     [ "$current_version" != "$previous_version" ] \
       || die "commit $commit does not change the CMake product version"
+    version_is_greater "$previous_version" "$current_version" \
+      || die "commit $commit CMake version ${current_version} must increase monotonically from ${previous_version}"
     paths=$(git diff-tree --no-commit-id --name-only -r "$commit")
     printf '%s\n' "$paths" | grep -Fxq CMakeLists.txt \
       || die "commit $commit must change CMakeLists.txt"
