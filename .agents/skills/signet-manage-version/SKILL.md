@@ -1,6 +1,6 @@
 ---
 name: signet-manage-version
-description: SignetのCMake project version、version header、配布設定、コミット種別、GitHub Releasesの整合を確認し、次のMAJOR・MINOR・PATCHを根拠付きで決めて更新する。version判断と検証に使い、commit、tag、Release公開は対応Skillへ渡す。
+description: SignetのCMake project version、version header、配布設定、コミット種別、GitHub Releasesの整合を確認し、次のMAJOR・MINOR・PATCHを根拠付きで決めて更新する。対象変更とversion更新を同じcommitへ整合させ、stage-onlyではversionを変更しない。commit・push・tag・Release・PR・Issueは各操作の明示許可と対応Skillへ渡す。
 ---
 
 # Signet Version Management
@@ -10,8 +10,8 @@ description: SignetのCMake project version、version header、配布設定、�
 1. `AGENTS.md`、開発・リリース正本、`CMakeLists.txt`、配布設定、既存のversion検査を確認する。Signetのversion正本は`CMakeLists.txt`の`project(VERSION ...)`であり、生成version headerはその値を表示へ伝播するconsumerとして確認する。
 2. 製品世代を壊す変更は、ユーザーがMAJORを明示し、かつbreaking changeである場合だけ採用する。根拠をcommit本文とrelease記録へ残す。
 3. `feat`はMINOR、それ以外の固定された10 type（`fix`、`docs`、`test`、`refactor`、`perf`、`build`、`ci`、`chore`、`style`、`revert`）はPATCHとする。複数の影響がある場合はMAJOR > MINOR > PATCHの最大impactを採用する。
-4. version-only commit、同一versionの複数commit、対象変更なしのversion更新を作らない。独立目的はcommit単位へ分け、対象検証が成功した直後、commit直前にversionを決定・更新する。次目的の編集開始前に前目的のcommitを完了させる。stage-onlyではversionを更新せず、commit許可時にだけ判定・更新する。
-5. 現在の未commit bootstrap状態は`0.1.0`を維持し、新規規則は次に明示許可されたcommitから適用する。各commitでversionを順次更新し、全作業後の事後分割を前提にしない。
+4. version-only commit、同一versionの複数commit、対象変更なしのversion更新を作らない。明示的にcommitが許可された変更・構築タスクでは、一目的の対象検証直後に最新のstatus・diff・indexを確認し、versionを決定・更新して対象変更と同じcommitへ含め、commit後にhash・statusを確認してから次目的へ進む。commit禁止・未コミット・監査のみ・計画のみ、stage-only、検証失敗、規則不明、競合、秘密情報、Gitの不適切な状態ではversionを更新またはcommitせず停止する。stage-onlyではversionを変更せず、複数目的を蓄積して後から分割しない。
+5. version更新後のcommitを越えてpush、tag、Release、PR、Issue、その他の外部公開を行わず、それぞれの明示許可と対応Skillへ渡す。
 
 ## 更新して検証する
 

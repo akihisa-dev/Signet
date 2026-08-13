@@ -15,7 +15,7 @@ Pull Requestを作る前に、次を確認してください。
 
 commitを依頼または作成する場合は、[開発手順のcommit・version・公開規則](docs/development.md#変更commitversion公開)に従ってください。typeは11種類に固定し、件名へscopeを入れず、`<type>[!]: <version> 日本語の説明`とします。本文には`Scope:`（英語小文字の名詞）、`目的:`、`内容:`、`確認:`、`影響:`を必ず含めます。対象変更とversion更新は同じcommitへ含め、versionだけのcommitは作りません。
 
-commitを許可された連続作業では、一目的の編集・対象検証・version更新・commit・post-commit確認を完了してから次目的へ進んでください。正しい流れは `feature A edit/test/version/commit -> feature B edit/test/version/commit` です。A/B/Cをすべて編集して最後にpatch-stageで3commitへ分ける事後分割は認めません。commit許可がない場合は目的完了時に停止し、stage-onlyの場合もstage後に停止してください。「最後まで実装、commit不要」という明示がある場合だけ複数目的の蓄積を許します。
+変更・構築タスクでは、一目的の編集・対象検証・version更新・対象だけのstage・ローカルcommit・post-commit確認を完了してから次目的へ進んでください。各commit後にhashとstatusを確認してください。検証失敗、規則不明、競合、秘密情報、Gitの不適切な状態ではcommitせず停止します。ユーザーがcommit禁止・未コミット・監査のみ・計画のみを指定した場合もcommitしません。stage-onlyの明示依頼はstage後に停止し、versionを更新しません。A/B/Cを蓄積して最後にpatch-stageで分割する運用は認めません。
 
 実credential、token、password、秘密鍵、個人情報、非公開ファイルその他の秘密をcommit、diff、ログ、文書、fixtureへ含めないでください。検査fixtureには架空値だけを使い、疑いがある値を出力・保存・引用しないでください。
 

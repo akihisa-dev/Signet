@@ -34,13 +34,11 @@
 ### 変更・commit・version・公開の正本
 
 - stage-only、commit、branch push、tag作成、tag push、Draft Release作成、Release公開は別操作であり、一つの許可を次の操作へ拡張しない。stage-onlyではversionを変更しない。
-- ユーザーがcommitを許可した連続作業では、独立目的を一つだけ編集し、実作業完了直後に対象検証、version更新、commit、post-commit確認まで完了してから次の目的を編集する。状態は `planned -> editing one purpose -> verified -> versioned -> staged -> committed -> post-commit checked -> next purpose` とし、失敗時は次へ進まない。
-- commit許可がない場合は各目的の完了時に停止して許可を求める。ただしユーザーが「最後まで実装、commit不要」と明示した場合だけ複数目的の蓄積を許す。stage-onlyもstage後に停止し、次目的の編集へ進まない。全目的を最後に事後分割する運用は禁止する。
-- 既に複数目的がdirtyな状態で後からcommit許可を受けた場合、過去状態を忠実に復元でき、中間commitが検証可能で、重複ファイルを安全にpatch-stageできる場合だけ事後分割を検討する。それ以外は全体を一つのbootstrap/integration commitとして扱うか、履歴書換えの明示許可を求める。
+- 変更・構築タスクは、必要な対象検証後に最新のstatus、diff、indexを確認し、対象だけを明示パスでstageして意味のまとまりごとにローカルcommitする。各commit後にhashとstatusを確認・報告し、状態は `planned -> editing one purpose -> verified -> versioned -> staged -> committed -> post-commit checked -> next purpose` とする。検証失敗、規則不明、競合、秘密情報、Gitの不適切な状態ではcommitせず停止する。
+- ユーザーがcommit禁止・未コミット・監査のみ・計画のみを指定した場合はcommitしない。stage-onlyの明示依頼は対象をstageした時点で停止し、versionを更新しない。複数目的を蓄積して後から分割する運用は禁止する。
 - 並行agentの変更も、同一branchのcommit順序と統合をメイン担当が管理する。前commit後に次担当の変更を統合し、commit境界をまたぐversion正本を複数担当が同時編集しない。
-- commit許可を受けた時点で変更の最大impactを判定し、対象変更とversion更新を同じcommitへ含める。versionだけのcommit、同一versionの複数commit、対象変更なしのversion更新は禁止する。
+- 変更の最大impactを判定し、対象変更とversion更新を同じcommitへ含める。versionだけのcommit、同一versionの複数commit、対象変更なしのversion更新は禁止する。
 - version正本は`CMakeLists.txt`の`project(VERSION ...)`とする。bundle、表示、checkerはこの値へ一致させる。version規則の入口は`scripts/version-policy.sh`、`scripts/verify.sh version`、`scripts/verify.sh version-self-test`を前提とする。
-- 現在の未commit bootstrap状態は`0.1.0`を維持し、新規規則は次に明示許可されたcommitから適用する。各commitのversionは、その目的を検証した直後に順次更新する。
 - tag名は`MAJOR.MINOR.PATCH`（`v`なし）とし、version一致、未使用、commit済み、clean、local/remote reachability、local release verify、秘密情報検査を満たすまで作成しない。tag作成、tag push、Draft、Publishはそれぞれ独立して扱う。
 - CIのActionsはlocal release verifyの代替ではない。公開済みassetは上書きせず、内容を変える公開は新しいPATCHとして扱う。
 - commit、diff、ログ、文書、fixtureへ実credential、token、password、秘密鍵、個人情報その他の秘密を入れない。値を出力・保存・引用せず、検査には架空値を使い、疑いがあれば内容を再掲せず停止して報告する。
