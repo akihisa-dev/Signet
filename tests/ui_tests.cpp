@@ -773,6 +773,13 @@ int main(int argc, char** argv) {
   assert(japanese_translator.translate(
              "MainWindow", "Generate an editable geometric logo from a prompt or image") ==
          QStringLiteral("文章または画像から編集可能な幾何ロゴを生成します"));
+  assert(japanese_translator.translate("signet::ui::CanvasView", "Grid") ==
+         QStringLiteral("グリッド"));
+  assert(japanese_translator.translate(
+             "signet::ui::CanvasView", "Select shapes of the same kind to move them together") ==
+         QStringLiteral("同じ種類の図形だけをまとめて移動できます"));
+  assert(japanese_translator.translate("signet::ui::CanvasView", "Split cancelled") ==
+         QStringLiteral("分割をキャンセルしました"));
   application.installTranslator(&japanese_translator);
 
   signet::core::DocumentHistory history(makeDocument());

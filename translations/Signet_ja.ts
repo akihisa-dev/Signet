@@ -2,7 +2,7 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="ja_JP">
 <context>
-    <name>CanvasView</name>
+    <name>signet::ui::CanvasView</name>
     <message>
         <location filename="../src/ui/canvas_view.cpp" line="546"/>
         <source>Geometric construction canvas</source>
@@ -127,6 +127,41 @@
         <location filename="../src/ui/canvas_view.cpp" line="2405"/>
         <source>Cannot find the shape&apos;s horizontal axis</source>
         <translation>図形の水平軸を見つけられません</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/canvas_view.cpp" line="529"/>
+        <source>Cannot split this shape</source>
+        <translation>この図形は分割できません</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/canvas_view.cpp" line="534"/>
+        <source>The split line does not cross the shape</source>
+        <translation>分割線が図形を横切っていません</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/canvas_view.cpp" line="537"/>
+        <source>The split line only touches the shape</source>
+        <translation>分割線が図形に接しているだけです</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/canvas_view.cpp" line="540"/>
+        <source>The split line follows the shape boundary</source>
+        <translation>分割線が図形の境界に沿っています</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/canvas_view.cpp" line="543"/>
+        <source>Move the split line away from a corner</source>
+        <translation>分割線を角から離してください</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/canvas_view.cpp" line="546"/>
+        <source>The split line must cross the shape twice</source>
+        <translation>分割線は図形を2回横切る必要があります</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/canvas_view.cpp" line="550"/>
+        <source>Cannot determine the split regions</source>
+        <translation>分割領域を判定できません</translation>
     </message>
 </context>
 <context>
@@ -444,45 +479,6 @@
         <location filename="../src/ui/main_window.cpp" line="424"/>
         <source>Split: drag across a closed shape; Esc cancels</source>
         <translation>分割: 閉じた図形を横切るようにドラッグ。Escでキャンセル</translation>
-    </message>
-</context>
-<context>
-    <name>signet::ui::CanvasView</name>
-    <message>
-        <location filename="../src/ui/canvas_view.cpp" line="511"/>
-        <location filename="../src/ui/canvas_view.cpp" line="535"/>
-        <source>Cannot split this shape</source>
-        <translation>この図形は分割できません</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/canvas_view.cpp" line="516"/>
-        <source>The split line does not cross the shape</source>
-        <translation>分割線が図形を横切っていません</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/canvas_view.cpp" line="519"/>
-        <source>The split line only touches the shape</source>
-        <translation>分割線が図形に接しているだけです</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/canvas_view.cpp" line="522"/>
-        <source>The split line follows the shape boundary</source>
-        <translation>分割線が図形の境界に沿っています</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/canvas_view.cpp" line="525"/>
-        <source>Move the split line away from a corner</source>
-        <translation>分割線を角から離してください</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/canvas_view.cpp" line="528"/>
-        <source>The split line must cross the shape twice</source>
-        <translation>分割線は図形を2回横切る必要があります</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/canvas_view.cpp" line="532"/>
-        <source>Cannot determine the split regions</source>
-        <translation>分割領域を判定できません</translation>
     </message>
 </context>
 <context>
